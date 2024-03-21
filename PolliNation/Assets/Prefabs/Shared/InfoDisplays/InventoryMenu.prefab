@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 401577731480127909}
   m_Layer: 0
-  m_Name: InventorySmallDisplay
+  m_Name: InventoryMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
