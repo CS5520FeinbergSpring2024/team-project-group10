@@ -1,18 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ResourceType : MonoBehaviour
+/**
+ <summary>
+ All resource types, both raw and produced.
+ </summary>
+ */
+public enum ResourceType
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    Pollen,
+    Nectar,
+    Buds,
+    Water,
+    Honey,
+    Propolis,
+    RoyalJelly
 }
