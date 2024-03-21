@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 807788551607665531}
   m_Layer: 0
-  m_Name: Hive_TasksMenu
+  m_Name: TasksMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
