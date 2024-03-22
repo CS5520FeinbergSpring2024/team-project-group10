@@ -411,6 +411,7 @@ GameObject:
   - component: {fileID: 8592366948666028045}
   - component: {fileID: 7071735463201408053}
   - component: {fileID: 2584625515304532120}
+  - component: {fileID: 3687933114118992213}
   m_Layer: 0
   m_Name: 'Water Image Button - Storage  '
   m_TagString: Untagged
@@ -476,6 +477,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3687933114118992213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 435157079764230812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &567709798989109077
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,6 +505,7 @@ GameObject:
   - component: {fileID: 4883597012158387543}
   - component: {fileID: 3419403235829446692}
   - component: {fileID: 4392776068483750635}
+  - component: {fileID: 230078627701678537}
   m_Layer: 0
   m_Name: Storage Building Image
   m_TagString: Untagged
@@ -551,6 +570,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &230078627701678537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567709798989109077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &623935782740445647
 GameObject:
   m_ObjectHideFlags: 0
@@ -716,6 +752,7 @@ GameObject:
   - component: {fileID: 7577907074950516715}
   - component: {fileID: 7551743473565005890}
   - component: {fileID: 1204677216082722145}
+  - component: {fileID: 265182083462531345}
   m_Layer: 0
   m_Name: 'Pollen Image Button - Storage '
   m_TagString: Untagged
@@ -781,6 +818,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &265182083462531345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911260837458630935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1205026457733316272
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,6 +967,7 @@ GameObject:
   - component: {fileID: 1291079547063397285}
   - component: {fileID: 2675326581539545588}
   - component: {fileID: 3589012599540272942}
+  - component: {fileID: 7868461696492820110}
   m_Layer: 0
   m_Name: 'Propolis Image Button - Storage '
   m_TagString: Untagged
@@ -978,6 +1033,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &7868461696492820110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254512289660372535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &1390053891092736020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,6 +2044,7 @@ GameObject:
   - component: {fileID: 4009065008894429439}
   - component: {fileID: 7266912371482319105}
   - component: {fileID: 8894474023271359837}
+  - component: {fileID: 5315953082015195377}
   m_Layer: 0
   m_Name: 'Conversion Building Image '
   m_TagString: Untagged
@@ -2036,6 +2109,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5315953082015195377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2654609719284786864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &2690029408000330754
 GameObject:
   m_ObjectHideFlags: 0
@@ -2433,6 +2523,7 @@ GameObject:
   - component: {fileID: 655414847484488970}
   - component: {fileID: 9172619812575752062}
   - component: {fileID: 4151909302687042951}
+  - component: {fileID: 4443112225201207614}
   m_Layer: 0
   m_Name: 'Buds Image Button - Storage  '
   m_TagString: Untagged
@@ -2498,6 +2589,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4443112225201207614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2964303033981010049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &2968856707845341389
 GameObject:
   m_ObjectHideFlags: 0
@@ -2709,6 +2817,7 @@ GameObject:
   - component: {fileID: 5010000412028739948}
   - component: {fileID: 3697561840983971479}
   - component: {fileID: 2296663908082655985}
+  - component: {fileID: 782878443767288137}
   m_Layer: 0
   m_Name: Nectar Image Button - Gathering
   m_TagString: Untagged
@@ -2774,6 +2883,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &782878443767288137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3019423750911574680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &3404478448526831522
 GameObject:
   m_ObjectHideFlags: 0
@@ -2785,6 +2911,7 @@ GameObject:
   - component: {fileID: 8529295223908135637}
   - component: {fileID: 3678045227076334681}
   - component: {fileID: 2074887687027154509}
+  - component: {fileID: 5871417232518233093}
   m_Layer: 0
   m_Name: Honey Image Button - Conversion
   m_TagString: Untagged
@@ -2850,6 +2977,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5871417232518233093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3404478448526831522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &3578211476218477246
 GameObject:
   m_ObjectHideFlags: 0
@@ -3206,6 +3350,7 @@ GameObject:
   - component: {fileID: 4572054511947770839}
   - component: {fileID: 5080190795330232386}
   - component: {fileID: 7246628939294371126}
+  - component: {fileID: 5554733186981750165}
   m_Layer: 0
   m_Name: Pollen Image Button - Gathering
   m_TagString: Untagged
@@ -3271,6 +3416,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5554733186981750165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3802306139471397914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &3972513331615301889
 GameObject:
   m_ObjectHideFlags: 0
@@ -3282,6 +3444,7 @@ GameObject:
   - component: {fileID: 3712347309822733980}
   - component: {fileID: 2512280164380836652}
   - component: {fileID: 2521893319750492881}
+  - component: {fileID: 159197380689604856}
   m_Layer: 0
   m_Name: 'Jelly Image Button - Conversion '
   m_TagString: Untagged
@@ -3347,6 +3510,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &159197380689604856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3972513331615301889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &4001599526705905959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3554,6 +3734,7 @@ GameObject:
   - component: {fileID: 8276281340680273474}
   - component: {fileID: 2454613718614868760}
   - component: {fileID: 3365511358000778181}
+  - component: {fileID: 5196356431059111039}
   m_Layer: 0
   m_Name: Water Image Button - Gathering
   m_TagString: Untagged
@@ -3619,6 +3800,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5196356431059111039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4166095570057281160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &4272307588097972551
 GameObject:
   m_ObjectHideFlags: 0
@@ -3706,6 +3904,7 @@ GameObject:
   - component: {fileID: 1274435822309690756}
   - component: {fileID: 2733077886085818212}
   - component: {fileID: 3708805016077633541}
+  - component: {fileID: 1976489923017683414}
   m_Layer: 0
   m_Name: Nectar Image Button - Storage
   m_TagString: Untagged
@@ -3771,6 +3970,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1976489923017683414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4743737010523522367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &4759594289492181162
 GameObject:
   m_ObjectHideFlags: 0
@@ -4224,6 +4440,7 @@ GameObject:
   - component: {fileID: 8004648430914191725}
   - component: {fileID: 7978966469579011270}
   - component: {fileID: 1189012809746386829}
+  - component: {fileID: 1817620928247312502}
   m_Layer: 0
   m_Name: Buds Image Button - Gathering
   m_TagString: Untagged
@@ -4289,6 +4506,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1817620928247312502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5168357515247292977}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &5283499092797955203
 GameObject:
   m_ObjectHideFlags: 0
@@ -5399,6 +5633,7 @@ GameObject:
   - component: {fileID: 291723578922332532}
   - component: {fileID: 7388106053553157146}
   - component: {fileID: 3733945341562759774}
+  - component: {fileID: 4203054965397465988}
   m_Layer: 0
   m_Name: Honey Image Button - Storage
   m_TagString: Untagged
@@ -5464,6 +5699,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4203054965397465988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6981719372106609913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &7079118791180423411
 GameObject:
   m_ObjectHideFlags: 0
@@ -6267,6 +6519,7 @@ GameObject:
   - component: {fileID: 3680995497893897026}
   - component: {fileID: 7118450834359745136}
   - component: {fileID: 738009288816332991}
+  - component: {fileID: 8430488328895805632}
   m_Layer: 0
   m_Name: 'Propolis Image Button - Conversion '
   m_TagString: Untagged
@@ -6332,6 +6585,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8430488328895805632
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8007479833760713209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &8057557849668118503
 GameObject:
   m_ObjectHideFlags: 0
@@ -6552,6 +6822,7 @@ GameObject:
   - component: {fileID: 8241279295142524890}
   - component: {fileID: 7170459006987182636}
   - component: {fileID: 7358294371477830656}
+  - component: {fileID: 4932858523333862064}
   m_Layer: 0
   m_Name: 'Jelly Image Button - Storage  '
   m_TagString: Untagged
@@ -6617,6 +6888,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4932858523333862064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8225836884067740279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &8371212116738700981
 GameObject:
   m_ObjectHideFlags: 0
@@ -6828,6 +7116,7 @@ GameObject:
   - component: {fileID: 1225943387989895029}
   - component: {fileID: 5774579422524448223}
   - component: {fileID: 5492319298111913584}
+  - component: {fileID: 2688867635420281724}
   m_Layer: 0
   m_Name: 'Gathering Building Image '
   m_TagString: Untagged
@@ -6892,6 +7181,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &2688867635420281724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450962831160763950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 4
+    callback:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &8614500802778969253
 GameObject:
   m_ObjectHideFlags: 0
