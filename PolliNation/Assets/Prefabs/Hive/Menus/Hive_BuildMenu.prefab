@@ -6064,8 +6064,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c533704e05783446899ad3018300f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buildingsList: []
-  resourceList: 
   selectedBuilding: {fileID: 0}
   selectedResource: {fileID: 0}
 --- !u!1 &7942903629677750598

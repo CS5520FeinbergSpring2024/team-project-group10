@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BuildMenuScript : MonoBehaviour
 {
-    public List<Building> buildingsList;
-    public List<ResourceType> resourceList;
+    private List<Building> buildingsList;
+    private List<ResourceType> resourceList;
     public Building selectedBuilding;
     public Resource selectedResource;
     // Reference to the future data class 
