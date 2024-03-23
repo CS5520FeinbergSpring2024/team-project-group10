@@ -652,6 +652,7 @@ MonoBehaviour:
   NectarAmountText: {fileID: 3182625929394701163}
   WaterAmountText: {fileID: 7636922642321697959}
   BudsAmountText: {fileID: 1900493930627721910}
+  UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
 --- !u!1 &3563951908928363269
 GameObject:
   m_ObjectHideFlags: 0
