@@ -5819,7 +5819,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8509569162482379331}
-  - {fileID: 4104092654247464523}
   - {fileID: 2508835980581209306}
   m_Father: {fileID: 913438539994755913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7441,7 +7440,7 @@ GameObject:
   - component: {fileID: 8509569162482379331}
   - component: {fileID: 6372979348001810196}
   m_Layer: 0
-  m_Name: Build Menu Screen
+  m_Name: BuildMenuScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7508,6 +7507,7 @@ RectTransform:
   - {fileID: 6981552033730568289}
   - {fileID: 5663429748425707272}
   - {fileID: 8155427495843370285}
+  - {fileID: 4104092654247464523}
   m_Father: {fileID: 3008180156818471039}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -7845,13 +7845,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8057557849668118503}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1958106057226855050}
-  m_Father: {fileID: 3008180156818471039}
+  m_Father: {fileID: 8509569162482379331}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
