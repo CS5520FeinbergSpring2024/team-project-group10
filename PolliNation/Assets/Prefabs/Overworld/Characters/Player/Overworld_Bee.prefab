@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 1166477321870745263}
   - component: {fileID: 1932082355530801487}
   - component: {fileID: 9173968612549378171}
-  - component: {fileID: 8090834177184731470}
+  - component: {fileID: 8247993164008920128}
   m_Layer: 0
   m_Name: Wings
   m_TagString: Untagged
@@ -227,8 +227,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &8090834177184731470
-SphereCollider:
+--- !u!136 &8247993164008920128
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -245,9 +245,11 @@ SphereCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.34837168
+  m_Height: 1.0609182
+  m_Direction: 0
+  m_Center: {x: -0.00080957415, y: -0.024723828, z: -0.017301619}
 --- !u!1 &3980424291178229954
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,6 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveAction: {fileID: -813024496332110153, guid: eafbd945a6443434d8c5694eda2d8cb6, type: 3}
+  speed: 5
 --- !u!1 &5431751622735599944
 GameObject:
   m_ObjectHideFlags: 0

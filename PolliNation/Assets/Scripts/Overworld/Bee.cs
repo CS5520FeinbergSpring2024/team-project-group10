@@ -6,8 +6,8 @@ using UnityEngine.InputSystem;
 public class Bee : MonoBehaviour
 {
     // Joystick Input
-    public InputActionReference moveAction;
-    private float speed = 5;
+    [SerializeField] private InputActionReference moveAction;
+    [SerializeField] private float speed = 5;
 
     // Start is called before the first frame update
     void Start()
