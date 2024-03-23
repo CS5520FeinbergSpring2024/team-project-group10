@@ -11,24 +11,20 @@ public class HiveInventoryBar : MonoBehaviour
     void Start()
     {
         if (UserInventory != null) {
+            // set initial values and add listener
+            UserInventory.OnInventoryChanged += InventoryUpdated;
             HoneyAmountText.text = UserInventory.GetHoneyCount.ToString();
             PropolisAmountText.text = UserInventory.GetPropolisCount.ToString();
             RoyalJellyAmountText.text = UserInventory.GetRoyalJellyCount.ToString();
         }
-        // add listener 
-        UserInventory.OnInventoryChanged += InventoryUpdated;
     }
 
+    // called on inventory count update
     private void InventoryUpdated(object sender, System.EventArgs e) {
         if (UserInventory != null) {
             HoneyAmountText.text = UserInventory.GetHoneyCount.ToString();
             PropolisAmountText.text = UserInventory.GetPropolisCount.ToString();
             RoyalJellyAmountText.text = UserInventory.GetRoyalJellyCount.ToString();
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }
