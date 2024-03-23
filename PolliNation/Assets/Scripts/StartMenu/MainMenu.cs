@@ -5,13 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public void PlyayGame() 
+    public void PlayGame() 
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        string hiveScene = "Hive";
+        SceneManager.LoadScene(hiveScene);
     }
 
-    public void QuitGame() 
-    {
-       Application.Quit();
-    }
 }
