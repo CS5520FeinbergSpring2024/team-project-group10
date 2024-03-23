@@ -1,0 +1,34 @@
+{
+    "name": "JoystickControls",
+    "maps": [
+        {
+            "name": "Bee",
+            "id": "b399666d-16b0-4f7b-8596-78e1037764b3",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "3c45af70-9600-49c2-b4ae-0335d4621abc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1de5bf01-e451-4041-9c4e-059ca6d12280",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
