@@ -14,7 +14,7 @@ public class BuildMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //gameObject.SetActive(false);
+        gameObject.SetActive(false);
         loadData();
     }
 
@@ -22,6 +22,24 @@ public class BuildMenuScript : MonoBehaviour
     void Update()
     {
 
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("Build menu script is enabled");
+        BuildButtonScript.onMenuOpen.AddListener(OpenMenu);
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("Build menu Script is now disabled");
+        BuildButtonScript.onMenuOpen.RemoveListener(OpenMenu);
+    }
+
+    private void OpenMenu()
+    {
+        Debug.Log("OpenMenu has been called");
+        gameObject.SetActive(true);
     }
 
     public void loadData()
