@@ -4,16 +4,31 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class MenuOpenEvent : UnityEvent { }
+//public class MenuOpenEvent : UnityEvent { }
+
 public class BuildButtonScript : MonoBehaviour
 {
-    public static MenuOpenEvent onMenuOpen = new MenuOpenEvent();
+    public UnityEvent onButtonClick;
+    public BuildMenuScriptableObject menuState;
 
-    public void OnButtonClick()
+    public void ClickButton()
     {
-        onMenuOpen.Invoke();
+        onButtonClick.Invoke();
         Debug.Log("Build button was clicked");
     }
+
+
+
+
+    //public static MenuOpenEvent onMenuOpen = new MenuOpenEvent();
+
+    //public void OnButtonClick()
+    //{
+    //    onMenuOpen.Invoke();
+    //    Debug.Log("Build button was clicked");
+    //}
+
+
     //public GameObject BuildMenuScreen;
     //public GameObject buildmenuPrefab;
     //private GameObject buildmenuInstance;

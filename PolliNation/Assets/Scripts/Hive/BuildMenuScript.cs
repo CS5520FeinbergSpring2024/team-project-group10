@@ -8,13 +8,15 @@ public class BuildMenuScript : MonoBehaviour
     private List<ResourceType> resourceList;
     public Building selectedBuilding;
     public Resource selectedResource;
+    public BuildMenuScriptableObject menuState;
+
     // Reference to the future data class 
     //public DataClass buildingData; 
 
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(false);
+        gameObject.SetActive(menuState.isOpen);
         loadData();
     }
 
@@ -24,23 +26,23 @@ public class BuildMenuScript : MonoBehaviour
 
     }
 
-    private void OnEnable()
-    {
-        Debug.Log("Build menu script is enabled");
-        BuildButtonScript.onMenuOpen.AddListener(OpenMenu);
-    }
+    //private void OnEnable()
+    //{
+    //    Debug.Log("Build menu script is enabled");
+    //    BuildButtonScript.onMenuOpen.AddListener(OpenMenu);
+    //}
 
-    private void OnDisable()
-    {
-        Debug.Log("Build menu Script is now disabled");
-        BuildButtonScript.onMenuOpen.RemoveListener(OpenMenu);
-    }
+    //private void OnDisable()
+    //{
+    //    Debug.Log("Build menu Script is now disabled");
+    //    BuildButtonScript.onMenuOpen.RemoveListener(OpenMenu);
+    //}
 
-    private void OpenMenu()
-    {
-        Debug.Log("OpenMenu has been called");
-        gameObject.SetActive(true);
-    }
+    //private void OpenMenu()
+    //{
+    //    Debug.Log("OpenMenu has been called");
+    //    gameObject.SetActive(true);
+    //}
 
     public void loadData()
     {
