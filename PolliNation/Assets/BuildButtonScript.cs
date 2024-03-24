@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BuildButtonScript : MonoBehaviour
 {
-    //public GameObject BuildMenuScreen;
+    public GameObject BuildMenuScreen;
     public GameObject buildmenuPrefab;
     private GameObject buildmenuInstance;
     // Start is called before the first frame update
@@ -20,33 +20,33 @@ public class BuildButtonScript : MonoBehaviour
         
     }
 
-    //public void onButtonClick()
-    //{
-    //    if (BuildMenuScreen != null)
-    //    {
-    //        BuildMenuScreen.SetActive(true);
-    //        Debug.Log("Build button was clicked");
-    //    }
-    //}
-
     public void onButtonClick()
     {
-        if (buildmenuPrefab != null)
+        if (BuildMenuScreen != null)
         {
-            if (buildmenuInstance == null) // Check if an instance already exists
-            {
-                buildmenuInstance = Instantiate(buildmenuPrefab);
-            }
-            else
-            {
-                buildmenuInstance.SetActive(true); // Activate the existing instance
-            }
-
+            BuildMenuScreen.SetActive(true);
             Debug.Log("Build button was clicked");
         }
-        else
-        {
-            Debug.LogWarning("No reference to menu prefab");
-        }
     }
+
+    //public void onButtonClick()
+    //{
+    //    if (buildmenuPrefab != null)
+    //    {
+    //        if (buildmenuInstance == null) // Check if an instance already exists
+    //        {
+    //            buildmenuInstance = Instantiate(buildmenuPrefab);
+    //        }
+    //        else
+    //        {
+    //            buildmenuInstance.SetActive(true); // Activate the existing instance
+    //        }
+
+    //        Debug.Log("Build button was clicked");
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning("No reference to menu prefab");
+    //    }
+    //}
 }
