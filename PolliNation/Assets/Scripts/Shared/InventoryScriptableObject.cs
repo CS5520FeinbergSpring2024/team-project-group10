@@ -18,14 +18,9 @@ public class InventoryScriptableObject : ScriptableObject
         }
     }
     
-    //get accessors 
-    public int GetNectarCount => resourceCounts[ResourceType.Nectar];
-    public int GetPollenCount => resourceCounts[ResourceType.Pollen];
-    public int GetWaterCount => resourceCounts[ResourceType.Water];
-    public int GetBudsCount => resourceCounts[ResourceType.Buds];
-    public int GetHoneyCount => resourceCounts[ResourceType.Honey];
-    public int GetPropolisCount => resourceCounts[ResourceType.Propolis];
-    public int GetRoyalJellyCount => resourceCounts[ResourceType.RoyalJelly];
+    public int GetResourceCount(ResourceType resourceType){
+        return resourceCounts[resourceType];
+    }
 
     // update method
     public void UpdateInventory(ResourceType resourceType, int amount) 
@@ -37,13 +32,9 @@ public class InventoryScriptableObject : ScriptableObject
     }
 
     public void ResetInventory() {
-        resourceCounts[ResourceType.Nectar] = 0;
-        resourceCounts[ResourceType.Pollen] = 0;
-        resourceCounts[ResourceType.Water] = 0;
-        resourceCounts[ResourceType.Buds] = 0;
-        resourceCounts[ResourceType.Honey] = 0;
-        resourceCounts[ResourceType.Propolis] = 0;
-        resourceCounts[ResourceType.RoyalJelly] = 0;
+        foreach (ResourceType resource in resourceCounts.Keys){
+            resourceCounts[resource] = 0;
+        }
         // check if there are subscribers to event and if so trigger;
         OnInventoryChanged?.Invoke(this, EventArgs.Empty);
     }
