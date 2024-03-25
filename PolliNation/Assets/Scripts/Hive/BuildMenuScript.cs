@@ -8,7 +8,6 @@ public class BuildMenuScript : MonoBehaviour
     private List<ResourceType> resourceList;
     public Building selectedBuilding;
     public Resource selectedResource;
-    //public BuildMenuScriptableObject menuState;
 
     // Reference to the future data class 
     //public DataClass buildingData; 
@@ -16,7 +15,6 @@ public class BuildMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //setVisibility();
         setClose();
         loadData();
     }
@@ -28,10 +26,10 @@ public class BuildMenuScript : MonoBehaviour
     }
 
     // potentially split to open and close separately
-    // or could add the praremter false
 
     public void setOpen()
     {
+        Debug.Log("Menu set to open");
         gameObject.SetActive(true);
     }
 
@@ -45,31 +43,12 @@ public class BuildMenuScript : MonoBehaviour
     //    gameObject.SetActive(menuState.isOpen);
     //}
 
-    private void OnDestroy()
-    {
-        //menuState.isOpen = false;
-        setClose();
-    }
-
-    //Attempting to use a Unity Event below
-
-    //private void OnEnable()
+    //private void OnDestroy()
     //{
-    //    Debug.Log("Build menu script is enabled");
-    //    BuildButtonScript.onMenuOpen.AddListener(OpenMenu);
+    //    //menuState.isOpen = false;
+    //    setClose();
     //}
 
-    //private void OnDisable()
-    //{
-    //    Debug.Log("Build menu Script is now disabled");
-    //    BuildButtonScript.onMenuOpen.RemoveListener(OpenMenu);
-    //}
-
-    //private void OpenMenu()
-    //{
-    //    Debug.Log("OpenMenu has been called");
-    //    gameObject.SetActive(true);
-    //}
 
     public void loadData()
     {
@@ -153,5 +132,11 @@ public class BuildMenuScript : MonoBehaviour
         Debug.Log("Exit button was clicked");
 
         saveChanges();
+
+        BuildButtonScript buildButton = FindObjectOfType<BuildButtonScript>();
+        if (buildButton != null)
+        {
+            buildButton.ReappearButton();
+        }
     }
 }
