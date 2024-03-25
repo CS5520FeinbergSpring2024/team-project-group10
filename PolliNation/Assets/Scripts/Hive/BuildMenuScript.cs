@@ -38,17 +38,6 @@ public class BuildMenuScript : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    //public void setVisibility()
-    //{
-    //    gameObject.SetActive(menuState.isOpen);
-    //}
-
-    //private void OnDestroy()
-    //{
-    //    //menuState.isOpen = false;
-    //    setClose();
-    //}
-
 
     public void loadData()
     {
