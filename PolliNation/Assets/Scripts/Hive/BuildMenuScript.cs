@@ -8,7 +8,7 @@ public class BuildMenuScript : MonoBehaviour
     private List<ResourceType> resourceList;
     public Building selectedBuilding;
     public Resource selectedResource;
-    public BuildMenuScriptableObject menuState;
+    //public BuildMenuScriptableObject menuState;
 
     // Reference to the future data class 
     //public DataClass buildingData; 
@@ -16,7 +16,8 @@ public class BuildMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.SetActive(menuState.isOpen);
+        //setVisibility();
+        setClose();
         loadData();
     }
 
@@ -25,6 +26,32 @@ public class BuildMenuScript : MonoBehaviour
     {
 
     }
+
+    // potentially split to open and close separately
+    // or could add the praremter false
+
+    public void setOpen()
+    {
+        gameObject.SetActive(true);
+    }
+
+    public void setClose()
+    {
+        gameObject.SetActive(false);
+    }
+
+    //public void setVisibility()
+    //{
+    //    gameObject.SetActive(menuState.isOpen);
+    //}
+
+    private void OnDestroy()
+    {
+        //menuState.isOpen = false;
+        setClose();
+    }
+
+    //Attempting to use a Unity Event below
 
     //private void OnEnable()
     //{

@@ -168,7 +168,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8763548300287709557}
         m_TargetAssemblyTypeName: BuildButtonScript, Assembly-CSharp
-        m_MethodName: onButtonClick
+        m_MethodName: ClickButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
