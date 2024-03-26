@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BuildMenuScript : MonoBehaviour
 {
+    private GameObject menuButtonObject;
     private ILaunchMenuButton launchMenuButton;
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
@@ -18,6 +19,21 @@ public class BuildMenuScript : MonoBehaviour
     {
         setClose();
         loadData();
+
+        menuButtonObject = GameObject.Find("Build Button Object");
+
+        if (menuButtonObject != null)
+        {
+            launchMenuButton = menuButtonObject.GetComponent<ILaunchMenuButton>();
+            if (launchMenuButton == null)
+            {
+                Debug.LogError("Button does not implement ILaunchMenuButton interface.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Menu button object reference not set.");
+        }
     }
 
     // Update is called once per frame
@@ -124,22 +140,11 @@ public class BuildMenuScript : MonoBehaviour
 
         saveChanges();
 
-        //BuildButtonScript buildButton = FindObjectOfType<BuildButtonScript>();
-        //if (buildButton != null)
-        //{
-        //    buildButton.ReappearButton();
-        //}
-
 
         if (launchMenuButton != null)
         {
             launchMenuButton.ReappearButton();
         }
-    }
-
-    public void SetLaunchMenuButton(ILaunchMenuButton button)
-    {
-        launchMenuButton = button;
     }
 
 }
