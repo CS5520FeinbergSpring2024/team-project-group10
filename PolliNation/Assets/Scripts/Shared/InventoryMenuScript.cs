@@ -13,6 +13,8 @@ public class InventoryMenuScript : MonoBehaviour
     public TextMeshProUGUI WaterAmountText;
     public TextMeshProUGUI BudsAmountText;
 
+    //private GameObject inventoryButtonObject;
+
     /*
     PLACEHOLDER FOR FUTURE RESOURCE LIMITS
     public TextMeshProUGUI HoneyLimitText;
@@ -27,6 +29,9 @@ public class InventoryMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
+        // make the menu not visible upon scene start
+        gameObject.SetActive(false);
+
         // on start do intial load of data and add listener
         if (UserInventory != null) {
             LoadData();
@@ -34,6 +39,13 @@ public class InventoryMenuScript : MonoBehaviour
             //future listener for changes in inventory limits
             // UserInventory.OnInventoryLimitsChanged += InventoryLimitsUpdated;
         }
+    }
+
+    // method to open menu 
+    public void SetOpen()
+    {
+        gameObject.SetActive(true);
+        gameObject.transform.parent.gameObject.SetActive(true);
     }
 
     // called on inventory count update
@@ -84,10 +96,13 @@ public class InventoryMenuScript : MonoBehaviour
         }
     */
 
+    
+    /*
     public void ExitMenu()
     {
         Canvas canvas = GetComponentInParent<Canvas>();
         canvas.gameObject.SetActive(false);
         Debug.Log("Inventory Menu Exit button was clicked");
     }
+    */
 }

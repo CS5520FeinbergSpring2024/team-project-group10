@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 9998cb57124da4554a85012860a97ea2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - inventoryMenuScript: {instanceID: 0}
+  - inventoryButtonImage: {fileID: 21300000, guid: 049b81f4d1e424964bd72f70194d2728, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
