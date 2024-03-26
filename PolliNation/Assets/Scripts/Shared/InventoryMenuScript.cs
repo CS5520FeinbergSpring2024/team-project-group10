@@ -29,7 +29,8 @@ public class InventoryMenuScript : MonoBehaviour
     {   
         // make the menu not visible upon scene start
         gameObject.SetActive(false);
-
+        //gameObject.transform.parent.gameObject.SetActive(false);
+        
         // on start do intial load of data and add listener
         if (UserInventory != null) {
             LoadData();
@@ -40,11 +41,11 @@ public class InventoryMenuScript : MonoBehaviour
     }
 
     // method to open menu 
-    public void SetOpen()
-    {
-        gameObject.SetActive(true);
-        gameObject.transform.parent.gameObject.SetActive(true);
-    }
+    //public void SetOpen()
+    //{
+    //    gameObject.SetActive(true);
+    //    gameObject.transform.parent.gameObject.SetActive(true);
+   // }
 
     // called on inventory count update
     private void InventoryUpdated(object sender, System.EventArgs e) {
