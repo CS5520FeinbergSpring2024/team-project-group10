@@ -40,13 +40,6 @@ public class InventoryMenuScript : MonoBehaviour
         }
     }
 
-    // method to open menu 
-    //public void SetOpen()
-    //{
-    //    gameObject.SetActive(true);
-    //    gameObject.transform.parent.gameObject.SetActive(true);
-   // }
-
     // called on inventory count update
     private void InventoryUpdated(object sender, System.EventArgs e) {
         LoadData();
