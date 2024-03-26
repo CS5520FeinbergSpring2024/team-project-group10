@@ -13,8 +13,6 @@ public class InventoryMenuScript : MonoBehaviour
     public TextMeshProUGUI WaterAmountText;
     public TextMeshProUGUI BudsAmountText;
 
-    //private GameObject inventoryButtonObject;
-
     /*
     PLACEHOLDER FOR FUTURE RESOURCE LIMITS
     public TextMeshProUGUI HoneyLimitText;
