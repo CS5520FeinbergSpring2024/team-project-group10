@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BuildMenuScript : MonoBehaviour
 {
+    private ILaunchMenuButton launchMenuButton;
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
     public Building selectedBuilding;
@@ -31,6 +32,7 @@ public class BuildMenuScript : MonoBehaviour
     {
         Debug.Log("Menu set to open");
         gameObject.SetActive(true);
+        gameObject.transform.parent.gameObject.SetActive(true);
     }
 
     public void setClose()
@@ -122,10 +124,22 @@ public class BuildMenuScript : MonoBehaviour
 
         saveChanges();
 
-        BuildButtonScript buildButton = FindObjectOfType<BuildButtonScript>();
-        if (buildButton != null)
+        //BuildButtonScript buildButton = FindObjectOfType<BuildButtonScript>();
+        //if (buildButton != null)
+        //{
+        //    buildButton.ReappearButton();
+        //}
+
+
+        if (launchMenuButton != null)
         {
-            buildButton.ReappearButton();
+            launchMenuButton.ReappearButton();
         }
     }
+
+    public void SetLaunchMenuButton(ILaunchMenuButton button)
+    {
+        launchMenuButton = button;
+    }
+
 }

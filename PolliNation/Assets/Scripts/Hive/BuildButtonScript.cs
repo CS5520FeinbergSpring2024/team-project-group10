@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 
-public class BuildButtonScript : MonoBehaviour
+public class BuildButtonScript : MonoBehaviour, ILaunchMenuButton
 {
     BuildMenuScript buildMenuScript;
     Image buildButtonImage;
