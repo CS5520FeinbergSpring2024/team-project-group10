@@ -95,4 +95,14 @@ public class InventoryMenuScript : MonoBehaviour
             Debug.LogWarning("Inventory Scriptable Object asset is null");
         }
     */
+
+    
+    /*
+    public void ExitMenu()
+    {
+        Canvas canvas = GetComponentInParent<Canvas>();
+        canvas.gameObject.SetActive(false);
+        Debug.Log("Inventory Menu Exit button was clicked");
+    }
+    */
 }
