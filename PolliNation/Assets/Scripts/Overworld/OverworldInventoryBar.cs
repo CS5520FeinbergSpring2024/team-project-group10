@@ -21,7 +21,6 @@ public class OverworldInventoryBar : MonoBehaviour
             NectarAmountText.text = UserInventory.GetResourceCount(ResourceType.Nectar).ToString();
             WaterAmountText.text = UserInventory.GetResourceCount(ResourceType.Water).ToString();
             BudsAmountText.text = UserInventory.GetResourceCount(ResourceType.Buds).ToString();
-            UserInventory.UpdateInventory(ResourceType.Water,5555);
          }
     }
 
