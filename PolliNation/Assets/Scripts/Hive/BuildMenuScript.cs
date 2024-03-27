@@ -6,8 +6,10 @@ public class BuildMenuScript : MonoBehaviour
 {
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
+    private Tile currentTile;
     public Building selectedBuilding;
     public Resource selectedResource;
+    private Canvas canvas;
     // Reference to the future data class 
     //public DataClass buildingData; 
 
@@ -15,6 +17,7 @@ public class BuildMenuScript : MonoBehaviour
     void Start()
     {
         loadData();
+        canvas = GetComponentInParent<Canvas>();
     }
 
     // Update is called once per frame
@@ -98,9 +101,19 @@ public class BuildMenuScript : MonoBehaviour
         }
     }
 
+    public void OpenMenuForTile(Tile tile)
+    {   
+        // tile use for bind building by tile.SetCurrentBuilding() method
+        currentTile = tile;
+
+        // Show the build menu    
+        canvas.gameObject.SetActive(true);
+    }
+
+
     public void exitMenu()
     {
-        Canvas canvas = GetComponentInParent<Canvas>();
+        //Canvas canvas = GetComponentInParent<Canvas>();
         canvas.gameObject.SetActive(false);
         Debug.Log("Exit button was clicked");
 
