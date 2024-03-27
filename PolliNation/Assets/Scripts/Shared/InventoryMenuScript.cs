@@ -27,6 +27,9 @@ public class InventoryMenuScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
+        // make the menu not visible upon scene start
+        gameObject.SetActive(false);
+        
         // on start do intial load of data and add listener
         if (UserInventory != null) {
             LoadData();
@@ -83,11 +86,5 @@ public class InventoryMenuScript : MonoBehaviour
             Debug.LogWarning("Inventory Scriptable Object asset is null");
         }
     */
-
-    public void ExitMenu()
-    {
-        Canvas canvas = GetComponentInParent<Canvas>();
-        canvas.gameObject.SetActive(false);
-        Debug.Log("Inventory Menu Exit button was clicked");
-    }
+    
 }
