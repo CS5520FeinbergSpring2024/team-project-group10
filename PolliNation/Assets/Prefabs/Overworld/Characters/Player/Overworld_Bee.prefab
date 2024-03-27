@@ -93,8 +93,8 @@ GameObject:
   m_Component:
   - component: {fileID: 945625065093261591}
   - component: {fileID: 8185818084362017882}
-  - component: {fileID: 3855277424672133258}
   - component: {fileID: 9222675034458696381}
+  - component: {fileID: 5980664414647806511}
   m_Layer: 0
   m_Name: BeeModel
   m_TagString: Untagged
@@ -145,18 +145,6 @@ CapsuleCollider:
   m_Height: 2.1101336
   m_Direction: 2
   m_Center: {x: 0, y: -0.023117661, z: -0.015936613}
---- !u!114 &3855277424672133258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456741958926659827}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 558926c97bb605547acefc312e4176e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &9222675034458696381
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -184,6 +172,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5980664414647806511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456741958926659827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 558926c97bb605547acefc312e4176e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2477548233694603837
 GameObject:
   m_ObjectHideFlags: 0
