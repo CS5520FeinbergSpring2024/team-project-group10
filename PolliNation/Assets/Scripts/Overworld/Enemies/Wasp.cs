@@ -6,15 +6,17 @@ using UnityEngine.Diagnostics;
 public class Wasp : MonoBehaviour
 {
     [SerializeField] private int damage = 5;
-    public BeeHealth beeHealth;
+    //public BeeHealth beeHealth;
     private Vector3 startingPosition;
 
     // range for random vector generation 
     private float min = 5;
     private float max = 20;
-    private int speed = 1;
+    private int speed = 4;
+    private float chaseRange = 3f;
+    private float damageRange = 1f;
     private Vector3 roamingPosition;
-    public GameObject bee;
+    private GameObject bee;
 
  
     private enum State 
@@ -68,41 +70,38 @@ public class Wasp : MonoBehaviour
                 roamingPosition = startingPosition;
                 startingPosition = transform.position;
             }
-            ChaseBee();
+            //Check whether to change state
+            ChangeState();
             break;
         case State.Chase:
             // chase bee
             transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, bee.transform.position, Time.deltaTime * speed), 
             Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (roamingPosition - bee.transform.position), Time.deltaTime));
+            ChangeState();
             break;
         case State.Attack:
             Debug.Log("In Attack");
+            //beeHealth.TakeDamage(damage);
+            //bee.beeHealth.TakeDamage(damage);
+            ChangeState();
             break;
         }
         
     }
 
     // method to check distance from Bee and change state to chase if within range
-    private void ChaseBee() 
+    private void ChangeState() 
     {
         Debug.Log("HELP In ChaseBee");
-        if (Vector3.Distance(transform.position, bee.transform.position) < 3f)
+        if (Vector3.Distance(transform.position, bee.transform.position) < chaseRange)
         {
             Debug.Log("HELP should be changing state to Chase");
             state = State.Chase;
+        } else if (Vector3.Distance(transform.position, bee.transform.position) < damageRange) {
+            state = State.Attack;
+        } else {
+            state = State.Roaming;
         }
     }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player") 
-        {
-            //beeHealth.TakeDamage(damage);
-            //Debug.Log("In OnTriggerEnter gameObject tag matched");
-
-        }
-    }
-
-
 
 }
