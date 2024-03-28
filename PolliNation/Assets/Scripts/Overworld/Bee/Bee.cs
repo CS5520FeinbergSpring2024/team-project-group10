@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Bee : MonoBehaviour
 {
@@ -26,6 +27,12 @@ public class Bee : MonoBehaviour
             transform.Translate(new Vector3(moveDirection.x * speed * Time.deltaTime, 0, moveDirection.y * speed * Time.deltaTime));
             GameObject child = gameObject.transform.GetChild(0).gameObject;
             child.transform.rotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0, moveDirection.y));
+        }
+    }
+    
+    void OnTriggerEnter(Collider other) {
+        if (other.name.Equals("Overworld_HiveObject")) {
+            SceneManager.LoadScene("Hive");
         }
     }
 }
