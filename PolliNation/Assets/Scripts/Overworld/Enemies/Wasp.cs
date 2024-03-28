@@ -7,7 +7,7 @@ public class Wasp : MonoBehaviour
 {
     [SerializeField] private int damage = 5;
     public BeeHealth beeHealth;
-    private Vector3 origin;
+    private Vector3 startingPosition;
 
     // range for random vector generation 
     private float min = 5;
@@ -19,30 +19,34 @@ public class Wasp : MonoBehaviour
     void Start()
     {
         // get the wasps origin position
-        origin = transform.position;
+        startingPosition = transform.position;
         roamingPosition = GetRoamingPosition();
     }
 
     private Vector3 GetRoamingPosition() {
         Vector3 randomvector = RandomEnemyMovementVector();
         //Debug.Log("random vector: " + randomvector);
-        return origin + (randomvector * 2f);
+        return startingPosition + randomvector;
     }
 
     private Vector3 RandomEnemyMovementVector()
     {   
         // get random x and z values within specified range
-        float x = Random.Range(min, max);
+        //float x = Random.Range(min, max);
         float z = Random.Range(min, max);
         // keep same height as origin
-        var y = origin.y;
+        float y = startingPosition.y;
+        float x = startingPosition.x;
         return new Vector3(x,y,z);
     }
 
     void Update()
-    {   //Debug.Log("Current Position " + transform.position);
-        //transform.position = Vector3.MoveTowards(origin, roamingPosition, speed);
-        rigidBody.velocity = new Vector3(speed, roamingPosition.x, roamingPosition.z);
+    {   Debug.Log("Current Position " + transform.position);
+        Debug.Log("Roaming Position " + roamingPosition);
+        transform.position = Vector3.MoveTowards(startingPosition, roamingPosition, Time.deltaTime * speed);
+        //rigidBody.velocity = new Vector3(speed, roamingPosition.x, roamingPosition.z);
+
+        // if bee gets to roamingPosition have bee move to new roaming position
         if (Vector3.Distance(transform.position, roamingPosition) < 1f)
         {
             roamingPosition = GetRoamingPosition();
