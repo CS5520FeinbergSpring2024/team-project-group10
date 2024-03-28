@@ -74,7 +74,7 @@ public class Wasp : MonoBehaviour
             transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
             Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (roamingPosition - transform.position), Time.deltaTime));
             // if bee gets to roamingPosition have bee move to new roaming position
-            if (Vector3.Distance(transform.position, roamingPosition) == 0)
+            if (Vector3.Distance(transform.position, roamingPosition) == 1F)
             {   
                 roamingPosition = startingPosition;
                 startingPosition = transform.position;
