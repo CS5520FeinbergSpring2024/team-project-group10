@@ -11,9 +11,9 @@ public class Wasp : MonoBehaviour
 
     // range for random vector generation 
     private float min = 5;
-    private float max = 20;
+    private float max = 10;
     private int speed = 4;
-    private float chaseRange = 3f;
+    private float chaseRange = 7f;
     private float damageRange = 1f;
     private Vector3 roamingPosition;
     private GameObject bee;
@@ -76,11 +76,10 @@ public class Wasp : MonoBehaviour
         case State.Chase:
             // chase bee
             transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, bee.transform.position, Time.deltaTime * speed), 
-            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (roamingPosition - bee.transform.position), Time.deltaTime));
+            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (bee.transform.position - transform.position), Time.deltaTime));
             ChangeState();
             break;
         case State.Attack:
-            Debug.Log("In Attack");
             //beeHealth.TakeDamage(damage);
             //bee.beeHealth.TakeDamage(damage);
             ChangeState();
@@ -92,16 +91,20 @@ public class Wasp : MonoBehaviour
     // method to check distance from Bee and change state to chase if within range
     private void ChangeState() 
     {
-        Debug.Log("HELP In ChaseBee");
-        if (Vector3.Distance(transform.position, bee.transform.position) < chaseRange)
+        if ((Vector3.Distance(transform.position, bee.transform.position) < chaseRange) 
+        && (Vector3.Distance(transform.position, bee.transform.position) > damageRange))
         {
-            Debug.Log("HELP should be changing state to Chase");
             state = State.Chase;
         } else if (Vector3.Distance(transform.position, bee.transform.position) < damageRange) {
             state = State.Attack;
         } else {
             state = State.Roaming;
         }
+    }
+
+    void LateUpdate()
+    {
+        transform.localEulerAngles = new Vector3(0,transform.localEulerAngles.y,0);
     }
 
 }

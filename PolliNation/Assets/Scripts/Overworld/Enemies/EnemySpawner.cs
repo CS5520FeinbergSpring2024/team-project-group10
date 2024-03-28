@@ -7,10 +7,10 @@ public class EnemySpawner : MonoBehaviour
 {
     private float prevSpawnTime;
     private float spawnDelay = 5;
-    private int maxEnemies = 3;
-    private float rangeLimit = 30;
+    private int maxEnemies = 1;
+    private float rangeLimit = 25;
     public GameObject enemy; 
-    private float minDistance = 10;
+    private float minDistance = 20;
 
     private int spawnCount = 0;
 
@@ -25,12 +25,6 @@ public class EnemySpawner : MonoBehaviour
         {
         return false;
         }
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    
     }
 
     // Update is called once per frame
