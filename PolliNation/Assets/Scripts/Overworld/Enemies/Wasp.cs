@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Diagnostics;
 
 public class Wasp : MonoBehaviour
 {
-    [SerializeField] private int damage = 5;
-    //public BeeHealth beeHealth;
+    [SerializeField] private int damage = 1;
     private Vector3 startingPosition;
 
     // range for random vector generation 
@@ -15,6 +15,8 @@ public class Wasp : MonoBehaviour
     private int speed = 4;
     private float chaseRange = 7f;
     private float damageRange = 2f;
+    private float prevAttackTime = -1f;
+    private float attackCooldown = 1f;
     private Vector3 roamingPosition;
     private GameObject bee;
 
@@ -80,12 +82,19 @@ public class Wasp : MonoBehaviour
             ChangeState();
             break;
         case State.Attack:
-            Debug.Log("Health: " + bee.GetComponent<BeeHealth>());
-            bee.GetComponent<BeeHealth>().TakeDamage(damage);
+            // continue chasing bee
+            transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, bee.transform.position, Time.deltaTime * speed), 
+            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (bee.transform.position - transform.position), Time.deltaTime));
+            if (Time.time > prevAttackTime + attackCooldown)
+            {
+                // attack bee
+                bee.GetComponent<BeeHealth>().TakeDamage(damage);
+                // set stored attack time
+                prevAttackTime = Time.time;
+            }
             ChangeState();
             break;
         }
-        
     }
 
     // method to check distance from Bee and change state to chase if within range
@@ -105,7 +114,7 @@ public class Wasp : MonoBehaviour
 
     void LateUpdate()
     {
-        //prevent wasp from rotation on x and z axis
+        //prevent wasp from rotation on x and z axis on collisions
         transform.localEulerAngles = new Vector3(0,transform.localEulerAngles.y,0);
     }
 

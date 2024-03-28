@@ -7,7 +7,7 @@ public class EnemySpawner : MonoBehaviour
 {
     private float prevSpawnTime;
     private float spawnDelay = 5;
-    private int maxEnemies = 1;
+    private int maxEnemies = 3;
     private float rangeLimit = 25;
     public GameObject enemy; 
     private float minDistance = 20;

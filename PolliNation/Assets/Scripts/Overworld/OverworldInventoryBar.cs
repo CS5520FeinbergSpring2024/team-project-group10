@@ -9,12 +9,14 @@ public class OverworldInventoryBar : MonoBehaviour
     public TextMeshProUGUI NectarAmountText;
     public TextMeshProUGUI WaterAmountText;
     public TextMeshProUGUI BudsAmountText;
+    public TextMeshProUGUI HealthAmountText;
     public InventoryScriptableObject UserInventory;
+    private GameObject bee;
 
     // Start is called before the first frame update
     void Start()
     {
-      // set initial values and add listener
+        // set initial values and add listener
          if (UserInventory != null) {
             UserInventory.OnInventoryChanged += InventoryUpdated;
             PollenAmountText.text = UserInventory.GetResourceCount(ResourceType.Pollen).ToString();
@@ -22,6 +24,14 @@ public class OverworldInventoryBar : MonoBehaviour
             WaterAmountText.text = UserInventory.GetResourceCount(ResourceType.Water).ToString();
             BudsAmountText.text = UserInventory.GetResourceCount(ResourceType.Buds).ToString();
          }
+
+         bee = GameObject.FindWithTag("Player");
+         if (bee != null)
+         {
+            Debug.Log("get health: " + bee.GetComponent<BeeHealth>().Health);
+            HealthAmountText.text = bee.GetComponent<BeeHealth>().Health.ToString();
+         }
+
     }
 
     // called on inventory count update
