@@ -141,13 +141,13 @@ public class BuildMenuScript : MonoBehaviour
         currentTile = tile;
 
         // Show the build menu    
-        canvas.gameObject.SetActive(true);
+        setOpen();
     }
 
 
     public void exitMenu()
     {
-        //Canvas canvas = GetComponentInParent<Canvas>();
+        Canvas canvas = GetComponentInParent<Canvas>();
         canvas.gameObject.SetActive(false);
         Debug.Log("Exit button was clicked");
 
