@@ -25,31 +25,31 @@ public class Wasp : MonoBehaviour
 
     private Vector3 GetRoamingPosition() {
         Vector3 randomvector = RandomEnemyMovementVector();
-        //Debug.Log("random vector: " + randomvector);
         return startingPosition + randomvector;
     }
 
     private Vector3 RandomEnemyMovementVector()
     {   
         // get random x and z values within specified range
-        //float x = Random.Range(min, max);
+        float x = Random.Range(min, max);
         float z = Random.Range(min, max);
         // keep same height as origin
         float y = startingPosition.y;
-        float x = startingPosition.x;
+        //float x = startingPosition.x;
         return new Vector3(x,y,z);
     }
 
     void Update()
-    {   Debug.Log("Current Position " + transform.position);
-        Debug.Log("Roaming Position " + roamingPosition);
-        transform.position = Vector3.MoveTowards(startingPosition, roamingPosition, Time.deltaTime * speed);
-        //rigidBody.velocity = new Vector3(speed, roamingPosition.x, roamingPosition.z);
+    {   
+        //move and rotate wasp towards roamingPosition
+        transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
+        Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (roamingPosition - transform.position), Time.deltaTime));
 
         // if bee gets to roamingPosition have bee move to new roaming position
-        if (Vector3.Distance(transform.position, roamingPosition) < 1f)
+        if (Vector3.Distance(transform.position, roamingPosition) == 0)
         {
-            roamingPosition = GetRoamingPosition();
+            roamingPosition = startingPosition;
+            startingPosition = transform.position;
         }
     }
 
