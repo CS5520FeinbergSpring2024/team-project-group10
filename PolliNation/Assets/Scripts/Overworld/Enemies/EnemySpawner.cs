@@ -15,25 +15,23 @@ public class EnemySpawner : MonoBehaviour
     float minSpawnDistance = 25;
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
 
+    void Start()
+    {
+        while (SpawnCheck())
+        {
+            SpawnEnemy();
+        }
+    }
+
     private bool SpawnCheck() 
     {
-        // check if conditions to spawn another enemy
-        //if ((Time.time > prevSpawnTime + spawnDelay) && (spawnCount < maxEnemies))
+        // check if condition to spawn another enemy
         if (spawnCount < maxEnemies)
         {
             return true;
         } else 
         {
         return false;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (SpawnCheck())
-        {
-            SpawnEnemy();
         }
     }
 

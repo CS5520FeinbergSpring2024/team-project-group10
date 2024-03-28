@@ -24,7 +24,6 @@ public class Wasp : MonoBehaviour
         Roaming,
         Chase,
         Attack,
-        Stuck,
     }
 
     private State state;
@@ -66,16 +65,13 @@ public class Wasp : MonoBehaviour
 
     void Update()
     {   
-        //Debug.Log("Start position: " + startingPosition);
-        //Debug.Log("Roaming Position: " + roamingPosition);
         switch (state) {
         default:
         case State.Roaming:
-    
+
             //move and rotate wasp towards roamingPosition
             transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
             Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(roamingPosition - transform.position), Time.deltaTime));
-
             // if wasp gets to roamingPosition turn around and loop
             if (Vector3.Distance(transform.position, roamingPosition) <= 0.01f)
             {   
@@ -103,10 +99,6 @@ public class Wasp : MonoBehaviour
             }
             ChangeState();
             break;
-        case State.Stuck:
-            Debug.Log("in stuck case");
-            
-            break;
         }
     }
 
@@ -120,10 +112,6 @@ public class Wasp : MonoBehaviour
             state = State.Chase;
         } else if (distance <= damageRange) {
             state = State.Attack;
-        } else if(distance == 5000) { //((Time.time > waspStartTime + 3 ) 
-        //&& (Math.Abs(gameObject.GetComponent<Rigidbody>().velocity.x) <= 0.1f 
-        //|| Math.Abs(gameObject.GetComponent<Rigidbody>().velocity.z) <= 0.1f)) {
-            state = State.Stuck;
         } else {
             state = State.Roaming;
         }
@@ -142,20 +130,7 @@ public class Wasp : MonoBehaviour
         if (other.tag.Equals("Boundary")) {
             //Debug.Log("wall position: " + other.transform.position);
             Debug.Log("Wasp position: " + transform.position);
-            //int signWallx = Math.Sign(other.transform.position.x);
-            //int signWallz = Math.Sign(other.transform.position.z);
-            //other.transform.position
-            //Debug.Log("detected boundary wall hit");
-            //roamingPosition = startingPosition;
-            //Debug.Log("new roaming: " + roamingPosition);
-            //transform.position += new Vector3(-signWallx*1f,0,-signWallz*1f);
-            //transform.Rotate(0,-180,0);
-            //    roamingPosition = startingPosition;
-                //startingPosition = transform.position;
-
-            // rotate 180, set new starting position and roaming position
-            //transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
-            //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(roamingPosition - transform.position), Time.deltaTime));
+         
         }
     }
     
