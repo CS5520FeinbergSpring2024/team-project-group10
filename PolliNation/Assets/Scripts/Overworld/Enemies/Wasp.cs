@@ -42,7 +42,7 @@ public class Wasp : MonoBehaviour
     void Update()
     {   //Debug.Log("Current Position " + transform.position);
         //transform.position = Vector3.MoveTowards(origin, roamingPosition, speed);
-        rigidBody.velocity = new Vector3(speed, roamingPosition.x, roamingPosition.y);
+        rigidBody.velocity = new Vector3(speed, roamingPosition.x, roamingPosition.z);
         if (Vector3.Distance(transform.position, roamingPosition) < 1f)
         {
             roamingPosition = GetRoamingPosition();
