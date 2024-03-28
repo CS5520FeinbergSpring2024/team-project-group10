@@ -39,7 +39,6 @@ public class EnemySpawner : MonoBehaviour
         if (SpawnCheck() == true)
         {
             SpawnEnemy();
-            //Debug.Log("spawn count: " + spawnCount);
         }
     }
 
@@ -49,14 +48,13 @@ public class EnemySpawner : MonoBehaviour
 
         // update stored spawn time
         prevSpawnTime = Time.time;
-        // updat enemy count
+        // update enemy count
         spawnCount += 1;
-        Debug.Log("spawnCount: " + spawnCount);
     }
 
     private Vector3 RandomEnemySpawnPosition()
     {
-                // get random x and z values within specified range
+        // get random x and z values within specified range
         float x = UnityEngine.Random.Range(-rangeLimit, rangeLimit);
         float z = UnityEngine.Random.Range(-rangeLimit, rangeLimit);
         // keep same height as origin

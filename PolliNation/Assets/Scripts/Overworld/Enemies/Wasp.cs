@@ -14,7 +14,23 @@ public class Wasp : MonoBehaviour
     private float max = 20;
     private int speed = 1;
     private Vector3 roamingPosition;
-    public Rigidbody rigidBody;
+    public GameObject bee;
+
+ 
+    private enum State 
+    {
+        Roaming,
+        Chase,
+        Attack,
+    }
+
+    private State state;
+
+    void Awake()
+    {
+       state = State.Roaming; 
+       bee = GameObject.FindWithTag("Player");
+    }
 
     void Start()
     {
@@ -33,23 +49,47 @@ public class Wasp : MonoBehaviour
         // get random x and z values within specified range
         float x = Random.Range(min, max);
         float z = Random.Range(min, max);
-        // keep same height as origin
+        // keep same height
         float y = startingPosition.y;
-        //float x = startingPosition.x;
         return new Vector3(x,y,z);
     }
 
     void Update()
     {   
-        //move and rotate wasp towards roamingPosition
-        transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
-        Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (roamingPosition - transform.position), Time.deltaTime));
+        switch (state) {
+        default:
+        case State.Roaming:
+            //move and rotate wasp towards roamingPosition
+            transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
+            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (roamingPosition - transform.position), Time.deltaTime));
+            // if bee gets to roamingPosition have bee move to new roaming position
+            if (Vector3.Distance(transform.position, roamingPosition) == 0)
+            {   
+                roamingPosition = startingPosition;
+                startingPosition = transform.position;
+            }
+            ChaseBee();
+            break;
+        case State.Chase:
+            // chase bee
+            transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, bee.transform.position, Time.deltaTime * speed), 
+            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (roamingPosition - bee.transform.position), Time.deltaTime));
+            break;
+        case State.Attack:
+            Debug.Log("In Attack");
+            break;
+        }
+        
+    }
 
-        // if bee gets to roamingPosition have bee move to new roaming position
-        if (Vector3.Distance(transform.position, roamingPosition) == 0)
+    // method to check distance from Bee and change state to chase if within range
+    private void ChaseBee() 
+    {
+        Debug.Log("HELP In ChaseBee");
+        if (Vector3.Distance(transform.position, bee.transform.position) < 3f)
         {
-            roamingPosition = startingPosition;
-            startingPosition = transform.position;
+            Debug.Log("HELP should be changing state to Chase");
+            state = State.Chase;
         }
     }
 
@@ -58,7 +98,7 @@ public class Wasp : MonoBehaviour
         if (other.gameObject.tag == "Player") 
         {
             //beeHealth.TakeDamage(damage);
-            Debug.Log("In OnTriggerEnter gameObject tag matched");
+            //Debug.Log("In OnTriggerEnter gameObject tag matched");
 
         }
     }
