@@ -14,7 +14,7 @@ public class Wasp : MonoBehaviour
     private float max = 10;
     private int speed = 4;
     private float chaseRange = 7f;
-    private float damageRange = 1f;
+    private float damageRange = 2f;
     private Vector3 roamingPosition;
     private GameObject bee;
 
@@ -80,8 +80,8 @@ public class Wasp : MonoBehaviour
             ChangeState();
             break;
         case State.Attack:
-            //beeHealth.TakeDamage(damage);
-            //bee.beeHealth.TakeDamage(damage);
+            Debug.Log("Health: " + bee.GetComponent<BeeHealth>());
+            bee.GetComponent<BeeHealth>().TakeDamage(damage);
             ChangeState();
             break;
         }
@@ -91,11 +91,12 @@ public class Wasp : MonoBehaviour
     // method to check distance from Bee and change state to chase if within range
     private void ChangeState() 
     {
-        if ((Vector3.Distance(transform.position, bee.transform.position) < chaseRange) 
-        && (Vector3.Distance(transform.position, bee.transform.position) > damageRange))
+        float distance = Vector3.Distance(transform.position, bee.transform.position);
+
+        if (damageRange < distance && distance <= chaseRange)
         {
             state = State.Chase;
-        } else if (Vector3.Distance(transform.position, bee.transform.position) < damageRange) {
+        } else if (distance <= damageRange) {
             state = State.Attack;
         } else {
             state = State.Roaming;
@@ -104,6 +105,7 @@ public class Wasp : MonoBehaviour
 
     void LateUpdate()
     {
+        //prevent wasp from rotation on x and z axis
         transform.localEulerAngles = new Vector3(0,transform.localEulerAngles.y,0);
     }
 

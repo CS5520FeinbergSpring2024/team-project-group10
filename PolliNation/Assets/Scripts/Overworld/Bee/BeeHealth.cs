@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class BeeHealth : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int health;
+    private int maxHealth = 100;
+    [SerializeField] private int health;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +17,7 @@ public class BeeHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        // if bee health goes to 0 return to hive maybe take away some of a resource?
+        // if bee health goes to 0 return to hive
         if(health <= 0) {
             SceneManager.LoadScene("Hive");
         }
