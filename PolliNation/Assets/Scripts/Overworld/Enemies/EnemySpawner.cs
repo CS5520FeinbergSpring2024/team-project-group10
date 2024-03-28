@@ -7,16 +7,19 @@ using UnityEngine.UIElements;
 public class EnemySpawner : MonoBehaviour
 {
     private float prevSpawnTime;
-    private float spawnDelay = 1;
-    private int maxEnemies = 3;
+    //private float spawnDelay = 1;
+    [SerializeField] private int maxEnemies = 3;
     public GameObject enemy; 
     private int spawnCount = 0;
+    float spawnRange = 27;
+    float minSpawnDistance = 25;
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
 
     private bool SpawnCheck() 
     {
         // check if conditions to spawn another enemy
-        if ((Time.time > prevSpawnTime + spawnDelay) && (spawnCount < maxEnemies))
+        //if ((Time.time > prevSpawnTime + spawnDelay) && (spawnCount < maxEnemies))
+        if (spawnCount < maxEnemies)
         {
             return true;
         } else 
@@ -28,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SpawnCheck() == true)
+        if (SpawnCheck())
         {
             SpawnEnemy();
         }
@@ -48,20 +51,13 @@ public class EnemySpawner : MonoBehaviour
     private UnityEngine.Vector3 RandomEnemySpawnPosition()
     {
         // initialize loop variables
-        float x,z,x_sign,z_sign;
+        float x,z;
         UnityEngine.Vector3 generatedPosition;
-        float rangeLowerLimit = 20;
-        float rangeUpperLimit = 30;
-        float minSpawnDistance = 25;
         // generate new positions until conditions are met...
-        // (1) on axis is above minimum distacne and (2) position is not too close to other spawns
+        // (1) wasp is above minimum distance and (2) position is not too close to other wasp spawns
         do{
-            x = UnityEngine.Random.Range(rangeLowerLimit, rangeUpperLimit);
-            x_sign = UnityEngine.Random.value < 0.5f ? -1f : 1f;
-            x *= x_sign;
-            z = UnityEngine.Random.Range(rangeLowerLimit, rangeUpperLimit);
-            z_sign = UnityEngine.Random.value < 0.5f ? -1f : 1f;
-            z *= z_sign;
+            x = UnityEngine.Random.Range(-spawnRange, spawnRange);
+            z = UnityEngine.Random.Range(-spawnRange, spawnRange);
             generatedPosition = new UnityEngine.Vector3(x,0,z);
         }
         while ((UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) < minSpawnDistance) 
@@ -72,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
 
     // method to check that enemies are spawning atleast a minimum distance apart
     private Boolean CheckSpawningPosition(UnityEngine.Vector3 generatedPosition)
-    {   float minDistanceFromOthers = 20;
+    {   float minDistanceFromOthers = 10;
         if (enemyStartingPositions != null) {   
             foreach (UnityEngine.Vector3 position in enemyStartingPositions) {
                 float distance = UnityEngine.Vector3.Distance(generatedPosition, position);

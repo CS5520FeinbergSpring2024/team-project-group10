@@ -980,7 +980,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2696508634978044719}
-  - component: {fileID: 3403310415669641571}
   - component: {fileID: 4652176413434259384}
   - component: {fileID: 2582390168804029412}
   - component: {fileID: 6761154589585776380}
@@ -1008,29 +1007,6 @@ Transform:
   - {fileID: 4453186978750917865}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &3403310415669641571
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7599335676633998008}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0
-  m_Height: 0.1
-  m_Direction: 0
-  m_Center: {x: 0, y: 0, z: -0.25}
 --- !u!135 &4652176413434259384
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1046,12 +1022,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: -0.4}
+  m_Radius: 1.1
+  m_Center: {x: 0, y: 0, z: -0.3}
 --- !u!54 &2582390168804029412
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1060,7 +1036,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7599335676633998008}
   serializedVersion: 4
-  m_Mass: 0.5
+  m_Mass: 0.1
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1091,8 +1067,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c08cd337ae74c2ebb2e91b77418a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
-  speed: 4
+  damage: 5
+  speed: 3
 --- !u!1 &8389479385838684371
 GameObject:
   m_ObjectHideFlags: 0

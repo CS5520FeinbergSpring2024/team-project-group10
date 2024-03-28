@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Overworld_Hive
   - Enemy
+  - Boundary
   layers:
   - Default
   - TransparentFX
