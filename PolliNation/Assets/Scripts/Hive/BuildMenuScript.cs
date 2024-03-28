@@ -8,6 +8,7 @@ public class BuildMenuScript : MonoBehaviour
     private ILaunchMenuButton launchMenuButton;
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
+    private Tile currentTile;
     public Building selectedBuilding;
     public Resource selectedResource;
 
@@ -19,6 +20,7 @@ public class BuildMenuScript : MonoBehaviour
     {
         setClose();
         loadData();
+
 
         menuButtonObject = GameObject.Find("Build Button Object");
 
@@ -34,6 +36,7 @@ public class BuildMenuScript : MonoBehaviour
         {
             Debug.LogError("Menu button object reference not set.");
         }
+
     }
 
     // Update is called once per frame
@@ -131,6 +134,16 @@ public class BuildMenuScript : MonoBehaviour
             Debug.LogWarning("No building selected!");
         }
     }
+
+    public void OpenMenuForTile(Tile tile)
+    {   
+        // tile use for bind building by tile.SetCurrentBuilding() method
+        currentTile = tile;
+
+        // Show the build menu    
+        setOpen();
+    }
+
 
     public void exitMenu()
     {
