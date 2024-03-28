@@ -26,9 +26,9 @@ public class OverworldInventoryBar : MonoBehaviour
          }
 
          bee = GameObject.FindWithTag("Player");
-         if (bee != null)
+         if (bee.GetComponent<BeeHealth>() != null)
          {
-            Debug.Log("get health: " + bee.GetComponent<BeeHealth>().Health);
+            bee.GetComponent<BeeHealth>().OnHealthChanged += HealthUpdated;
             HealthAmountText.text = bee.GetComponent<BeeHealth>().Health.ToString();
          }
 
@@ -41,6 +41,13 @@ public class OverworldInventoryBar : MonoBehaviour
             NectarAmountText.text = UserInventory.GetResourceCount(ResourceType.Nectar).ToString();
             WaterAmountText.text = UserInventory.GetResourceCount(ResourceType.Water).ToString();
             BudsAmountText.text = UserInventory.GetResourceCount(ResourceType.Buds).ToString();
+        }
+    }
+
+        // called on inventory count update
+    private void HealthUpdated(object sender, System.EventArgs e) {
+         if (bee.GetComponent<BeeHealth>() != null) {
+            HealthAmountText.text = bee.GetComponent<BeeHealth>().Health.ToString();
         }
     }
 

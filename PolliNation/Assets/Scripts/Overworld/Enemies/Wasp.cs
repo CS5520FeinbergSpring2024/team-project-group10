@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,16 +8,16 @@ using UnityEngine.Diagnostics;
 public class Wasp : MonoBehaviour
 {
     [SerializeField] private int damage = 1;
+    [SerializeField] private int speed = 4;
     private Vector3 startingPosition;
 
-    // range for random vector generation 
-    private float min = 5;
-    private float max = 10;
-    private int speed = 4;
+    private float pathRange = 10f;
+
     private float chaseRange = 7f;
     private float damageRange = 2f;
     private float prevAttackTime = -1f;
     private float attackCooldown = 1f;
+    private float minDistance = 5;
     private Vector3 roamingPosition;
     private GameObject bee;
 
@@ -51,8 +52,14 @@ public class Wasp : MonoBehaviour
     private Vector3 RandomEnemyMovementVector()
     {   
         // get random x and z values within specified range
-        float x = Random.Range(min, max);
-        float z = Random.Range(min, max);
+        float x = UnityEngine.Random.Range(-pathRange, pathRange);
+        float z = UnityEngine.Random.Range(-pathRange, pathRange);
+        // generate new random numbers until one of the axis is greater than min distance
+        while (Math.Abs(x) < minDistance && Math.Abs(z) < minDistance) {
+            x = UnityEngine.Random.Range(-pathRange, pathRange);
+            z = UnityEngine.Random.Range(-pathRange, pathRange);
+        }
+
         // keep same height
         float y = startingPosition.y;
         return new Vector3(x,y,z);

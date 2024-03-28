@@ -6,17 +6,16 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     private float prevSpawnTime;
-    private float spawnDelay = 5;
-    private int maxEnemies = 3;
-    private float rangeLimit = 25;
+    private float spawnDelay = 1;
+    private int maxEnemies = 5;
+    private float rangeLimit = 30;
     public GameObject enemy; 
-    private float minDistance = 20;
+    private float minDistance = 25;
 
     private int spawnCount = 0;
 
     private bool SpawnCheck() 
     {
-
         // check if conditions to spawn another enemy
         if ((Time.time > prevSpawnTime + spawnDelay) && (spawnCount < maxEnemies))
         {
@@ -54,7 +53,7 @@ public class EnemySpawner : MonoBehaviour
         // keep same height as origin
         var y = 0;
         // generate new random numbers until one of the axis is greater than min distance
-        while (Math.Abs(x) < minDistance || Math.Abs(z) < minDistance) {
+        while (Math.Abs(x) < minDistance && Math.Abs(z) < minDistance) {
             x = UnityEngine.Random.Range(-rangeLimit, rangeLimit);
             z = UnityEngine.Random.Range(-rangeLimit, rangeLimit);
         }
