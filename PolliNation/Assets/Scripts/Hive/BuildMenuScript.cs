@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BuildMenuScript : MonoBehaviour
 {
@@ -9,7 +11,9 @@ public class BuildMenuScript : MonoBehaviour
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
     private Tile currentTile;
+    [SerializeField] private BuildingType selectedBuildingType;
     public Building selectedBuilding;
+    public GameObject buildingGatheringPrefab;
     public Resource selectedResource;
 
     // Reference to the future data class 
@@ -101,8 +105,55 @@ public class BuildMenuScript : MonoBehaviour
     public void SelectBuilding(Building building)
     {
         selectedBuilding = building;
-        Debug.Log("Selected building: " + building.name);
+        Debug.Log("Selected building: " + building.Type);
     }
+
+    // Wrapper function for building button choise
+    public void HandleBuildingClick(BaseEventData eventData)
+    {
+        PointerEventData pointerEventData = eventData as PointerEventData;
+        if (pointerEventData != null)
+        {
+            GameObject clickedImage = EventSystem.current.currentSelectedGameObject;
+            //string buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
+
+            if (clickedImage != null)
+            {
+                string buttonName = clickedImage.name;
+                Debug.Log("The button name is:" + buttonName);
+                switch (buttonName)
+                {
+                    case "Storage Building Image":
+                        selectedBuildingType = BuildingType.Storage;
+                        Debug.Log("Storage building selected");
+                        break;
+                    case "Gathering Building Image":
+                        selectedBuildingType = BuildingType.Gathering;
+                        Debug.Log("Gathering building selected");
+                        break;
+                    case "Conversion Building Image":
+                        selectedBuildingType = BuildingType.Production;
+                        Debug.Log("Production building selected");
+                        break;
+                    default:
+                        Debug.LogError("That is not a valid button");
+                        break;
+                }
+                //selectedBuildingType = BuildingType.Gathering;
+                //Debug.Log("Gathering building selected");
+            }
+            else
+            {
+                Debug.LogWarning("No game object image was selected");
+            }
+
+        }
+        else
+        {
+            Debug.LogWarning("No PointerEventData received");
+        }
+
+    } 
 
     // Function to handle selecting a resource
     public void SelectResource(Resource resource)

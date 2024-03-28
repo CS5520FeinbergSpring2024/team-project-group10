@@ -661,7 +661,19 @@ MonoBehaviour:
   - eventID: 4
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 6372979348001810196}
+          m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
+          m_MethodName: HandleBuildingClick
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &623935782740445647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2282,7 +2294,19 @@ MonoBehaviour:
   - eventID: 4
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 6372979348001810196}
+          m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
+          m_MethodName: HandleBuildingClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2690029408000330754
 GameObject:
   m_ObjectHideFlags: 0
@@ -6526,7 +6550,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7207815271342563395}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6372979348001810196}
+        m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
+        m_MethodName: HandleBuildingClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6981719372106609913
 GameObject:
   m_ObjectHideFlags: 0
@@ -7458,9 +7494,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c533704e05783446899ad3018300f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedBuildingType: 0
   selectedBuilding: {fileID: 0}
+  buildingGatheringPrefab: {fileID: 1173837564942887432, guid: 23526c0a47a1f1a4194c459b8aacfd89, type: 3}
   selectedResource: {fileID: 0}
-  menuState: {fileID: 11400000, guid: 7c3342ddfdff0cc418eb54902b429db4, type: 2}
 --- !u!1 &7942903629677750598
 GameObject:
   m_ObjectHideFlags: 0
@@ -8346,7 +8383,19 @@ MonoBehaviour:
   - eventID: 4
     callback:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 6372979348001810196}
+          m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
+          m_MethodName: HandleBuildingClick
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8614500802778969253
 GameObject:
   m_ObjectHideFlags: 0
