@@ -105,3 +105,6 @@ PolliNation/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 # Temporary auto-generated Android Assets
 PolliNation/[Aa]ssets/[Ss]treamingAssets/aa.meta
 PolliNation/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# ProBuilder
+PolliNation/ProjectSettings/Packages/com.unity.probuilder/Settings.json
