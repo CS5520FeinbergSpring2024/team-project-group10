@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,7 +24,6 @@ public class BeeHealth : MonoBehaviour
         OnHealthChanged?.Invoke(this, EventArgs.Empty); 
     }
 
-    // 
     public int Health
     {
         get { return health;}

@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 3;
     public GameObject enemy; 
     private int spawnCount = 0;
-    //float minSpawnDistance = 25;
+
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
     private float xAxisLimit = 0;
     private float zAxisLimit = 0;

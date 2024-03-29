@@ -6,8 +6,16 @@ using UnityEngine;
 using UnityEngine.Diagnostics;
 using UnityEngine.UIElements;
 
-public class Wasp : MonoBehaviour
+public class Wasp : Enemy
 {
+    protected override void Awake()
+    {
+        base.Awake();
+        SetEnemyStats(5, 5, 10, 2.5f, 1, 5);
+    }
+
+
+    /**
     [SerializeField] private int damage = 5;
     [SerializeField] private int speed = 5;
     private float chaseRange = 10f;
@@ -133,6 +141,7 @@ public class Wasp : MonoBehaviour
          
         }
     }
-    
+    **/
+
 
 }
