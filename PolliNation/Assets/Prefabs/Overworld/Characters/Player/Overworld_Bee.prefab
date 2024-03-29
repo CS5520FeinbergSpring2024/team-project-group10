@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8936391253444639770}
   m_Layer: 0
   m_Name: Stinger
-  m_TagString: Untagged
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 945625065093261591}
   m_Layer: 0
   m_Name: BeeModel
-  m_TagString: Untagged
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 9173968612549378171}
   m_Layer: 0
   m_Name: Wings
-  m_TagString: Untagged
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 3369541671394792970}
   m_Layer: 0
   m_Name: RightAntenna
-  m_TagString: Untagged
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 8380642102453411748}
   m_Layer: 0
   m_Name: Overworld_Bee
-  m_TagString: Player
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -439,7 +439,7 @@ GameObject:
   - component: {fileID: 909110735557581474}
   m_Layer: 0
   m_Name: LeftAntenna
-  m_TagString: Untagged
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -522,7 +522,7 @@ GameObject:
   - component: {fileID: 5314504096475859756}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
