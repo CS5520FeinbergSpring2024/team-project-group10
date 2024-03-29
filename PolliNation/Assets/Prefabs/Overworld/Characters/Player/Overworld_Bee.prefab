@@ -298,9 +298,10 @@ GameObject:
   - component: {fileID: 4477476435172545005}
   - component: {fileID: 6303534105448895238}
   - component: {fileID: 611612440411794933}
+  - component: {fileID: 8380642102453411748}
   m_Layer: 0
   m_Name: Overworld_Bee
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -390,7 +391,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 4
   m_CollisionDetection: 0
 --- !u!135 &611612440411794933
 SphereCollider:
@@ -413,6 +414,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.4547352
   m_Center: {x: 0, y: 0, z: -0.1}
+--- !u!114 &8380642102453411748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4502921324777491362}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3566c7c1c0384cd9818b8e43b2ceb26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5431751622735599944
 GameObject:
   m_ObjectHideFlags: 0

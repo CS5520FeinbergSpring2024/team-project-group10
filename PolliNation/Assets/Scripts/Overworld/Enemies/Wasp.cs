@@ -9,9 +9,9 @@ using UnityEngine.UIElements;
 public class Wasp : MonoBehaviour
 {
     [SerializeField] private int damage = 5;
-    [SerializeField] private int speed = 3;
-    private float chaseRange = 7f;
-    private float damageRange = 2f;
+    [SerializeField] private int speed = 5;
+    private float chaseRange = 10f;
+    private float damageRange = 2.5f;
     private float prevAttackTime = -1f;
     private float attackCooldown = 1f;
     private float pathRange = 5f;
@@ -127,7 +127,7 @@ public class Wasp : MonoBehaviour
     
     //if wasp hits the boundary walls
     void OnTriggerEnter(Collider other) {
-        if (other.tag.Equals("Boundary")) {
+        if (other.tag.Equals("Meadow_Boundary")) {
             //Debug.Log("wall position: " + other.transform.position);
             Debug.Log("Wasp position: " + transform.position);
          
