@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: -8864176723413445206}
   m_Layer: 0
   m_Name: Overworld_PollenProvider
-  m_TagString: PollenProvider
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,15 +147,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 22191988341224268, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 462619859931358882, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 682063118006684514, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 846231617597278455, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -171,27 +171,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1386257522875019435, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1520376102514778194, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1681082708221936633, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 1748361579329603053, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2934518251308002551, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3077450691417752830, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -235,31 +235,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3782495390842611341, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4719778539342775221, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4979521063233367829, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4994391064677281454, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5064022306982338288, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6240761751898595689, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6321273896275110147, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6338544495955059037, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -271,15 +271,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6706202584058725651, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6835216547831489979, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7361371526565614051, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7940502277987834181, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
@@ -287,15 +287,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8005677629917863121, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8376700075414020880, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 8940085478126635364, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
-      value: PollenProvider
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
