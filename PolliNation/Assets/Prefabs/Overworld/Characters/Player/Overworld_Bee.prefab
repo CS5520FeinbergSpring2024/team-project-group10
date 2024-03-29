@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 5980664414647806511}
   m_Layer: 0
   m_Name: BeeModel
-  m_TagString: Untagged
+  m_TagString: Bee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -137,7 +137,7 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -168,7 +168,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -361,7 +361,6 @@ GameObject:
   - component: {fileID: 8510113387431811963}
   - component: {fileID: 4478791727174523617}
   - component: {fileID: 4477476435172545005}
-  - component: {fileID: 8881126789738815372}
   m_Layer: 0
   m_Name: Overworld_Bee
   m_TagString: Bee
@@ -429,33 +428,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveAction: {fileID: -813024496332110153, guid: eafbd945a6443434d8c5694eda2d8cb6, type: 3}
   speed: 5
---- !u!54 &8881126789738815372
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4502921324777491362}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &5431751622735599944
 GameObject:
   m_ObjectHideFlags: 0
@@ -550,7 +522,6 @@ GameObject:
   - component: {fileID: 819391783491144769}
   - component: {fileID: 3146437095794393728}
   - component: {fileID: 5314504096475859756}
-  - component: {fileID: 216563213024516666}
   m_Layer: 0
   m_Name: Body
   m_TagString: Bee
@@ -623,26 +594,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &216563213024516666
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7751630258701478107}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
