@@ -14,6 +14,7 @@ public class Wasp : MonoBehaviour
     private float damageRange = 2f;
     private float prevAttackTime = -1f;
     private float attackCooldown = 1f;
+    private float pathRange = 5f;
     private Vector3 startingPosition;
     private Vector3 roamingPosition;
     private GameObject bee;
@@ -50,7 +51,6 @@ public class Wasp : MonoBehaviour
     {   
         // initialize loop variables
         float x,z;
-        float pathRange = 3;
         float minAxisTravel = 1;
 
         do 

@@ -11,17 +11,18 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 3;
     public GameObject enemy; 
     private int spawnCount = 0;
-    float minSpawnDistance = 25;
+    //float minSpawnDistance = 25;
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
     private float xAxisLimit = 0;
     private float zAxisLimit = 0;
-    private float boundaryCushion = 3;
+    private float apothem;
+    private float boundaryCushion;
 
     void Awake()
     {
         // get locations of all boundarys to map out max spawning distances on both axis
         GameObject[] boundaries = GameObject.FindGameObjectsWithTag("Meadow_Boundary");
-        FindMapBoundaries(boundaries);
+        FindHexBoundaries(boundaries);
     }
 
     void Start()
@@ -67,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
             z = UnityEngine.Random.Range(-zAxisLimit + boundaryCushion, zAxisLimit- boundaryCushion);
             generatedPosition = new UnityEngine.Vector3(x,0,z);
         }
-        while ((UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) < minSpawnDistance) 
+        while ((UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) > (apothem - boundaryCushion)) 
         || !CheckSpawningPosition(generatedPosition));
         
         return generatedPosition;
@@ -88,8 +89,8 @@ public class EnemySpawner : MonoBehaviour
         return true;
     }
 
-    // method to get bounds from boundary gameobjects
-    private void FindMapBoundaries(GameObject[] boundaries) {
+    // method to get bounds from boundary gameobjects surrounding hexagon shaped map
+    private void FindHexBoundaries(GameObject[] boundaries) {
         foreach (GameObject boundary in boundaries) {
                 UnityEngine.Vector3 wallPos = boundary.transform.position;
                 float x_size = boundary.GetComponent<Collider>().bounds.size.x;
@@ -104,5 +105,9 @@ public class EnemySpawner : MonoBehaviour
                     zAxisLimit = (float)(Math.Abs(wallPos.z) - 0.5 * z_size);
                 }
             }  
+            apothem = Mathf.Sqrt(3/2)* xAxisLimit;
+            Debug.Log("apothem " + apothem);
+
+            boundaryCushion = xAxisLimit * .1f;
     }
 }
