@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BuildMenuScript : MonoBehaviour
 {
     private GameObject menuButtonObject;
+    private GameObject buildingImageObject;
     private ILaunchMenuButton launchMenuButton;
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
@@ -14,6 +15,7 @@ public class BuildMenuScript : MonoBehaviour
     private BuildingType selectedBuildingType;
     public Building selectedBuilding;
     public GameObject buildingGatheringPrefab;
+    public GameObject buildingStoragePrefab;
     public Resource selectedResource;
 
     // Reference to the future data class 
@@ -110,10 +112,22 @@ public class BuildMenuScript : MonoBehaviour
 
     public void GatheringClick()
     {
+        //if (buildingImageObject = GameObject.Find("Gathering Building Image")){
+        //    selectedBuildingType = BuildingType.Gathering;
+        //    //selectedBuilding.Type = selectedBuildingType;
+        //    Debug.Log("Gathering building selected");
+        //}
         selectedBuildingType = BuildingType.Gathering;
         //selectedBuilding.Type = selectedBuildingType;
         Debug.Log("Gathering building selected");
     }
+
+    public void StorageClick()
+    {
+        selectedBuildingType = BuildingType.Storage;
+        Debug.Log("Storage building selected");
+    }
+
 
     // Wrapper function for building button choise
     public void HandleBuildingClick(BaseEventData eventData)
@@ -146,8 +160,7 @@ public class BuildMenuScript : MonoBehaviour
                         Debug.LogError("That is not a valid button");
                         break;
                 }
-                //selectedBuildingType = BuildingType.Gathering;
-                //Debug.Log("Gathering building selected");
+                
             }
             else
             {
@@ -171,7 +184,7 @@ public class BuildMenuScript : MonoBehaviour
 
     public void Build()
     {
-        if (selectedBuilding != null)
+        if (selectedBuildingType == BuildingType.Gathering)
         {
             // Check if the player can afford to build the selected building
             // Commenting for now for future implementation of methods in Building class
@@ -186,9 +199,15 @@ public class BuildMenuScript : MonoBehaviour
             //{
             //    Debug.LogWarning("Cannot afford to build: " + selectedBuilding.name);
             //}
+
             Vector3 position = new Vector3(0, 0, 0);
             Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
-            Debug.Log("Building instantiated: " + selectedBuilding.Type);
+            Debug.Log("Building instantiated: " + selectedBuildingType);
+        }else if(selectedBuildingType == BuildingType.Storage)
+        {
+            Vector3 position = new Vector3(0, 0, 0);
+            Instantiate(buildingStoragePrefab, position, Quaternion.identity);
+            Debug.Log("Building instantiated: " + selectedBuildingType);
         }
         else
         {

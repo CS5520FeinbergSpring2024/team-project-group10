@@ -664,8 +664,8 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6372979348001810196}
           m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
-          m_MethodName: HandleBuildingClick
-          m_Mode: 0
+          m_MethodName: StorageClick
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7508,6 +7508,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedBuilding: {fileID: 0}
   buildingGatheringPrefab: {fileID: 1173837564942887432, guid: 23526c0a47a1f1a4194c459b8aacfd89, type: 3}
+  buildingStoragePrefab: {fileID: 3067881542520758940, guid: 0199bb0bac626e643b9b1b3fb66727df, type: 3}
   selectedResource: {fileID: 0}
 --- !u!1 &7942903629677750598
 GameObject:
