@@ -3,11 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Overworld_Hive
-  - Enemy
-  - Boundary
-  - Meadow_Boundary
+  tags: []
   layers:
   - Default
   - TransparentFX
