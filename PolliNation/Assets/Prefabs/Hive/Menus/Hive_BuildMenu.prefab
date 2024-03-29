@@ -5779,7 +5779,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &1221194098229122862
 MonoBehaviour:
@@ -7460,7 +7460,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedBuilding: {fileID: 0}
   selectedResource: {fileID: 0}
-  menuState: {fileID: 11400000, guid: 7c3342ddfdff0cc418eb54902b429db4, type: 2}
 --- !u!1 &7942903629677750598
 GameObject:
   m_ObjectHideFlags: 0
