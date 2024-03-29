@@ -223,7 +223,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7723221488980062324}
-  - component: {fileID: 807370929903718788}
   m_Layer: 0
   m_Name: Inventory Menu Screen
   m_TagString: Untagged
@@ -245,6 +244,7 @@ RectTransform:
   m_Children:
   - {fileID: 5646166363067849751}
   - {fileID: 8561331397107776700}
+  - {fileID: 6438471177573174574}
   m_Father: {fileID: 2273813335242458936}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -252,26 +252,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &807370929903718788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437108480531624239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44f6d1de44c334018acc00bb3d236b30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
-  HoneyAmountText: {fileID: 9148507712021430624}
-  PropolisAmountText: {fileID: 7228149351721215531}
-  RoyalJellyAmountText: {fileID: 4622553095068541279}
-  PollenAmountText: {fileID: 1346233775502014487}
-  NectarAmountText: {fileID: 8950318762017173658}
-  WaterAmountText: {fileID: 6063941825784188222}
-  BudsAmountText: {fileID: 8574279006237317165}
 --- !u!1 &466207482768697950
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,13 +278,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466207482768697950}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8575961948384217923}
-  m_Father: {fileID: 2273813335242458936}
+  m_Father: {fileID: 7723221488980062324}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -393,10 +373,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 807370929903718788}
-        m_TargetAssemblyTypeName: InventoryMenuScript, Assembly-CSharp
-        m_MethodName: ExitMenu
-        m_Mode: 1
+      - m_Target: {fileID: 437108480531624239}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -414,6 +394,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 401577731480127909}
+  - component: {fileID: 9191608049121227601}
   m_Layer: 0
   m_Name: InventoryMenu
   m_TagString: Untagged
@@ -437,6 +418,26 @@ Transform:
   - {fileID: 2273813335242458936}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9191608049121227601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781157660556699605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f6d1de44c334018acc00bb3d236b30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
+  HoneyAmountText: {fileID: 9148507712021430624}
+  PropolisAmountText: {fileID: 7228149351721215531}
+  RoyalJellyAmountText: {fileID: 4622553095068541279}
+  PollenAmountText: {fileID: 1346233775502014487}
+  NectarAmountText: {fileID: 8950318762017173658}
+  WaterAmountText: {fileID: 6063941825784188222}
+  BudsAmountText: {fileID: 8574279006237317165}
 --- !u!1 &2157017287422326933
 GameObject:
   m_ObjectHideFlags: 0
@@ -469,7 +470,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7723221488980062324}
-  - {fileID: 6438471177573174574}
   m_Father: {fileID: 401577731480127909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -498,7 +498,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &8288518657484896018
 MonoBehaviour:
@@ -1659,10 +1659,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2716462616634848219}
     m_Modifications:
+    - target: {fileID: 52510342544835181, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123528373599986297, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362531057442943453, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 605945502835572008, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 907898481643174025, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612250775055271910, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3135370746879374131, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 684fb2f14297b488380d97af5b67dff6, type: 3}
+    - target: {fileID: 4069402456233246121, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4163722265366847199, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_text
       value: Pollen
@@ -1670,6 +1698,10 @@ PrefabInstance:
     - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Pollen Amount Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269096658614635897, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Pivot.x
@@ -1751,9 +1783,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5850413120619330176, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001699262607685285, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211396929303985323, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Pollen Section
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1784,9 +1832,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2716462616634848219}
     m_Modifications:
+    - target: {fileID: 52510342544835181, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123528373599986297, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362531057442943453, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 605945502835572008, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 907898481643174025, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612250775055271910, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4069402456233246121, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Nectar Amount Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269096658614635897, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Pivot.x
@@ -1868,9 +1948,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5850413120619330176, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001699262607685285, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211396929303985323, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Nectar Section
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1901,10 +1997,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3858940157283593662}
     m_Modifications:
+    - target: {fileID: 52510342544835181, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123528373599986297, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362531057442943453, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 605945502835572008, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 907898481643174025, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612250775055271910, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3135370746879374131, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 6b963ab009d834c68bb118c324c7a9cd, type: 3}
+    - target: {fileID: 4069402456233246121, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4163722265366847199, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_text
       value: Honey
@@ -1912,6 +2036,10 @@ PrefabInstance:
     - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Honey Amount Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269096658614635897, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Pivot.x
@@ -1993,9 +2121,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5850413120619330176, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001699262607685285, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211396929303985323, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Honey Section
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2026,6 +2170,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2716462616634848219}
     m_Modifications:
+    - target: {fileID: 52510342544835181, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123528373599986297, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362531057442943453, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 532038008425423226, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_SizeDelta.x
       value: 145
@@ -2034,10 +2190,26 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 605945502835572008, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 907898481643174025, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612250775055271910, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3135370746879374131, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 1fab7b4dd6a2f4f3da4de4323e74f829, type: 3}
+    - target: {fileID: 4069402456233246121, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4163722265366847199, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_text
       value: Buds
@@ -2045,6 +2217,10 @@ PrefabInstance:
     - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Buds Amount Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269096658614635897, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Pivot.x
@@ -2126,9 +2302,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5850413120619330176, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001699262607685285, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211396929303985323, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Buds Section
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2159,10 +2351,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3858940157283593662}
     m_Modifications:
+    - target: {fileID: 52510342544835181, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123528373599986297, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362531057442943453, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 605945502835572008, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 907898481643174025, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612250775055271910, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3135370746879374131, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 886c06dbe2dc44dd18d58e369040f437, type: 3}
+    - target: {fileID: 4069402456233246121, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4163722265366847199, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_text
       value: Propolis
@@ -2170,6 +2390,10 @@ PrefabInstance:
     - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Propolis Amount Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269096658614635897, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Pivot.x
@@ -2251,9 +2475,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5850413120619330176, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001699262607685285, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211396929303985323, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Propolis Section
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2284,10 +2524,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2716462616634848219}
     m_Modifications:
+    - target: {fileID: 52510342544835181, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123528373599986297, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362531057442943453, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 605945502835572008, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 907898481643174025, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612250775055271910, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3135370746879374131, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 9132bb3cad778430a8e3c28bc53dbed4, type: 3}
+    - target: {fileID: 4069402456233246121, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4163722265366847199, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_text
       value: Water
@@ -2295,6 +2563,10 @@ PrefabInstance:
     - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Water Amount Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269096658614635897, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Pivot.x
@@ -2376,9 +2648,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5850413120619330176, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001699262607685285, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211396929303985323, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Water Section
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2409,6 +2697,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3858940157283593662}
     m_Modifications:
+    - target: {fileID: 52510342544835181, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 123528373599986297, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 362531057442943453, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 532038008425423226, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_SizeDelta.x
       value: 129.2472
@@ -2457,10 +2757,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -15
       objectReference: {fileID: 0}
+    - target: {fileID: 605945502835572008, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 907898481643174025, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2612250775055271910, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3135370746879374131, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 53012c67a3c884cbaab2c0ebd407bb63, type: 3}
+    - target: {fileID: 4069402456233246121, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4163722265366847199, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_text
       value: Royal Jelly
@@ -2468,6 +2784,10 @@ PrefabInstance:
     - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Royal Jelly Amount Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4598880261000583616, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5269096658614635897, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Pivot.x
@@ -2549,9 +2869,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5850413120619330176, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8001699262607685285, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211396929303985323, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
       propertyPath: m_Name
       value: Royal Jelly Section
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880963929869663949, guid: 24ccd32adb9ae4e0198a3d88de449824, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

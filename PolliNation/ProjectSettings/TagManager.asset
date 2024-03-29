@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bee
   - PollenProvider
+  - Overworld_Hive
   layers:
   - Default
   - TransparentFX

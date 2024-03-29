@@ -4,17 +4,39 @@ using UnityEngine;
 
 public class BuildMenuScript : MonoBehaviour
 {
+    private GameObject menuButtonObject;
+    private ILaunchMenuButton launchMenuButton;
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
+    private Tile currentTile;
     public Building selectedBuilding;
     public Resource selectedResource;
+
     // Reference to the future data class 
     //public DataClass buildingData; 
 
     // Start is called before the first frame update
     void Start()
     {
+        setClose();
         loadData();
+
+
+        menuButtonObject = GameObject.Find("Build Button Object");
+
+        if (menuButtonObject != null)
+        {
+            launchMenuButton = menuButtonObject.GetComponent<ILaunchMenuButton>();
+            if (launchMenuButton == null)
+            {
+                Debug.LogError("Button does not implement ILaunchMenuButton interface.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Menu button object reference not set.");
+        }
+
     }
 
     // Update is called once per frame
@@ -22,6 +44,21 @@ public class BuildMenuScript : MonoBehaviour
     {
 
     }
+
+    // potentially split to open and close separately
+
+    public void setOpen()
+    {
+        Debug.Log("Menu set to open");
+        gameObject.SetActive(true);
+        gameObject.transform.parent.gameObject.SetActive(true);
+    }
+
+    public void setClose()
+    {
+        gameObject.SetActive(false);
+    }
+
 
     public void loadData()
     {
@@ -98,6 +135,16 @@ public class BuildMenuScript : MonoBehaviour
         }
     }
 
+    public void OpenMenuForTile(Tile tile)
+    {   
+        // tile use for bind building by tile.SetCurrentBuilding() method
+        currentTile = tile;
+
+        // Show the build menu    
+        setOpen();
+    }
+
+
     public void exitMenu()
     {
         Canvas canvas = GetComponentInParent<Canvas>();
@@ -105,5 +152,12 @@ public class BuildMenuScript : MonoBehaviour
         Debug.Log("Exit button was clicked");
 
         saveChanges();
+
+
+        if (launchMenuButton != null)
+        {
+            launchMenuButton.ReappearButton();
+        }
     }
+
 }
