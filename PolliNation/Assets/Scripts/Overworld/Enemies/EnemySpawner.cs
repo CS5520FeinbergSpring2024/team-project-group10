@@ -11,11 +11,11 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private int maxEnemies = 3;
     public GameObject enemy; 
     private int spawnCount = 0;
-    float spawnRange = 27;
     float minSpawnDistance = 25;
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
-    private double xAxisLimit = 0;
-    private double zAxisLimit = 0;
+    private float xAxisLimit = 0;
+    private float zAxisLimit = 0;
+    private float boundaryCushion = 3;
 
     void Awake()
     {
@@ -63,8 +63,8 @@ public class EnemySpawner : MonoBehaviour
         // generate new positions until conditions are met...
         // (1) wasp is above minimum distance and (2) position is not too close to other wasp spawns
         do{
-            x = UnityEngine.Random.Range(-spawnRange, spawnRange);
-            z = UnityEngine.Random.Range(-spawnRange, spawnRange);
+            x = UnityEngine.Random.Range(-xAxisLimit + boundaryCushion, xAxisLimit - boundaryCushion);
+            z = UnityEngine.Random.Range(-zAxisLimit + boundaryCushion, zAxisLimit- boundaryCushion);
             generatedPosition = new UnityEngine.Vector3(x,0,z);
         }
         while ((UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) < minSpawnDistance) 
@@ -88,22 +88,21 @@ public class EnemySpawner : MonoBehaviour
         return true;
     }
 
+    // method to get bounds from boundary gameobjects
     private void FindMapBoundaries(GameObject[] boundaries) {
         foreach (GameObject boundary in boundaries) {
                 UnityEngine.Vector3 wallPos = boundary.transform.position;
-                double x_size = boundary.GetComponent<Collider>().bounds.size.x;
-                double z_size = boundary.GetComponent<Collider>().bounds.size.z;
+                float x_size = boundary.GetComponent<Collider>().bounds.size.x;
+                float z_size = boundary.GetComponent<Collider>().bounds.size.z;
         
                 if (Math.Abs(wallPos.x) - 0.5 * x_size > xAxisLimit)
                 {   
-                    xAxisLimit = Math.Abs(wallPos.x) - 0.5 * x_size;
+                    xAxisLimit = (float) (Math.Abs(wallPos.x) - 0.5 * x_size);
                 }
                 if (Math.Abs(wallPos.z) - 0.5 * z_size > zAxisLimit)
                 {   
-                    zAxisLimit = Math.Abs(wallPos.z) - 0.5 * z_size;
+                    zAxisLimit = (float)(Math.Abs(wallPos.z) - 0.5 * z_size);
                 }
             }  
-            Debug.Log("x limit: " + xAxisLimit);
-            Debug.Log("zAxisLimit" + zAxisLimit);
     }
 }
