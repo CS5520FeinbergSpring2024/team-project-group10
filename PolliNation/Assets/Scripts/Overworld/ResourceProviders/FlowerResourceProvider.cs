@@ -275,7 +275,6 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
             _partialUnitsForCollection += CollectionAmountPerSecond * Time.deltaTime;
             try
             {
-                Debug.Log(FormatLogMessage(funcTag, "Collecting."));
                 if (_partialUnitsForCollection > 1)
                 {
                     UserInventory.UpdateInventory(ResourceType,
@@ -292,7 +291,6 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
         }
         else
         {
-            Debug.Log(FormatLogMessage(funcTag, "Not collectable."));
             _currentlyCollecting = false;
         }
     }
@@ -303,10 +301,8 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
     /// </summary>
     public void Regenerate()
     {
-        const string funcTag = "Regenerate()";
         if (IsRegenerable() && _amountRemaining < TotalCollectableAmount)
         {
-            Debug.Log(FormatLogMessage(funcTag, "Regenerating."));
             float iterAmount = RegeneratedAmountPerSecond * Time.deltaTime;
             _amountRemaining = Math.Min(_amountRemaining + iterAmount,
                                         TotalCollectableAmount);
@@ -314,7 +310,6 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
         }
         else
         {
-            Debug.Log(FormatLogMessage(funcTag, "Not regenerable."));
             _currentlyRegenerating = false;
         }
     }
