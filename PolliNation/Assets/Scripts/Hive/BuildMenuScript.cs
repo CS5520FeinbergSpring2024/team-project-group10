@@ -11,7 +11,7 @@ public class BuildMenuScript : MonoBehaviour
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
     private Tile currentTile;
-    [SerializeField] private BuildingType selectedBuildingType;
+    private BuildingType selectedBuildingType;
     public Building selectedBuilding;
     public GameObject buildingGatheringPrefab;
     public Resource selectedResource;
@@ -108,6 +108,13 @@ public class BuildMenuScript : MonoBehaviour
         Debug.Log("Selected building: " + building.Type);
     }
 
+    public void GatheringClick()
+    {
+        selectedBuildingType = BuildingType.Gathering;
+        //selectedBuilding.Type = selectedBuildingType;
+        Debug.Log("Gathering building selected");
+    }
+
     // Wrapper function for building button choise
     public void HandleBuildingClick(BaseEventData eventData)
     {
@@ -179,6 +186,9 @@ public class BuildMenuScript : MonoBehaviour
             //{
             //    Debug.LogWarning("Cannot afford to build: " + selectedBuilding.name);
             //}
+            Vector3 position = new Vector3(0, 0, 0);
+            Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
+            Debug.Log("Building instantiated: " + selectedBuilding.Type);
         }
         else
         {

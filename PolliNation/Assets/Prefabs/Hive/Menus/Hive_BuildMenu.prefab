@@ -4128,7 +4128,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4447773347611542750}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6372979348001810196}
+        m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
+        m_MethodName: Build
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4166095570057281160
 GameObject:
   m_ObjectHideFlags: 0
@@ -7494,7 +7506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c533704e05783446899ad3018300f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedBuildingType: 0
   selectedBuilding: {fileID: 0}
   buildingGatheringPrefab: {fileID: 1173837564942887432, guid: 23526c0a47a1f1a4194c459b8aacfd89, type: 3}
   selectedResource: {fileID: 0}
@@ -8386,7 +8397,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 6372979348001810196}
           m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
-          m_MethodName: HandleBuildingClick
+          m_MethodName: GatheringClick
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

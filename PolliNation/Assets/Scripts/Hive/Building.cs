@@ -32,30 +32,25 @@ public class Building : MonoBehaviour
     {
         if (type == BuildingType.Gathering)
         {
-            if(myInventory.GetResourceCount(global::ResourceType.Nectar) >= 5)
-            {
-                return true;
-            }
+            return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 5;
+            
         }
-
-        if(type == BuildingType.Storage)
+        else if(type == BuildingType.Storage)
         {
-            if((myInventory.GetResourceCount(global::ResourceType.Nectar) >= 10) &&
-                (myInventory.GetResourceCount(global::ResourceType.Pollen) >= 5))
-            {
-                return true;
-            }
-        }
-
-        if(type == BuildingType.Production)
+            return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 10 &&
+                myInventory.GetResourceCount(global::ResourceType.Pollen) >= 5;       
+        
+        }else if(type == BuildingType.Production)
         {
-            if((myInventory.GetResourceCount(global::ResourceType.Nectar) >= 20) &&
-                    (myInventory.GetResourceCount(global::ResourceType.Pollen) >= 10))
-            {
-                return true;
-            }
+            return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 20 &&
+                    myInventory.GetResourceCount(global::ResourceType.Pollen) >= 10;
         }
-        return true;
+        else
+        {
+            Debug.Log("Building type not valid");
+            return false;         
+        }
+        
     }
 
 
