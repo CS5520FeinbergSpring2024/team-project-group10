@@ -1,5 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1937632543923708035
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5228172620729664505}
+  - component: {fileID: 8012013187016662486}
+  - component: {fileID: 1819709212617219189}
+  m_Layer: 0
+  m_Name: CollisionVolume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5228172620729664505
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937632543923708035}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.03828273, y: -0.06793409, z: 0.05948718, w: 0.9951787}
+  m_LocalPosition: {x: 0.15, y: 0.06, z: 0.26}
+  m_LocalScale: {x: 4.535625, y: 1.4388082, z: 4.771497}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5373865921108297471}
+  m_LocalEulerAnglesHint: {x: 4.835, y: -7.535, z: 6.523}
+--- !u!33 &8012013187016662486
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937632543923708035}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!135 &1819709212617219189
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937632543923708035}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8090212740446701295
 GameObject:
   m_ObjectHideFlags: 0
@@ -31,6 +93,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5228172620729664505}
   - {fileID: 2581309486570343207}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -136,11 +199,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.18
       objectReference: {fileID: 0}
     - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.29000002
       objectReference: {fileID: 0}
     - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_LocalRotation.w
