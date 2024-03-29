@@ -94,6 +94,14 @@ PrefabInstance:
       propertyPath: m_TagString
       value: PollenProvider
       objectReference: {fileID: 0}
+    - target: {fileID: 846231617597278455, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.76
+      objectReference: {fileID: 0}
+    - target: {fileID: 846231617597278455, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.19
+      objectReference: {fileID: 0}
     - target: {fileID: 1386257522875019435, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_Name
       value: Daisy
@@ -189,6 +197,14 @@ PrefabInstance:
     - target: {fileID: 6321273896275110147, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
       value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338544495955059037, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.23999977
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338544495955059037, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.3000002
       objectReference: {fileID: 0}
     - target: {fileID: 6706202584058725651, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
       propertyPath: m_TagString
