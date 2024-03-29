@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5373865921108297471}
+  - component: {fileID: 2483917271076932913}
+  - component: {fileID: -8864176723413445206}
   m_Layer: 0
   m_Name: Overworld_PollenProvider
   m_TagString: PollenProvider
@@ -28,6 +30,201 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2581309486570343207}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &2483917271076932913
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8090212740446701295}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &-8864176723413445206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8090212740446701295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6549ae263117a425a9f7caf1477f001f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
+--- !u!1001 &998742113492119407
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5373865921108297471}
+    m_Modifications:
+    - target: {fileID: 22191988341224268, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 462619859931358882, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 682063118006684514, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1386257522875019435, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_Name
+      value: Daisy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1386257522875019435, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1520376102514778194, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1681082708221936633, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 1748361579329603053, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 2934518251308002551, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3077450691417752830, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3782495390842611341, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4719778539342775221, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4979521063233367829, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 4994391064677281454, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 5064022306982338288, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6240761751898595689, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6321273896275110147, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6706202584058725651, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 6835216547831489979, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7361371526565614051, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940502277987834181, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8005677629917863121, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 8376700075414020880, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    - target: {fileID: 8940085478126635364, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+      propertyPath: m_TagString
+      value: PollenProvider
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+--- !u!4 &2581309486570343207 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3318759180398273608, guid: d3c5fa2e849c543ab8538f32894f04dc, type: 3}
+  m_PrefabInstance: {fileID: 998742113492119407}
+  m_PrefabAsset: {fileID: 0}
