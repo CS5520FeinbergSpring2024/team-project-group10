@@ -25,7 +25,7 @@ public class OverworldInventoryBar : MonoBehaviour
             BudsAmountText.text = UserInventory.GetResourceCount(ResourceType.Buds).ToString();
          }
 
-         bee = GameObject.FindWithTag("Player");
+         bee = GameObject.Find("Overworld_Bee");
          if (bee.GetComponent<BeeHealth>() != null)
          {
             bee.GetComponent<BeeHealth>().OnHealthChanged += HealthUpdated;

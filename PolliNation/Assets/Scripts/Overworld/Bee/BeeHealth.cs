@@ -5,14 +5,19 @@ using UnityEngine.SceneManagement;
 public class BeeHealth : MonoBehaviour
 {
     private int maxHealth = 100;
-    private int health = 100;
+    private int health;
     public event EventHandler OnHealthChanged;
-    // Start is called before the first frame update
-    void Start()
+    
+    void Awake()
     {
         health = maxHealth;
     }
 
+    /// <summary>
+    /// Method adjust health based on damage and 
+    /// return the bee to hive it health reaches 0.
+    /// Event handler added to notify listeners on change to health;
+    /// </summary>
     public void TakeDamage(int damage)
     {
         health -= damage;

@@ -8,9 +8,9 @@ using UnityEngine.UIElements;
 /// </summary>
 public abstract class Enemy : MonoBehaviour
 {
-    [SerializeField] protected int damage;
-    [SerializeField] protected int speed;
-    [SerializeField] protected int health;
+    protected int damage;
+    protected int speed;
+    protected int health;
     protected float chaseRange;
     protected float attackRange;
     protected float prevAttackTime;
@@ -19,6 +19,7 @@ public abstract class Enemy : MonoBehaviour
     protected Vector3 startingPosition;
     protected Vector3 roamingPosition;
     protected GameObject bee;
+    private Rigidbody rigidBody;
 
     private enum State 
     {
@@ -34,7 +35,7 @@ public abstract class Enemy : MonoBehaviour
     protected virtual void SetEnemyStats(int enemyDamage = 1, 
     int enemySpeed = 1, 
     float enemyChaseRange = 10, 
-    float enemyAttackRange = 2,
+    float enemyAttackRange = 2.5f,
     float enemyAttackCooldown = 1, 
     float enemyPathRange = 5)
     {
@@ -58,7 +59,8 @@ public abstract class Enemy : MonoBehaviour
             state = State.Chase;
         } else if (distance <= attackRange) {
             state = State.Attack;
-        } else {
+        } 
+        else {
             state = State.Roaming;
         }
     }
@@ -97,12 +99,79 @@ public abstract class Enemy : MonoBehaviour
         return new Vector3(x,0,z);
     }
 
+
+    /// <summary>
+    /// Method called when bee is in roaming state.
+    /// </summary>
+    private protected virtual void Roaming()
+    {
+        //move and rotate wasp towards roamingPosition
+        //transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
+        //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(roamingPosition - transform.position), Time.deltaTime));
+
+
+        Debug.Log("pathRange: " + pathRange);
+        transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.deltaTime * speed), 
+        Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.deltaTime));
+        // if wasp gets to roamingPosition turn around and loop
+        if (Vector3.Distance(rigidBody.position, roamingPosition) <= 0.01f)
+        {   
+            roamingPosition = startingPosition;
+            startingPosition = rigidBody.position;
+        }
+        
+    }
+
+    /// <summary>
+    /// Method called when bee is in Chase state.
+    /// </summary>
+    private protected virtual void Chase()
+    {
+        // chase bee
+        transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.deltaTime * speed), 
+        Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation (bee.transform.position - rigidBody.position), Time.deltaTime)); 
+    }
+
+    /// <summary>
+    /// Method called when bee health reaches 0. 
+    /// Bee health class returns player to hive when health hits 0,
+    /// specific enemy classes can add other behaviors if desired.
+    /// </summary>
+    private protected virtual void OnKill()
+    {
+        Debug.Log("Bee killed");
+    }
+
+    /// <summary>
+    /// Method called when enemy is in attack mode. 
+    /// </summary>
+    private protected virtual void Attack()
+    {
+        // continue chasing bee
+        transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.deltaTime * speed), 
+        Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation (bee.transform.position - rigidBody.position), Time.deltaTime));
+        if (Time.time > prevAttackTime + attackCooldown)
+        {
+            // attack bee
+            bee.GetComponent<BeeHealth>().TakeDamage(damage);
+            //check if bee health hits 0 call OnKill method
+            if (bee.GetComponent<BeeHealth>().Health == 0)
+            {
+                OnKill();
+            }
+            // set stored attack time
+            prevAttackTime = Time.time;
+        }
+    }
+
     // Unity lifecycle methods
 
     protected virtual void Awake()
     {
         // find bee game object 
-        bee = GameObject.FindWithTag("Player");
+        bee = GameObject.Find("Overworld_Bee");
+        // gets rigidbody component from gameObject script is attached to
+        rigidBody = gameObject.GetComponent<Rigidbody>();
         if (bee == null)
         {
             Debug.Log("Bee not found");
@@ -117,43 +186,20 @@ public abstract class Enemy : MonoBehaviour
         roamingPosition = GetRoamingPosition();
     }
 
-    private protected void Update()
+    private protected virtual void FixedUpdate()
     {   
         switch (state) {
         default:
         case State.Roaming:
-            //transform.position = new UnityEngine.Vector3(10f,0,10f);
-            
-            //move and rotate wasp towards roamingPosition
-            transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
-            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(roamingPosition - transform.position), Time.deltaTime));
-            // if wasp gets to roamingPosition turn around and loop
-            if (Vector3.Distance(transform.position, roamingPosition) <= 0.01f)
-            {   
-                roamingPosition = startingPosition;
-                startingPosition = transform.position;
-            }
-        
+            Roaming();
             ChangeState();
             break;
         case State.Chase:
-            // chase bee
-            transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, bee.transform.position, Time.deltaTime * speed), 
-            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (bee.transform.position - transform.position), Time.deltaTime));
+            Chase();
             ChangeState();
             break;
         case State.Attack:
-            // continue chasing bee
-            transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, bee.transform.position, Time.deltaTime * speed), 
-            Quaternion.Slerp(transform.rotation, Quaternion.LookRotation (bee.transform.position - transform.position), Time.deltaTime));
-            if (Time.time > prevAttackTime + attackCooldown)
-            {
-                // attack bee
-                bee.GetComponent<BeeHealth>().TakeDamage(damage);
-                Debug.Log(bee.GetComponent<BeeHealth>().Health);
-                // set stored attack time
-                prevAttackTime = Time.time;
-            }
+            Attack();
             ChangeState();
             break;
         }
@@ -167,12 +213,12 @@ public abstract class Enemy : MonoBehaviour
 
 
     
-    //if wasp hits the boundary walls
+    // logging when wasps hit stuff for testing purposes 
     private protected void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Meadow_Boundary")) {
             //Debug.Log("wall position: " + other.transform.position);
             Debug.Log("Wasp position: " + transform.position);
-        } else if (other.CompareTag("Player"))
+        } else if (other.name ==  "Overworld_Bee")
         {
             Debug.Log("hit bee");
         }
