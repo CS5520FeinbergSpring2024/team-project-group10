@@ -14,6 +14,15 @@ public class EnemySpawner : MonoBehaviour
     float spawnRange = 27;
     float minSpawnDistance = 25;
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
+    private double xAxisLimit = 0;
+    private double zAxisLimit = 0;
+
+    void Awake()
+    {
+        // get locations of all boundarys to map out max spawning distances on both axis
+        GameObject[] boundaries = GameObject.FindGameObjectsWithTag("Meadow_Boundary");
+        FindMapBoundaries(boundaries);
+    }
 
     void Start()
     {
@@ -77,5 +86,24 @@ public class EnemySpawner : MonoBehaviour
             }   
         }
         return true;
+    }
+
+    private void FindMapBoundaries(GameObject[] boundaries) {
+        foreach (GameObject boundary in boundaries) {
+                UnityEngine.Vector3 wallPos = boundary.transform.position;
+                double x_size = boundary.GetComponent<Collider>().bounds.size.x;
+                double z_size = boundary.GetComponent<Collider>().bounds.size.z;
+        
+                if (Math.Abs(wallPos.x) - 0.5 * x_size > xAxisLimit)
+                {   
+                    xAxisLimit = Math.Abs(wallPos.x) - 0.5 * x_size;
+                }
+                if (Math.Abs(wallPos.z) - 0.5 * z_size > zAxisLimit)
+                {   
+                    zAxisLimit = Math.Abs(wallPos.z) - 0.5 * z_size;
+                }
+            }  
+            Debug.Log("x limit: " + xAxisLimit);
+            Debug.Log("zAxisLimit" + zAxisLimit);
     }
 }
