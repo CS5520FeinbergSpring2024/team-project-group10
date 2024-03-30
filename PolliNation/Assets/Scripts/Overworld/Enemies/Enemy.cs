@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 /// <summary>
 /// Contains logic for Enemy classes.
@@ -15,11 +15,15 @@ public abstract class Enemy : MonoBehaviour
     protected float attackRange;
     protected float prevAttackTime;
     protected float attackCooldown;
-    protected float pathRange;
+    protected float patrolRange;
     protected Vector3 startingPosition;
     protected Vector3 roamingPosition;
     protected GameObject bee;
     private Rigidbody rigidBody;
+    private float apothem;
+    // temp high placeholder values
+    float xAxisLimit = 1000;
+    float zAxisLimit = 1000;
 
     private enum State 
     {
@@ -37,14 +41,14 @@ public abstract class Enemy : MonoBehaviour
     float enemyChaseRange = 10, 
     float enemyAttackRange = 2.5f,
     float enemyAttackCooldown = 1, 
-    float enemyPathRange = 5)
+    float enemyPatrolRange = 5)
     {
         damage = enemyDamage;
         speed = enemySpeed;
         chaseRange = enemyChaseRange;
         attackRange = enemyAttackRange;
         attackCooldown = enemyAttackCooldown;
-        pathRange = enemyPathRange;
+        patrolRange = enemyPatrolRange;
     }
 
     /// <summary>
@@ -71,7 +75,17 @@ public abstract class Enemy : MonoBehaviour
     /// </summary>
     private Vector3 GetRoamingPosition() 
     {
-        Vector3 targetVector = RandomTargetVector();
+        Vector3 targetVector;
+        int loopCounter = 0;
+        do 
+        {
+            targetVector = RandomTargetVector();
+            loopCounter += 1;
+            if (loopCounter > 1000) {
+                Debug.Log("Broke GetRoamingPositionLoop");
+                break;
+            }
+        } while (!CheckPositionInBounds(startingPosition + targetVector));
         return startingPosition + targetVector;
     }
 
@@ -86,70 +100,58 @@ public abstract class Enemy : MonoBehaviour
         int loopCounter = 0;
         do 
         {
-            x = UnityEngine.Random.Range(-pathRange, pathRange);
-            z = UnityEngine.Random.Range(-pathRange, pathRange);
+            x = UnityEngine.Random.Range(-patrolRange, patrolRange);
+            z = UnityEngine.Random.Range(-patrolRange, patrolRange);
             loopCounter += 1;
             // may not be possible to meet conditions to break loop
             if (loopCounter > 1000) {
                 Debug.Log("Broke RandomTargetVectorloop");
                 break;
             }
-        } while(Math.Abs(x) < minAxisTravel && Math.Abs(z) < minAxisTravel);
+        } while(Math.Abs(x) < minAxisTravel || Math.Abs(z) < minAxisTravel);
         
         return new Vector3(x,0,z);
     }
 
+    protected Boolean CheckPositionInBounds(UnityEngine.Vector3 position){
+        float difX = Math.Abs(position.x) - xAxisLimit;
+        float difZ = Math.Abs(position.z) - zAxisLimit;
+        if (difX >= 0 || difZ >= 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
 
     /// <summary>
-    /// Method called when bee is in roaming state.
+    /// Method called when wasp is in roaming state.
     /// </summary>
     private protected virtual void Roaming()
     {
+        
         //move and rotate wasp towards roamingPosition
-        //transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
-        //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(roamingPosition - transform.position), Time.deltaTime));
-
-        //Debug.Log("Starting position: " + rigidBody.position + "target position: " + roamingPosition);
-        //Debug.Log("Distance: " + UnityEngine.Vector3.Distance(rigidBody.position, roamingPosition));
-        //Debug.Log("pathRange: " + pathRange);
-
-        //transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed), 
-        //Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.fixedDeltaTime));
-
-      
         rigidBody.position = Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed);
-        //if (rigidBody.position.sqrMagnitude <= 0.1) {
-        //if (Distance()) {
-         //   Debug.Log("is equal to 0");
-        //} else {
-            //Debug.Log("sqmag: " + rigidBody.position.sqrMagnitude);
-            //Debug.Log("Current position: " + rigidBody.position + "target position: " + roamingPosition);
-            
-        //}
         // if wasp gets to roamingPosition turn around and loop
         // check before setting rotation to avoid LookRotation zero error
-        
         if (Vector3.Distance(rigidBody.position, roamingPosition) <= 0.1f)
         {   
             roamingPosition = startingPosition;
             startingPosition = rigidBody.position;
-        } else {
-            rigidBody.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.fixedDeltaTime * speed);
-        }
-        
-        
+        } 
+        transform.rotation = Quaternion.Lerp(rigidBody.rotation, Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.fixedDeltaTime * speed);
+    
     }
 
     /// <summary>
-    /// Method called when bee is in Chase state.
+    /// Method called when wasp is in Chase state.
     /// </summary>
     private protected virtual void Chase()
     {
         // chase bee
-        //rigidBody.position = Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.fixedDeltaTime * speed);
-        //rigidBody.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
-        transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.deltaTime * speed), 
-        Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation (bee.transform.position - rigidBody.position), Time.deltaTime)); 
+        rigidBody.position = Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.fixedDeltaTime * speed);
+        transform.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
     }
 
     /// <summary>
@@ -168,10 +170,9 @@ public abstract class Enemy : MonoBehaviour
     private protected virtual void Attack()
     {
         // continue chasing bee
-        //rigidBody.position = Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.fixedDeltaTime * speed);
-        //rigidBody.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
-        transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.deltaTime * speed), 
-        Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation (bee.transform.position - rigidBody.position), Time.deltaTime));
+        rigidBody.position = Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.fixedDeltaTime * speed);
+        transform.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
+
         if (Time.time > prevAttackTime + attackCooldown)
         {
             // attack bee
@@ -186,6 +187,34 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method called wasp hits boundary wall to move it away
+    ///  from boundary wall in case it gets stuck
+    /// </summary>
+    protected void CheckStuck(UnityEngine.Vector3 struckWall){
+        Debug.Log("In stuck method");
+        float difX = Math.Abs(roamingPosition.x) - Math.Abs(struckWall.x);
+        float difZ = Math.Abs(roamingPosition.z) - Math.Abs(struckWall.z);
+        if (difX > 0) {
+            roamingPosition.x -= difX * 1.2f * Math.Sign(struckWall.x);
+        }
+        if (difZ > 0) {
+            Debug.Log("Z coordinate too far");
+            roamingPosition.z -= difZ * 1.2f * Math.Sign(struckWall.z);
+        }
+        
+        Debug.Log("Wasp RP: " + roamingPosition);
+        //rigidBody.position = Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed);
+        if (Vector3.Distance(rigidBody.position, roamingPosition) <= 0.1f)
+        {   
+            roamingPosition = startingPosition;
+            startingPosition = rigidBody.position;
+        } 
+        //transform.position = roamingPosition;
+        //roamingPosition = startingPosition;
+        //startingPosition = rigidBody.position;
+    }
+
     // Unity lifecycle methods
 
     protected virtual void Awake()
@@ -196,7 +225,12 @@ public abstract class Enemy : MonoBehaviour
         rigidBody = gameObject.GetComponent<Rigidbody>();
         if (bee == null)
         {
-            Debug.Log("Bee not found");
+            Debug.Log("Bee object not found");
+        }
+        // get locations of all boundarys to map out max spawning distances on both axis
+        GameObject[] boundaries = GameObject.FindGameObjectsWithTag("Meadow_Boundary");
+        if (boundaries != null) {
+            FindMapBoundaries(boundaries);
         }
     }
 
@@ -232,18 +266,48 @@ public abstract class Enemy : MonoBehaviour
         //prevent wasp from rotation on x and z axis on collisions
         transform.localEulerAngles = new Vector3(0,transform.localEulerAngles.y,0);
     }
-
-
     
     // logging when wasps hit stuff for testing purposes 
     private protected void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Meadow_Boundary")) {
-            //Debug.Log("wall position: " + other.transform.position);
-            Debug.Log("Wasp position: " + transform.position);
+            Debug.Log("Wasp hit wall");
+            Debug.Log("Wasp RP: " + roamingPosition);
+            Debug.Log("Wall Position: " + other.transform.position);
+            //other.transform.position
+            CheckStuck(other.transform.position);
+    
         } else if (other.name ==  "Overworld_Bee")
         {
             Debug.Log("hit bee");
         }
+    }
+
+    /// <summary>
+    /// Method to get bounds from boundary gameobjects surrounding hexagon shaped map
+    /// </summary>
+    private void FindMapBoundaries(GameObject[] boundaries) {
+        
+
+        foreach (GameObject boundary in boundaries) {
+                // get position of wall
+                UnityEngine.Vector3 wallPos = boundary.transform.position;
+                // find min x and z positions of boundary walls
+                if (Math.Abs(wallPos.x) < xAxisLimit && wallPos.x != 0)
+                {   
+                    xAxisLimit = Math.Abs(wallPos.x) ;
+                }
+                if (Math.Abs(wallPos.z) < zAxisLimit && wallPos.z != 0)
+                {   
+                    zAxisLimit = Math.Abs(wallPos.z) ;
+                }
+            }  
+            
+            if (xAxisLimit < zAxisLimit)
+            {
+                apothem = Mathf.Sqrt(3)/2 * xAxisLimit;
+            } else {
+                apothem = Mathf.Sqrt(3)/2 * zAxisLimit;
+            }
     }
     
 }

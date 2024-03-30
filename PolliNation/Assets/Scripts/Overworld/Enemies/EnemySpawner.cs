@@ -2,22 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private float prevSpawnTime;
-    //private float spawnDelay = 1;
-    [SerializeField] private int maxEnemies = 20;
+    [SerializeField] private int maxEnemies = 5;
     public GameObject enemy; 
     private int spawnCount = 0;
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
-    private float xAxisLimit = 0;
-    private float zAxisLimit = 0;
-    private float apothem;
-    private float boundaryCushion;
-    [SerializeField] private float minDistanceFromOthers = 25;
+    private float distanceToCenter = 1000;
+    private float cushion = 5;
+    private bool spawnPositionAvailable = true;
+    [SerializeField] private float minDistanceFromOthers = 15;
 
     void Awake()
     {
@@ -28,40 +26,27 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        while (SpawnCheck())
-        {
+        //while (spawnCount <= maxEnemies && spawnPositionAvailable)
+        //{
             SpawnEnemy();
-        }
+        //}
     }
 
-
-    /// <summary>
-    /// Method conditions to spawn an enemy
-    /// </summary>
-    private bool SpawnCheck() 
-    {
-        // check if condition to spawn another enemy
-        if (spawnCount < maxEnemies)
-        {
-            return true;
-        } else 
-        {
-        return false;
-        }
-    }
 
     /// <summary>
     /// Method to spawn a new enemy 
     /// </summary>
     void SpawnEnemy()
-    {  
-        UnityEngine.Vector3 enemyPositon =  RandomEnemySpawnPosition();
-        Instantiate(enemy, enemyPositon, UnityEngine.Quaternion.identity);
-        enemyStartingPositions.Add(enemyPositon);
-        // update stored spawn time
-        prevSpawnTime = Time.time;
-        // update enemy count
-        spawnCount += 1;
+    {   
+        for (int i = 0; i < maxEnemies; i++){
+            if (spawnPositionAvailable) {
+                UnityEngine.Vector3 enemyPositon =  RandomEnemySpawnPosition();
+                Instantiate(enemy, enemyPositon, UnityEngine.Quaternion.identity);
+                enemyStartingPositions.Add(enemyPositon);
+                // update enemy count
+                spawnCount += 1;
+            }
+        }
     }
 
     /// <summary>
@@ -76,22 +61,25 @@ public class EnemySpawner : MonoBehaviour
         int counter = 0;
         UnityEngine.Vector3 generatedPosition;
         // generate new positions until conditions are met...
-        // (1) wasp is above minimum distance from map center
+        // (1) wasp is less than 90% of way to closest wall distance
+        // (2) wasp is more than 60% of the distance to the closest wall distance
         /// and (2) position is not too close to other wasp spawns
         do{
-            x = UnityEngine.Random.Range(-xAxisLimit + boundaryCushion, xAxisLimit - boundaryCushion);
-            z = UnityEngine.Random.Range(-zAxisLimit + boundaryCushion, zAxisLimit- boundaryCushion);
+            x = UnityEngine.Random.Range(-distanceToCenter + cushion, distanceToCenter - cushion);
+            z = UnityEngine.Random.Range(-distanceToCenter+ cushion, distanceToCenter- cushion);
             generatedPosition = new UnityEngine.Vector3(x,0,z);
             counter += 1;
             // break loop if not possible to find points that meet criteria
             if (counter >= 1000)
             {
+                Debug.Log("Broke loop in EnemySpawner");
+                spawnPositionAvailable = false;
                 break;
             }
         }
-        while ((UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) < (apothem - boundaryCushion)) 
+        while (UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) > (distanceToCenter * 0.9)
+        || UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) < (distanceToCenter * 0.6)
         || !CheckSpawningPosition(generatedPosition));
-        
         return generatedPosition;
     }
 
@@ -112,23 +100,16 @@ public class EnemySpawner : MonoBehaviour
 
     // method to get bounds from boundary gameobjects surrounding hexagon shaped map
     private void FindMapBoundaries(GameObject[] boundaries) {
+
         foreach (GameObject boundary in boundaries) {
+                // get position of wall
                 UnityEngine.Vector3 wallPos = boundary.transform.position;
-        
-                if (Math.Abs(wallPos.x) > xAxisLimit)
-                {   
-                    xAxisLimit = Math.Abs(wallPos.x) ;
-                }
-                if (Math.Abs(wallPos.z) > zAxisLimit)
-                {   
-                    zAxisLimit = Math.Abs(wallPos.z) ;
-                }
-            }  
-            //Debug.Log("x axis limit: " + xAxisLimit);
 
-            apothem = Mathf.Sqrt(3)/2 * xAxisLimit;
-            //Debug.Log("apothem " + apothem);
-
-            boundaryCushion = xAxisLimit * .2f;
+                // get distance of boundary from center
+                float boundaryDistance = UnityEngine.Vector3.Distance(new UnityEngine.Vector3(0,0,0), boundary.transform.position);
+                if (boundaryDistance < distanceToCenter) {
+                    distanceToCenter = boundaryDistance;
+                }
+        }     
     }
 }
