@@ -9,16 +9,15 @@ public class EnemySpawner : MonoBehaviour
 {
     private float prevSpawnTime;
     //private float spawnDelay = 1;
-    [SerializeField] private int maxEnemies = 3;
+    [SerializeField] private int maxEnemies = 20;
     public GameObject enemy; 
     private int spawnCount = 0;
-
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
     private float xAxisLimit = 0;
     private float zAxisLimit = 0;
     private float apothem;
     private float boundaryCushion;
-    private float minDistanceFromOthers = 15;
+    [SerializeField] private float minDistanceFromOthers = 25;
 
     void Awake()
     {
@@ -35,6 +34,10 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+
+    /// <summary>
+    /// Method conditions to spawn an enemy
+    /// </summary>
     private bool SpawnCheck() 
     {
         // check if condition to spawn another enemy
@@ -47,6 +50,9 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method to spawn a new enemy 
+    /// </summary>
     void SpawnEnemy()
     {  
         UnityEngine.Vector3 enemyPositon =  RandomEnemySpawnPosition();
@@ -58,6 +64,11 @@ public class EnemySpawner : MonoBehaviour
         spawnCount += 1;
     }
 
+    /// <summary>
+    ///  Finds a random spawn position for an enemy that is within map limits
+    ///  found by FindMapBoundaries(), atleast a specified distance away from the map center,
+    ///  and CheckSpawningPosition() is true. 
+    /// </summary>
     private UnityEngine.Vector3 RandomEnemySpawnPosition()
     {
         // initialize loop variables
@@ -65,7 +76,8 @@ public class EnemySpawner : MonoBehaviour
         int counter = 0;
         UnityEngine.Vector3 generatedPosition;
         // generate new positions until conditions are met...
-        // (1) wasp is above minimum distance and (2) position is not too close to other wasp spawns
+        // (1) wasp is above minimum distance from map center
+        /// and (2) position is not too close to other wasp spawns
         do{
             x = UnityEngine.Random.Range(-xAxisLimit + boundaryCushion, xAxisLimit - boundaryCushion);
             z = UnityEngine.Random.Range(-zAxisLimit + boundaryCushion, zAxisLimit- boundaryCushion);
@@ -77,7 +89,7 @@ public class EnemySpawner : MonoBehaviour
                 break;
             }
         }
-        while ((UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) > (apothem - boundaryCushion)) 
+        while ((UnityEngine.Vector3.Distance(generatedPosition, new UnityEngine.Vector3(0,0,0)) < (apothem - boundaryCushion)) 
         || !CheckSpawningPosition(generatedPosition));
         
         return generatedPosition;
@@ -102,23 +114,21 @@ public class EnemySpawner : MonoBehaviour
     private void FindMapBoundaries(GameObject[] boundaries) {
         foreach (GameObject boundary in boundaries) {
                 UnityEngine.Vector3 wallPos = boundary.transform.position;
-                float x_size = boundary.GetComponent<Collider>().bounds.size.x;
-                float z_size = boundary.GetComponent<Collider>().bounds.size.z;
         
-                if (Math.Abs(wallPos.x) - 0.5 * x_size > xAxisLimit)
+                if (Math.Abs(wallPos.x) > xAxisLimit)
                 {   
-                    xAxisLimit = (float) (Math.Abs(wallPos.x) - 0.5 * x_size);
+                    xAxisLimit = Math.Abs(wallPos.x) ;
                 }
-                if (Math.Abs(wallPos.z) - 0.5 * z_size > zAxisLimit)
+                if (Math.Abs(wallPos.z) > zAxisLimit)
                 {   
-                    zAxisLimit = (float)(Math.Abs(wallPos.z) - 0.5 * z_size);
+                    zAxisLimit = Math.Abs(wallPos.z) ;
                 }
             }  
-            Debug.Log("x axis limit: " + xAxisLimit);
+            //Debug.Log("x axis limit: " + xAxisLimit);
 
-            apothem = Mathf.Sqrt(3/2)* xAxisLimit;
-            Debug.Log("apothem " + apothem);
+            apothem = Mathf.Sqrt(3)/2 * xAxisLimit;
+            //Debug.Log("apothem " + apothem);
 
-            boundaryCushion = xAxisLimit * .1f;
+            boundaryCushion = xAxisLimit * .2f;
     }
 }

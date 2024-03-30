@@ -109,16 +109,34 @@ public abstract class Enemy : MonoBehaviour
         //transform.SetPositionAndRotation(Vector3.MoveTowards(transform.position, roamingPosition, Time.deltaTime * speed), 
         //Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(roamingPosition - transform.position), Time.deltaTime));
 
+        //Debug.Log("Starting position: " + rigidBody.position + "target position: " + roamingPosition);
+        //Debug.Log("Distance: " + UnityEngine.Vector3.Distance(rigidBody.position, roamingPosition));
+        //Debug.Log("pathRange: " + pathRange);
 
-        Debug.Log("pathRange: " + pathRange);
-        transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.deltaTime * speed), 
-        Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.deltaTime));
+        //transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed), 
+        //Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.fixedDeltaTime));
+
+      
+        rigidBody.position = Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed);
+        //if (rigidBody.position.sqrMagnitude <= 0.1) {
+        //if (Distance()) {
+         //   Debug.Log("is equal to 0");
+        //} else {
+            //Debug.Log("sqmag: " + rigidBody.position.sqrMagnitude);
+            //Debug.Log("Current position: " + rigidBody.position + "target position: " + roamingPosition);
+            
+        //}
         // if wasp gets to roamingPosition turn around and loop
-        if (Vector3.Distance(rigidBody.position, roamingPosition) <= 0.01f)
+        // check before setting rotation to avoid LookRotation zero error
+        
+        if (Vector3.Distance(rigidBody.position, roamingPosition) <= 0.1f)
         {   
             roamingPosition = startingPosition;
             startingPosition = rigidBody.position;
+        } else {
+            rigidBody.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.fixedDeltaTime * speed);
         }
+        
         
     }
 
@@ -128,6 +146,8 @@ public abstract class Enemy : MonoBehaviour
     private protected virtual void Chase()
     {
         // chase bee
+        //rigidBody.position = Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.fixedDeltaTime * speed);
+        //rigidBody.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
         transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.deltaTime * speed), 
         Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation (bee.transform.position - rigidBody.position), Time.deltaTime)); 
     }
@@ -148,6 +168,8 @@ public abstract class Enemy : MonoBehaviour
     private protected virtual void Attack()
     {
         // continue chasing bee
+        //rigidBody.position = Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.fixedDeltaTime * speed);
+        //rigidBody.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
         transform.SetPositionAndRotation(Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.deltaTime * speed), 
         Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation (bee.transform.position - rigidBody.position), Time.deltaTime));
         if (Time.time > prevAttackTime + attackCooldown)

@@ -13,7 +13,7 @@ public class Wasp : Enemy
     [SerializeField] int pollenKillPenalty = 1;
 
     [SerializeField] private int waspDamage = 5;
-    [SerializeField] private  int waspSpeed = 7;
+    [SerializeField] private  int waspSpeed = 8;
     private float waspChaseRange = 10;
     private float waspAttackRange = 2.5f;
     private float waspAttackCooldown = 1;
