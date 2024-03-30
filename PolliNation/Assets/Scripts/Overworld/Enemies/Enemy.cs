@@ -1,4 +1,5 @@
 using System;
+using Palmmedia.ReportGenerator.Core;
 using UnityEngine;
 
 /// <summary>
@@ -32,19 +33,35 @@ public abstract class Enemy : MonoBehaviour
     /// </summary>
     protected virtual void SetEnemyStats(int enemyDamage = 1, 
     int enemySpeed = 1, 
-    float enemyChaseRange = 10, 
-    float enemyAttackRange = 2.5f,
+    float enemyChaseRange = 10,
     float enemyAttackCooldown = 1, 
     float enemyPatrolRange = 5,
-    int enemyHealth = 10)
+    int enemyHealth = 10,
+    float enemyAttackRange = 0)
     {
         damage = enemyDamage;
         speed = enemySpeed;
         chaseRange = enemyChaseRange;
         attackRange = enemyAttackRange;
+        if (attackRange == 0 )
+        {
+            SetAttackRangeByCollider();
+        }
         attackCooldown = enemyAttackCooldown;
         patrolRange = enemyPatrolRange;
         health = enemyHealth;
+    }
+
+    /// <summary>
+    /// Method to set attack range of enemy equal to diameter of bee collider
+    /// </summary>
+    private void SetAttackRangeByCollider()
+    {
+        float beeColliderRadius = bee.GetComponent<SphereCollider>().radius; 
+        if (beeColliderRadius != 0)
+           {
+            attackRange = 2 * beeColliderRadius;
+           }
     }
 
     /// <summary>
@@ -185,10 +202,6 @@ public abstract class Enemy : MonoBehaviour
         bee = GameObject.Find("Overworld_Bee");
         // gets rigidbody component from gameObject script is attached to
         rigidBody = gameObject.GetComponent<Rigidbody>();
-        if (bee == null)
-        {
-            Debug.Log("Bee object not found");
-        }
     }
 
     private protected void Start()
@@ -197,6 +210,7 @@ public abstract class Enemy : MonoBehaviour
         // get the wasps spawn origin position and set target position for patrol path
         startingPosition = transform.position;
         roamingPosition = GetRoamingPosition();
+        
     }
 
     private protected virtual void FixedUpdate()
