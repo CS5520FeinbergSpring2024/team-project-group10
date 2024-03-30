@@ -1,8 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Instantiates PollenProvider objects in the scene. Manages their placement
+/// and values.
+/// </summary>
 public class MeadowResourceProviderManager : MonoBehaviour
 {
     // Fields to in editor.
@@ -18,9 +20,22 @@ public class MeadowResourceProviderManager : MonoBehaviour
     // the ring between these two radii.
     private readonly int _locationOuterRadius = 50;
     private readonly int _locationInnerRadius = 15;
+
     // For flower rotations.
     private readonly int _xRotationDegrees = 10;
     private readonly int _zRotationDegrees = 10;
+
+    // For generating production constraints.
+    /* A future version could tie these values to the player's progress,
+     * e.g. by multiplying regeneration time by a factor of the player's 
+     * inventory count.
+     */
+    private readonly int _secondsToCollectTotalMin = 0;
+    private readonly int _secondsToCollectTotalMax = 7;
+    private readonly int _totalCollectableAmountMin = 10;
+    private readonly int _totalCollectableAmountMax = 45;
+    private readonly int _regenerationTimeSecondsMin = 5;
+    private readonly int _regenerationTimeSecondsMax = 15;
 
     /// <summary>
     /// Generates a random Vector3 location on the plane within the 
@@ -53,6 +68,27 @@ public class MeadowResourceProviderManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets the given PollenProFlowerResourceProvidervider's secondsToCollectTotal, 
+    /// totalCollectableAmount, and regenerationTimeSeconds to random values.
+    /// </summary>
+    /// <param name="FlowerResourceProvider">The FlowerResourceProvider for which to set
+    /// values.</param>
+    private void SetRandomProductionValues(FlowerResourceProvider provider)
+    {
+        if (provider != null)
+        {
+            int secondsToCollectTotal = UnityEngine.Random.Range(
+                        _secondsToCollectTotalMin, _secondsToCollectTotalMax + 1);
+            int totalCollectableAmount = UnityEngine.Random.Range(
+                _totalCollectableAmountMin, _totalCollectableAmountMax + 1);
+            int regenerationTimeSeconds = UnityEngine.Random.Range(
+                _regenerationTimeSecondsMin, _regenerationTimeSecondsMax + 1);
+            provider.SetValues(provider.ResourceType, totalCollectableAmount,
+                                     secondsToCollectTotal, regenerationTimeSeconds);
+        }
+    }
+
+    /// <summary>
     /// Spawn <c>count</c> number of the given <c>prefab</c> at random locations.
     /// </summary>
     /// <param name="prefab">The prefab to spawn objects from.</param>
@@ -63,11 +99,13 @@ public class MeadowResourceProviderManager : MonoBehaviour
         {
             for (int i = 0; i < count; i++)
             {
-                Instantiate(_pollenProviderPrefab,
-                            GenerateRandomRingLocation(),
-                            GenerateRandomRotation());
+                GameObject instance = Instantiate(prefab,
+                                                  GenerateRandomRingLocation(),
+                                                  GenerateRandomRotation());
+                FlowerResourceProvider providerScript =
+                        instance.GetComponent<FlowerResourceProvider>();
+                SetRandomProductionValues(providerScript);
             }
-
         }
         catch (UnassignedReferenceException e)
         {
@@ -78,7 +116,6 @@ public class MeadowResourceProviderManager : MonoBehaviour
             Debug.LogError(e);
         }
     }
-
 
     // Start is called before the first frame update
     void Start()
