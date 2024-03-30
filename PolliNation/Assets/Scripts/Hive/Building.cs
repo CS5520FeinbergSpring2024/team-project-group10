@@ -39,13 +39,15 @@ public class Building
         }
         else if(type == BuildingType.Storage)
         {
-            return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 10 &&
-                myInventory.GetResourceCount(global::ResourceType.Pollen) >= 5;       
+            //return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 10 &&
+            //    myInventory.GetResourceCount(global::ResourceType.Pollen) >= 5;
+            return true;
         
         }else if(type == BuildingType.Production)
         {
-            return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 20 &&
-                    myInventory.GetResourceCount(global::ResourceType.Pollen) >= 10;
+            //return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 20 &&
+            //        myInventory.GetResourceCount(global::ResourceType.Pollen) >= 10;
+            return true;
         }
         else
         {

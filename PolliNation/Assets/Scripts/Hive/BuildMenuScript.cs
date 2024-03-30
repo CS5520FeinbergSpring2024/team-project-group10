@@ -224,6 +224,40 @@ public class BuildMenuScript : MonoBehaviour
         selectedResourceType = ResourceType.Nectar;
         Debug.Log("Nectar resource selected");
     }
+    public void PollenResourceClick()
+    {
+        selectedResourceType = ResourceType.Pollen;
+        Debug.Log("Pollen resource selected");
+    }
+    public void WaterResourceClick()
+    {
+        selectedResourceType = ResourceType.Water;
+        Debug.Log("Water resource selected");
+    }
+
+    public void BudsResourceClick()
+    {
+        selectedResourceType = ResourceType.Buds;
+        Debug.Log("Buds resource selected");
+    }
+
+    public void HoneyResourceClick()
+    {
+        selectedResourceType = ResourceType.Honey;
+        Debug.Log("Honey resource selected");
+    }
+
+    public void PropolisResourceClick()
+    {
+        selectedResourceType = ResourceType.Propolis;
+        Debug.Log("Propolis resource selected");
+    }
+
+    public void RoyalJellyResourceClick()
+    {
+        selectedResourceType = ResourceType.RoyalJelly;
+        Debug.Log("Nectar resource selected");
+    }
 
     public void Build()
     {
@@ -263,6 +297,16 @@ public class BuildMenuScript : MonoBehaviour
                 Debug.Log("Building instantiated: " + selectedBuildingType);
             }
             
+        }
+        else if(selectedBuildingType == BuildingType.Production)
+        {
+            Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));
+            if (selectedBuilding.CanAfford(BuildingType.Storage))
+            {
+                Vector3 position = new Vector3(0, 0, 0);
+                Instantiate(buildingProductionPrefab, position, Quaternion.identity);
+                Debug.Log("Building instantiated: " + selectedBuildingType);
+            }
         }
         else
         {
