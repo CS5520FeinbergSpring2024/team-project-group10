@@ -1,10 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -26,10 +22,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        //while (spawnCount <= maxEnemies && spawnPositionAvailable)
-        //{
-            SpawnEnemy();
-        //}
+        SpawnEnemy();
     }
 
 
@@ -63,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
         // generate new positions until conditions are met...
         // (1) wasp is less than 90% of way to closest wall distance
         // (2) wasp is more than 60% of the distance to the closest wall distance
-        /// and (2) position is not too close to other wasp spawns
+        /// and (3) position is not too close to other wasp spawns
         do{
             x = UnityEngine.Random.Range(-distanceToCenter + cushion, distanceToCenter - cushion);
             z = UnityEngine.Random.Range(-distanceToCenter+ cushion, distanceToCenter- cushion);

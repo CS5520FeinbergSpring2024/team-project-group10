@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -20,10 +18,6 @@ public abstract class Enemy : MonoBehaviour
     protected Vector3 roamingPosition;
     protected GameObject bee;
     private Rigidbody rigidBody;
-    private float apothem;
-    // temp high placeholder values
-    float xAxisLimit = 1000;
-    float zAxisLimit = 1000;
 
     private enum State 
     {
@@ -41,7 +35,8 @@ public abstract class Enemy : MonoBehaviour
     float enemyChaseRange = 10, 
     float enemyAttackRange = 2.5f,
     float enemyAttackCooldown = 1, 
-    float enemyPatrolRange = 5)
+    float enemyPatrolRange = 5,
+    int enemyHealth = 10)
     {
         damage = enemyDamage;
         speed = enemySpeed;
@@ -49,6 +44,7 @@ public abstract class Enemy : MonoBehaviour
         attackRange = enemyAttackRange;
         attackCooldown = enemyAttackCooldown;
         patrolRange = enemyPatrolRange;
+        health = enemyHealth;
     }
 
     /// <summary>
@@ -90,38 +86,32 @@ public abstract class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// Method to get a random vector within given wasp patrol ranges
+    /// Method to get a random vector of wasp patrol range
     /// </summary>
     private Vector3 RandomTargetVector()
     {   
-        // initialize loop variables
-        float x,z;
-        float minAxisTravel = 2;
-        int loopCounter = 0;
-        do 
-        {
-            x = UnityEngine.Random.Range(-patrolRange, patrolRange);
-            z = UnityEngine.Random.Range(-patrolRange, patrolRange);
-            loopCounter += 1;
-            // may not be possible to meet conditions to break loop
-            if (loopCounter > 1000) {
-                Debug.Log("Broke RandomTargetVectorloop");
-                break;
-            }
-        } while(Math.Abs(x) < minAxisTravel || Math.Abs(z) < minAxisTravel);
-        
+        // find point on circumference of circle with radius of patrol range
+        float x,z, xSign,zSign;
+        x = UnityEngine.Random.Range(-patrolRange, patrolRange);
+        xSign = UnityEngine.Random.Range(0,2)*2 -1;
+        x *= xSign;
+        z = (float) Math.Sqrt(Math.Pow(patrolRange,2) - Math.Pow(x,2));
+        zSign = UnityEngine.Random.Range(0,2)*2 -1;
+        z *= zSign;
         return new Vector3(x,0,z);
     }
 
+    /// <summary>
+    /// Method check if path hits a map boundary wall. 
+    /// </summary>
     protected Boolean CheckPositionInBounds(UnityEngine.Vector3 position){
-        float difX = Math.Abs(position.x) - xAxisLimit;
-        float difZ = Math.Abs(position.z) - zAxisLimit;
-        if (difX >= 0 || difZ >= 0) {
-            return false;
+        if (Physics.Linecast(position, startingPosition, out RaycastHit hitInfo))
+        {
+            if (hitInfo.transform.CompareTag("Meadow_Boundary")) {
+                return false;
+            }
         }
-        else {
-            return true;
-        }
+        return true;
     }
 
 
@@ -187,35 +177,7 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Method called wasp hits boundary wall to move it away
-    ///  from boundary wall in case it gets stuck
-    /// </summary>
-    protected void CheckStuck(UnityEngine.Vector3 struckWall){
-        Debug.Log("In stuck method");
-        float difX = Math.Abs(roamingPosition.x) - Math.Abs(struckWall.x);
-        float difZ = Math.Abs(roamingPosition.z) - Math.Abs(struckWall.z);
-        if (difX > 0) {
-            roamingPosition.x -= difX * 1.2f * Math.Sign(struckWall.x);
-        }
-        if (difZ > 0) {
-            Debug.Log("Z coordinate too far");
-            roamingPosition.z -= difZ * 1.2f * Math.Sign(struckWall.z);
-        }
-        
-        Debug.Log("Wasp RP: " + roamingPosition);
-        //rigidBody.position = Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed);
-        if (Vector3.Distance(rigidBody.position, roamingPosition) <= 0.1f)
-        {   
-            roamingPosition = startingPosition;
-            startingPosition = rigidBody.position;
-        } 
-        //transform.position = roamingPosition;
-        //roamingPosition = startingPosition;
-        //startingPosition = rigidBody.position;
-    }
-
-    // Unity lifecycle methods
+    /////// Unity lifecycle methods ///////
 
     protected virtual void Awake()
     {
@@ -226,11 +188,6 @@ public abstract class Enemy : MonoBehaviour
         if (bee == null)
         {
             Debug.Log("Bee object not found");
-        }
-        // get locations of all boundarys to map out max spawning distances on both axis
-        GameObject[] boundaries = GameObject.FindGameObjectsWithTag("Meadow_Boundary");
-        if (boundaries != null) {
-            FindMapBoundaries(boundaries);
         }
     }
 
@@ -269,45 +226,13 @@ public abstract class Enemy : MonoBehaviour
     
     // logging when wasps hit stuff for testing purposes 
     private protected void OnTriggerEnter(Collider other) {
-        if (other.CompareTag("Meadow_Boundary")) {
+        if (other.CompareTag("Meadow_Boundary")) 
+        {
             Debug.Log("Wasp hit wall");
-            Debug.Log("Wasp RP: " + roamingPosition);
-            Debug.Log("Wall Position: " + other.transform.position);
-            //other.transform.position
-            CheckStuck(other.transform.position);
-    
         } else if (other.name ==  "Overworld_Bee")
         {
             Debug.Log("hit bee");
         }
-    }
-
-    /// <summary>
-    /// Method to get bounds from boundary gameobjects surrounding hexagon shaped map
-    /// </summary>
-    private void FindMapBoundaries(GameObject[] boundaries) {
-        
-
-        foreach (GameObject boundary in boundaries) {
-                // get position of wall
-                UnityEngine.Vector3 wallPos = boundary.transform.position;
-                // find min x and z positions of boundary walls
-                if (Math.Abs(wallPos.x) < xAxisLimit && wallPos.x != 0)
-                {   
-                    xAxisLimit = Math.Abs(wallPos.x) ;
-                }
-                if (Math.Abs(wallPos.z) < zAxisLimit && wallPos.z != 0)
-                {   
-                    zAxisLimit = Math.Abs(wallPos.z) ;
-                }
-            }  
-            
-            if (xAxisLimit < zAxisLimit)
-            {
-                apothem = Mathf.Sqrt(3)/2 * xAxisLimit;
-            } else {
-                apothem = Mathf.Sqrt(3)/2 * zAxisLimit;
-            }
     }
     
 }
