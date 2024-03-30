@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Building : MonoBehaviour
+// Made Building class a normal C# class that is not a MonoBehaviour
+public class Building
 {
     public InventoryScriptableObject myInventory;
     public BuildingType Type
@@ -32,7 +33,8 @@ public class Building : MonoBehaviour
     {
         if (type == BuildingType.Gathering)
         {
-            return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 5;
+            //return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 5;
+            return true;
             
         }
         else if(type == BuildingType.Storage)

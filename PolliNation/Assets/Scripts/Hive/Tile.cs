@@ -73,7 +73,7 @@ public class Tile : MonoBehaviour
     {
         if (currentBuilding != null)
         { 
-            Instantiate(currentBuilding, transform.position, Quaternion.identity);
+            //Instantiate(currentBuilding, transform.position, Quaternion.identity);
         }
     }
 
