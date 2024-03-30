@@ -106,13 +106,13 @@ public class BuildMenuScript : MonoBehaviour
     }
 
     // Function to handle selecting a building
-    public void SelectBuilding(Building building)
-    {
-        selectedBuilding = building;
-        Debug.Log("Selected building: " + building.Type);
-    }
+    //public void SelectBuilding(Building building)
+    //{
+    //    selectedBuilding = building;
+    //    Debug.Log("Selected building: " + building.Type);
+    //}
 
-    // Separate methods to handle the building image clicks
+    // Separate methods to handle the selecting a building
     public void GatheringClick()
     {
         selectedBuildingType = BuildingType.Gathering;
@@ -180,36 +180,36 @@ public class BuildMenuScript : MonoBehaviour
 
 
     // Simplified wrapper function to try to consolidate handle click for buildings
-    public void HandleBuildingClick(GameObject clickedObject)
-    {
-        string buildingName = clickedObject.name;
-        if (buildingName.Contains("Gathering"))
-        {
-            selectedBuildingType = BuildingType.Gathering;
-            Debug.Log("Gathering building selected");
-        }else if (buildingName.Contains("Storage"))
-        {
-            selectedBuildingType = BuildingType.Storage;
-            Debug.Log("Storage building selected");
-        }
-        else
-        {
-            Debug.LogError("Invalid building type selected");
-        }
-    }
+    //public void HandleBuildingClick(GameObject clickedObject)
+    //{
+    //    string buildingName = clickedObject.name;
+    //    if (buildingName.Contains("Gathering"))
+    //    {
+    //        selectedBuildingType = BuildingType.Gathering;
+    //        Debug.Log("Gathering building selected");
+    //    }else if (buildingName.Contains("Storage"))
+    //    {
+    //        selectedBuildingType = BuildingType.Storage;
+    //        Debug.Log("Storage building selected");
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("Invalid building type selected");
+    //    }
+    //}
 
-    public void OnImageClick()
-    {
-        GameObject clickedObject = EventSystem.current.currentSelectedGameObject;
-        if (clickedObject != null)
-        {
-            HandleBuildingClick(clickedObject);
-        }
-        else
-        {
-            Debug.LogError("No GameObject clicked");
-        }
-    }
+    //public void OnImageClick()
+    //{
+    //    GameObject clickedObject = EventSystem.current.currentSelectedGameObject;
+    //    if (clickedObject != null)
+    //    {
+    //        HandleBuildingClick(clickedObject);
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("No GameObject clicked");
+    //    }
+    //}
 
 
     // Function to handle selecting a resource
