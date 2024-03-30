@@ -24,6 +24,8 @@ public class Bee : MonoBehaviour
         if(moveDirection.x != 0 || moveDirection.y != 0) {
             Vector3 moveAmount = new Vector3(moveDirection.x, 0, moveDirection.y);
             _RigidBody.position += Time.fixedDeltaTime * speed * moveAmount;
+            // Set height to zero after each movement to ensure bee doesn't fly out of bounds
+            _RigidBody.position = new Vector3(_RigidBody.position.x, 0, _RigidBody.position.z);
 
             Quaternion newRotation = Quaternion.LookRotation(new Vector3(moveDirection.x, 0, moveDirection.y));
             _RigidBody.rotation = Quaternion.Lerp(_RigidBody.rotation, newRotation, Time.fixedDeltaTime * speed);
