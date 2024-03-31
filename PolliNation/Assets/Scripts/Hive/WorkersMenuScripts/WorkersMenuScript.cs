@@ -19,14 +19,23 @@ public class WorkersMenuScript : MonoBehaviour
     private Resource resource;
     private GameObject menuButtonObject;
     private ILaunchMenuButton launchMenuButton;
-    //private int availableWorkers;
+    //private static int availableWorkers; //make it static prevent to be destoryed when GameObject deactived.
     //private int totalworkerCount;
     //private DataClass dataClass;
     private Formula formula;
     private Dictionary<ResourceType, int> resourceQuantities;
+    private Dictionary<ResourceType, int> finishGoodQuantities;
+    private float timeProduceNectar = 10; //10 seconds
+    private float timeProducePollen = 15;
+    private float timeProduceWater = 20;
+    private float timeProduceBuds = 25;
+    private float timeConvertHoney = 60;
+    private float timeConvertPropolis = 70;
+    private float timeConvertRoyalJelly = 80;
+
 
     //used for test only
-    private int availableWorkers = 5;
+    private static int availableWorkers = 5;
     private int totalworkerCount;
     /// ///////////////////////////////
 
@@ -67,16 +76,28 @@ public class WorkersMenuScript : MonoBehaviour
             availableWorkersText.text = availableWorkers.ToString();
             totalworkerCount = availableWorkers;
 
-            resourceQuantities = new Dictionary<string, int>();
-            resourceQuantities.Add("Nectar", userInventory.GetResourceCount(ResourceType.Nectar));
-            resourceQuantities.Add("Pollen", userInventory.GetResourceCount(ResourceType.Pollen));
-            resourceQuantities.Add("Water", userInventory.GetResourceCount(ResourceType.Water));
-            resourceQuantities.Add("Buds", userInventory.GetResourceCount(ResourceType.Buds))
+            resourceQuantities = new Dictionary<ResourceType, int>();
+            finishGoodQuantities = new Dictionary<ResourceType, int>();
+            resourceQuantities.Add(ResourceType.Nectar, userInventory.GetResourceCount(ResourceType.Nectar));
+            resourceQuantities.Add(ResourceType.Pollen, userInventory.GetResourceCount(ResourceType.Pollen));
+            resourceQuantities.Add(ResourceType.Water, userInventory.GetResourceCount(ResourceType.Water));
+            resourceQuantities.Add(ResourceType.Buds, userInventory.GetResourceCount(ResourceType.Buds));
+            finishGoodQuantities.Add(ResourceType.Honey, 0);
+            finishGoodQuantities.Add(ResourceType.Propolis, 0);
+            finishGoodQuantities.Add(ResourceType.RoyalJelly, 0);
             formula = new Formula(resourceQuantities);
         }*/
 
         //used for test only
         resourceQuantities = new Dictionary<ResourceType, int>();
+        finishGoodQuantities = new Dictionary<ResourceType, int>();
+        resourceQuantities.Add(ResourceType.Nectar, 5);
+        resourceQuantities.Add(ResourceType.Pollen, 5);
+        resourceQuantities.Add(ResourceType.Water, 5);
+        resourceQuantities.Add(ResourceType.Buds, 5);
+        finishGoodQuantities.Add(ResourceType.Honey, 0);
+        finishGoodQuantities.Add(ResourceType.Propolis, 0);
+        finishGoodQuantities.Add(ResourceType.RoyalJelly, 0);
         formula = new Formula(resourceQuantities);
         availableWorkersText.text = availableWorkers.ToString();
         totalworkerCount = availableWorkers;
@@ -87,56 +108,82 @@ public class WorkersMenuScript : MonoBehaviour
     {
         if (availableWorkers > 0 && availableWorkers <= totalworkerCount)
         {
+            int assignedValue;
             switch (resourceType) 
             {
-
+                
                 case ResourceType.Nectar:
-                    NectarAssignedText.text = (int.Parse(NectarAssignedText.text) + 1).ToString();
-                    availableWorkers--;
+                    //check if the input text is correct format, below are same
+                    if (int.TryParse(NectarAssignedText.text, out assignedValue))
+                    {
+                        NectarAssignedText.text = (assignedValue + 1).ToString();
+                        availableWorkers--;
+                    }   
                     break;
                 case ResourceType.Pollen:
-                    PollenAssignedText.text = (int.Parse(PollenAssignedText.text) + 1).ToString();
-                    availableWorkers--;
-                    break;
-                case ResourceType.Buds:
-                    BudsAssignedText.text = (int.Parse(BudsAssignedText.text) + 1).ToString();
-                    availableWorkers--;
-                    break;
-                case ResourceType.Water:
-                    WaterAssignedText.text = (int.Parse(WaterAssignedText.text) + 1).ToString();
-                    availableWorkers--;
-                    break;
-                case ResourceType.Honey:
-                    if (formula.Honey(int.Parse(HoneyAssignedText.text) + 1))
+                    if (int.TryParse(PollenAssignedText.text, out assignedValue))
                     {
-                        HoneyAssignedText.text = (int.Parse(HoneyAssignedText.text) + 1).ToString();
+                        PollenAssignedText.text = (assignedValue + 1).ToString();
                         availableWorkers--;
                     }
-                    else 
+                    break;
+                case ResourceType.Buds:
+                    if (int.TryParse(BudsAssignedText.text, out assignedValue))
                     {
-                        Debug.Log("You don't have enough resource to convert");
+                        BudsAssignedText.text = (assignedValue + 1).ToString();
+                        availableWorkers--;
+                    }
+                    break;
+                case ResourceType.Water:
+                    if (int.TryParse(WaterAssignedText.text, out assignedValue))
+                    {
+                        WaterAssignedText.text = (assignedValue + 1).ToString();
+                        availableWorkers--;
+                    }
+                    break;
+                case ResourceType.Honey:
+                    if (int.TryParse(HoneyAssignedText.text, out assignedValue))
+                    {
+                        if (formula.Honey(assignedValue + 1))
+                        {
+                            HoneyAssignedText.text = (assignedValue+ 1).ToString();
+                            finishGoodQuantities[ResourceType.Honey] = assignedValue + 1;
+                            availableWorkers--;
+                        }
+                        else
+                        {
+                            Debug.Log("You don't have enough resource to convert");
+                        }
                     }
                     break;
                 case ResourceType.Propolis:
-                    if (formula.Propolis(int.Parse(PropolisAssignedText.text) + 1)) 
+                    if (int.TryParse(PropolisAssignedText.text, out assignedValue))
                     {
-                        PropolisAssignedText.text = (int.Parse(PropolisAssignedText.text) + 1).ToString();
-                        availableWorkers--;
-                    }
-                    else
-                    {
-                        Debug.Log("You don't have enough resource to convert");
+                        if (formula.Propolis(assignedValue + 1))
+                        {
+                            PropolisAssignedText.text = (assignedValue + 1).ToString();
+                            finishGoodQuantities[ResourceType.Propolis] = assignedValue + 1;
+                            availableWorkers--;
+                        }
+                        else
+                        {
+                            Debug.Log("You don't have enough resource to convert");
+                        }
                     }
                     break;
                 case ResourceType.RoyalJelly:
-                    if (formula.RoyalJelly(int.Parse(RoyalJellyAssignedText.text) + 1)) 
+                    if (int.TryParse(RoyalJellyAssignedText.text, out assignedValue))
                     {
-                        RoyalJellyAssignedText.text = (int.Parse(RoyalJellyAssignedText.text) + 1).ToString();
-                        availableWorkers--;
-                    }
-                    else
-                    {
-                        Debug.Log("You don't have enough resource to convert");
+                        if (formula.RoyalJelly(assignedValue + 1))
+                        {
+                            RoyalJellyAssignedText.text = (assignedValue + 1).ToString();
+                            finishGoodQuantities[ResourceType.RoyalJelly] = assignedValue + 1;
+                            availableWorkers--;
+                        }
+                        else
+                        {
+                            Debug.Log("You don't have enough resource to convert");
+                        }
                     }
                     break;
             }
@@ -146,55 +193,81 @@ public class WorkersMenuScript : MonoBehaviour
 
     public void ClickMinus(ResourceType resourceType)
     {
+        int assignedValue;
         switch (resourceType)
         {
             case ResourceType.Nectar:
-                if (int.Parse(NectarAssignedText.text) > 0)
-                {
-                    NectarAssignedText.text = (int.Parse(NectarAssignedText.text) - 1).ToString();
-                    availableWorkers++;
+                //check if the input text is correct format, below are same
+                if (int.TryParse(NectarAssignedText.text, out assignedValue))
+                {   
+                    if (assignedValue > 0) //only do logic after worker assigned, below are same
+                    {
+                        NectarAssignedText.text = (assignedValue - 1).ToString();
+                        availableWorkers++;
+                    }
                 }
                 break;
             case ResourceType.Pollen:
-                if (int.Parse(PollenAssignedText.text) > 0)
+                if (int.TryParse(PollenAssignedText.text, out assignedValue))
                 {
-                    PollenAssignedText.text = (int.Parse(PollenAssignedText.text) - 1).ToString();
-                    availableWorkers++;
+                    if (assignedValue > 0)
+                    {
+                        PollenAssignedText.text = (assignedValue - 1).ToString();
+                        availableWorkers++;
+                    }
                 }
                 break;
             case ResourceType.Buds:
-                if (int.Parse(BudsAssignedText.text) > 0)
+                if (int.TryParse(BudsAssignedText.text, out assignedValue))
                 {
-                    BudsAssignedText.text = (int.Parse(BudsAssignedText.text) - 1).ToString();
-                    availableWorkers++;
+                    if (assignedValue > 0)
+                    {
+                        BudsAssignedText.text = (assignedValue - 1).ToString();
+                        availableWorkers++;
+                    }
                 }
                 break;
             case ResourceType.Water:
-                if (int.Parse(WaterAssignedText.text) > 0)
+                if (int.TryParse(WaterAssignedText.text, out assignedValue))
                 {
-                    WaterAssignedText.text = (int.Parse(WaterAssignedText.text) - 1).ToString();
-                    availableWorkers++;
+                    if (assignedValue > 0)
+                    {
+                        WaterAssignedText.text = (assignedValue - 1).ToString();
+                        availableWorkers++;
+                    }
                 }
                 break;
             case ResourceType.Honey:
-                if (int.Parse(HoneyAssignedText.text) > 0)
+                if (int.TryParse(HoneyAssignedText.text, out assignedValue))
                 {
-                    HoneyAssignedText.text = (int.Parse(HoneyAssignedText.text) - 1).ToString();
-                    availableWorkers++;
+                    if (assignedValue > 0)
+                    {
+                        HoneyAssignedText.text = (assignedValue - 1).ToString();
+                        finishGoodQuantities[ResourceType.Honey] = assignedValue - 1;
+                        availableWorkers++;
+                    }
                 }
                 break;
             case ResourceType.Propolis:
-                if (int.Parse(PropolisAssignedText.text) > 0)
+                if (int.TryParse(PropolisAssignedText.text, out assignedValue))
                 {
-                    PropolisAssignedText.text = (int.Parse(PropolisAssignedText.text) - 1).ToString();
-                    availableWorkers++;
+                    if (assignedValue > 0)
+                    {
+                        PropolisAssignedText.text = (assignedValue - 1).ToString();
+                        finishGoodQuantities[ResourceType.Propolis] = assignedValue - 1;
+                        availableWorkers++;
+                    }
                 }
                 break;
             case ResourceType.RoyalJelly:
-                if (int.Parse(RoyalJellyAssignedText.text) > 0)
+                if (int.TryParse(RoyalJellyAssignedText.text, out assignedValue))
                 {
-                    RoyalJellyAssignedText.text = (int.Parse(RoyalJellyAssignedText.text) - 1).ToString();
-                    availableWorkers++;
+                    if (assignedValue > 0)
+                    {
+                        RoyalJellyAssignedText.text = (assignedValue - 1).ToString();
+                        finishGoodQuantities[ResourceType.RoyalJelly] = assignedValue - 1;
+                        availableWorkers++;
+                    }
                 }
                 break;
         }
@@ -213,15 +286,193 @@ public class WorkersMenuScript : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void Assign()
+    private void saveChanges()
     {
-        foreach (var kvp in resourceQuantities)
+        //store finish goods changes to the database
+        foreach (var good in finishGoodQuantities)
         {
-            ResourceType key = kvp.Key;
-            int value = kvp.Value;
+            ResourceType key = good.Key;
+            int value = good.Value;
             userInventory.UpdateInventory(key, value);
+
+            //dataClass.SaveResource(key, userInventory.GetResourceCount(key) + value);
+        }
+
+
+        //store raw material changes to the database
+        foreach (var res in resourceQuantities)
+        {
+            ResourceType key = res.Key;
+            int value = res.Value;
+            userInventory.UpdateInventory(key, value);
+
+            //dataClass.SaveResource(key, value);
         }
     }
+
+
+    public void Assign()
+    {   
+        int nectarAssignedValue;
+        if (int.TryParse(NectarAssignedText.text, out nectarAssignedValue) && nectarAssignedValue != 0)
+        {   
+            CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeProduceNectar * nectarAssignedValue, remainingTime =>
+            {
+                //update time, call when update
+                NectarAssignedText.text = TimerManager.FormatTime(remainingTime);
+
+            }, () => 
+            {   
+                //add resource to local storage when finish assignment. call when count down finished
+                resourceQuantities[ResourceType.Nectar] = resourceQuantities[ResourceType.Nectar] + nectarAssignedValue;
+                NectarAssignedText.text = "Finished";
+                availableWorkersText.text = (++availableWorkers).ToString(); // worker add one when it finished last assignment
+            }));
+        }
+
+        int pollenAssignedValue;
+        if (int.TryParse(PollenAssignedText.text, out pollenAssignedValue) && pollenAssignedValue != 0)
+        {
+            CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeProducePollen * pollenAssignedValue, remainingTime =>
+            {
+                //update time
+                PollenAssignedText.text = TimerManager.FormatTime(remainingTime);
+            }, () =>
+            {
+                resourceQuantities[ResourceType.Pollen] = resourceQuantities[ResourceType.Pollen] + pollenAssignedValue;
+                PollenAssignedText.text = "Finished";
+                availableWorkersText.text = (++availableWorkers).ToString();
+            }));
+        }
+
+        int waterAssignedValue;
+        if (int.TryParse(WaterAssignedText.text, out waterAssignedValue) && waterAssignedValue != 0)
+        {
+            CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeProduceWater * waterAssignedValue, remainingTime =>
+            {
+                //update time
+                WaterAssignedText.text = TimerManager.FormatTime(remainingTime);
+            }, () =>
+            {
+                resourceQuantities[ResourceType.Water] = resourceQuantities[ResourceType.Water] + waterAssignedValue;
+                WaterAssignedText.text = "Finished";
+                availableWorkersText.text = (++availableWorkers).ToString();
+            }));
+        }
+
+        int budsAssignedValue;
+        if (int.TryParse(BudsAssignedText.text, out budsAssignedValue) && budsAssignedValue != 0)
+        {
+            CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeProduceBuds * budsAssignedValue, remainingTime =>
+            {
+                //update time
+                BudsAssignedText.text = TimerManager.FormatTime(remainingTime);
+            }, () =>
+            {
+                resourceQuantities[ResourceType.Buds] = resourceQuantities[ResourceType.Buds] + budsAssignedValue;
+                BudsAssignedText.text = "Finished";
+                availableWorkersText.text = (++availableWorkers).ToString();
+            }));
+        }
+
+        int honeyAssignedValue;
+        if (int.TryParse(HoneyAssignedText.text, out honeyAssignedValue) && honeyAssignedValue != 0)
+        {
+            CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeConvertHoney * honeyAssignedValue, remainingTime =>
+            {
+                //update time
+                HoneyAssignedText.text = TimerManager.FormatTime(remainingTime);
+            }, () =>
+            {
+                finishGoodQuantities[ResourceType.Honey] = finishGoodQuantities[ResourceType.Honey] + honeyAssignedValue;
+                HoneyAssignedText.text = "Finished";
+                availableWorkersText.text = (++availableWorkers).ToString();
+            }));
+        }
+
+        int propolisAssignedValue;
+        if (int.TryParse(PropolisAssignedText.text, out propolisAssignedValue) && propolisAssignedValue != 0)
+        {
+            CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeConvertPropolis * propolisAssignedValue, remainingTime =>
+            {
+                //update time
+                PropolisAssignedText.text = TimerManager.FormatTime(remainingTime);
+            }, () =>
+            {
+                finishGoodQuantities[ResourceType.Propolis] = finishGoodQuantities[ResourceType.Propolis] + propolisAssignedValue;
+                PropolisAssignedText.text = "Finished";
+                availableWorkersText.text = (++availableWorkers).ToString();
+            }));
+        }
+
+        int royalJellyAssignedValue;
+        if (int.TryParse(RoyalJellyAssignedText.text, out royalJellyAssignedValue) && royalJellyAssignedValue != 0)
+        {
+            CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeConvertRoyalJelly * royalJellyAssignedValue, remainingTime =>
+            {
+                //update time
+                RoyalJellyAssignedText.text = TimerManager.FormatTime(remainingTime);
+            }, () =>
+            {
+                finishGoodQuantities[ResourceType.RoyalJelly] = finishGoodQuantities[ResourceType.RoyalJelly] + royalJellyAssignedValue;
+                RoyalJellyAssignedText.text = "Finished";
+                availableWorkersText.text = (++availableWorkers).ToString();
+            }));
+        }
+
+
+    }
+
+    public void ClaimResources()
+    {
+        string zero = "0";
+        string finished = "Finished";
+        //set timer back to show number of worker need to be assigned.
+        if (NectarAssignedText.text.Equals(finished))
+        {
+            NectarAssignedText.text = zero;
+            saveChanges();
+        }
+       
+        if (PollenAssignedText.text.Equals(finished))
+        {
+            PollenAssignedText.text = zero;
+            saveChanges();
+        }
+        
+        if (WaterAssignedText.text.Equals(finished))
+        {
+            WaterAssignedText.text = zero;
+            saveChanges();
+        }
+        
+        if (BudsAssignedText.text.Equals(finished))
+        {
+            BudsAssignedText.text = zero;
+            saveChanges();
+        }
+        
+        if (HoneyAssignedText.text.Equals(finished))
+        {
+            HoneyAssignedText.text = zero;
+            saveChanges();
+        }
+
+        if(PropolisAssignedText.text.Equals(finished))
+        {
+            PropolisAssignedText.text = zero;
+            saveChanges();
+        }
+
+        if(RoyalJellyAssignedText.text.Equals(finished))
+        {
+            RoyalJellyAssignedText.text = zero;
+            saveChanges();
+        }
+
+        
+    }
+
 
     public void ExitMenu()
     {
