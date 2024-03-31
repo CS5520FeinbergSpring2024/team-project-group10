@@ -267,52 +267,81 @@ public class BuildMenuScript : MonoBehaviour
             // Commenting for now for future implementation of methods in Building class
 
 
-            //if (selectedBuilding.CanAfford())
-            //{
-            //    // Instantiate the selected building at its specified position
-            //    Instantiate(selectedBuilding, selectedBuilding.Position, Quaternion.identity);
-            //    Debug.Log("Building instantiated: " + selectedBuilding.name);
-            //}
-            //else
-            //{
-            //    Debug.LogWarning("Cannot afford to build: " + selectedBuilding.name);
-            //}
+            //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0,0,0));
+            //if Building.CanAfford(BuildingType.Gathering) instead of if(selectedBuilding
 
-            Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0,0,0));
-            if (selectedBuilding.CanAfford(BuildingType.Gathering))
+            if (Building.CanAfford(BuildingType.Gathering))
             {
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
                 Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
                 Debug.Log("Building instantiated: " + selectedBuildingType);
             }
+            //if (selectedBuilding.CanAfford(BuildingType.Gathering))
+            //{
+            //    // Temp position for instantiation
+            //    Vector3 position = new Vector3(0, 0, 0);
+            //    Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
+            //    Debug.Log("Building instantiated: " + selectedBuildingType);
+            //}
            
         }else if(selectedBuildingType == BuildingType.Storage)
         {
-            Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));
-            if (selectedBuilding.CanAfford(BuildingType.Storage))
+            if (Building.CanAfford(BuildingType.Gathering))
             {
+                // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
                 Instantiate(buildingStoragePrefab, position, Quaternion.identity);
                 Debug.Log("Building instantiated: " + selectedBuildingType);
             }
-            
+
+            //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));
+            //if (selectedBuilding.CanAfford(BuildingType.Storage))
+            //{
+            //    Vector3 position = new Vector3(0, 0, 0);
+            //    Instantiate(buildingStoragePrefab, position, Quaternion.identity);
+            //    Debug.Log("Building instantiated: " + selectedBuildingType);
+            //}
+
         }
         else if(selectedBuildingType == BuildingType.Production)
         {
-            Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));
-            if (selectedBuilding.CanAfford(BuildingType.Storage))
+            if (Building.CanAfford(BuildingType.Gathering))
             {
+                // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
                 Instantiate(buildingProductionPrefab, position, Quaternion.identity);
                 Debug.Log("Building instantiated: " + selectedBuildingType);
             }
+
+            //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));
+            //if (selectedBuilding.CanAfford(BuildingType.Storage))
+            //{
+            //    Vector3 position = new Vector3(0, 0, 0);
+            //    Instantiate(buildingProductionPrefab, position, Quaternion.identity);
+            //    Debug.Log("Building instantiated: " + selectedBuildingType);
+            //}
         }
         else
         {
             Debug.LogWarning("No building selected!");
         }
     }
+
+    // Potentially create a helper method to call build method and make build take in a vector3 position
+
+    //public void BuildWrapper()
+    //{
+    //    //Check if build menu was open from a tile
+    //    if(currentTile != null)
+    //    {
+    //        Build(currentTile.transform.position);
+    //    }
+    //    else
+    //    {
+    //        Build(Vector3.zero);
+    //    }
+    //}
 
     public void OpenMenuForTile(Tile tile)
     {   

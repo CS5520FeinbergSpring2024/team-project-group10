@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Made Building class a normal C# class that is not a MonoBehaviour
-public class Building
+public class Building : MonoBehaviour
 {
     public InventoryScriptableObject myInventory;
+    [SerializeField]
+    private BuildingType myNewBuildingType;
     public BuildingType Type
-    { get; set; }
+    { get { return myNewBuildingType; } set { myNewBuildingType = value; } }
     public int Cost
     { get; set; }
     public ResourceType? ResourceType 
@@ -29,7 +31,8 @@ public class Building
         Position = position;
     }
 
-    public bool CanAfford(BuildingType type)
+    // Potentially make static
+    public static bool CanAfford(BuildingType type)
     {
         if (type == BuildingType.Gathering)
         {
