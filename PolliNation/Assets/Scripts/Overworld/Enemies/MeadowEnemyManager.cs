@@ -2,22 +2,23 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemySpawner : MonoBehaviour
+public class MeadowEnemyManager : MonoBehaviour
 {
     public GameObject wasp; 
     [SerializeField] private int numWasps = 5;
     private List<UnityEngine.Vector3> enemyStartingPositions = new();
-    private UnityEngine.Vector3 mapCenter = new(0,0,0);
     private float maxSpawnDistance;
     private float minSpawnDistance;
     private bool spawnPositionAvailable = true;
+    private string boundaryWallTag = "Meadow_Boundary";
     [SerializeField] private float minDistanceFromOthers = 15;
 
     void Awake()
     {
-        // get locations of all boundarys to map out max spawning distances on both axis
-        GameObject[] boundaries = GameObject.FindGameObjectsWithTag("Meadow_Boundary");
-        FindMapBoundaries(boundaries);
+        // get locations of all boundarys to map out max and min spawning distances 
+        float minBoundaryDistance = MapBoundaryUtilityScript.FindMinBoundaryDistance(boundaryWallTag);
+        maxSpawnDistance = minBoundaryDistance * 0.8f;
+        minSpawnDistance = minBoundaryDistance * 0.6f;
     }
 
     void Start()
@@ -54,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
     private UnityEngine.Vector3 RandomEnemySpawnPosition()
     {
         // initialize loop variables
-        float x, z, xSign, zSign, distance;
+        float x, z, zSign, distance;
         UnityEngine.Vector3 generatedPosition;
         int counter = 0;
 
@@ -64,8 +65,6 @@ public class EnemySpawner : MonoBehaviour
         {
             distance = UnityEngine.Random.Range(minSpawnDistance , maxSpawnDistance);
             x = UnityEngine.Random.Range(-distance, distance);
-            xSign = UnityEngine.Random.Range(0,2)*2 -1;
-            x *= xSign;
             z = (float) Math.Sqrt(Math.Pow(distance,2) - Math.Pow(x,2));
             zSign = UnityEngine.Random.Range(0,2)*2 -1;
             z *= zSign;
@@ -99,27 +98,5 @@ public class EnemySpawner : MonoBehaviour
             }   
         }
         return true;
-    }
-
-    /// <summary>
-    /// method to get bounds from boundary gameobjects surrounding map
-    /// </summary>
-    private void FindMapBoundaries(GameObject[] boundaries) {
-        float distanceToCenter = float.MaxValue;
-
-        foreach (GameObject boundary in boundaries) 
-        {
-                // get position of wall
-                UnityEngine.Vector3 wallPos = boundary.transform.position;
-                // get distance of boundary from center
-                float boundaryDistance = UnityEngine.Vector3.Distance(mapCenter, boundary.transform.position);
-                if (boundaryDistance < distanceToCenter) 
-                {
-                    distanceToCenter = boundaryDistance;
-                }
-        }
-        // set max and min distance as 80% and 60% of distance from center to put on outer ring of map    
-        maxSpawnDistance = distanceToCenter * 0.8f;
-        minSpawnDistance = distanceToCenter * 0.6f; 
     }
 }

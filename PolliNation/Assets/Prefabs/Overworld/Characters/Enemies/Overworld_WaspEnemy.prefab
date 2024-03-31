@@ -783,7 +783,7 @@ Transform:
   m_GameObject: {fileID: 5416767153514184440}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.33333337, z: 0}
+  m_LocalPosition: {x: 0, y: -0.84, z: 0}
   m_LocalScale: {x: 0.13333334, y: 0.6666666, z: 0.13333333}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1181,7 +1181,9 @@ MonoBehaviour:
   waspDamage: 5
   waspSpeed: 8
   waspChaseRange: 7
-  waspPathRange: 20
+  waspAttackCooldown: 1
+  waspHealth: 5
+  waspPatrolRange: 10
 --- !u!1 &8389479385838684371
 GameObject:
   m_ObjectHideFlags: 0

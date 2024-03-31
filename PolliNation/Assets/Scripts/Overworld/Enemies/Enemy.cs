@@ -108,10 +108,10 @@ public abstract class Enemy : MonoBehaviour
     private Vector3 RandomTargetVector()
     {   
         // find point on circumference of circle with radius of patrol range
-        float x,z, xSign,zSign;
+        float x,z, zSign;
         x = UnityEngine.Random.Range(-patrolRange, patrolRange);
-        xSign = UnityEngine.Random.Range(0,2)*2 -1;
-        x *= xSign;
+        //xSign = UnityEngine.Random.Range(0,2)*2 -1;
+        //x *= xSign;
         z = (float) Math.Sqrt(Math.Pow(patrolRange,2) - Math.Pow(x,2));
         zSign = UnityEngine.Random.Range(0,2)*2 -1;
         z *= zSign;
