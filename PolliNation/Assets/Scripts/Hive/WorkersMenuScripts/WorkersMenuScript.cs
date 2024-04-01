@@ -315,7 +315,9 @@ public class WorkersMenuScript : MonoBehaviour
     {   
         int nectarAssignedValue;
         if (int.TryParse(NectarAssignedText.text, out nectarAssignedValue) && nectarAssignedValue != 0)
-        {   
+        {
+            //record how many workers assigned which will be add back when assignment finished.
+            int workersAssigned = nectarAssignedValue;
             CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeProduceNectar * nectarAssignedValue, remainingTime =>
             {
                 //update time, call when update
@@ -326,97 +328,104 @@ public class WorkersMenuScript : MonoBehaviour
                 //add resource to local storage when finish assignment. call when count down finished
                 resourceQuantities[ResourceType.Nectar] = resourceQuantities[ResourceType.Nectar] + nectarAssignedValue;
                 NectarAssignedText.text = "Finished";
-                availableWorkersText.text = (++availableWorkers).ToString(); // worker add one when it finished last assignment
+                availableWorkers += workersAssigned;
+                availableWorkersText.text = availableWorkers.ToString(); // worker add one when it finished last assignment
             }));
         }
 
         int pollenAssignedValue;
         if (int.TryParse(PollenAssignedText.text, out pollenAssignedValue) && pollenAssignedValue != 0)
         {
+            int workersAssigned = pollenAssignedValue;
             CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeProducePollen * pollenAssignedValue, remainingTime =>
             {
-                //update time
                 PollenAssignedText.text = TimerManager.FormatTime(remainingTime);
             }, () =>
             {
                 resourceQuantities[ResourceType.Pollen] = resourceQuantities[ResourceType.Pollen] + pollenAssignedValue;
                 PollenAssignedText.text = "Finished";
-                availableWorkersText.text = (++availableWorkers).ToString();
+                availableWorkers += workersAssigned;
+                availableWorkersText.text = availableWorkers.ToString();
             }));
         }
 
         int waterAssignedValue;
         if (int.TryParse(WaterAssignedText.text, out waterAssignedValue) && waterAssignedValue != 0)
         {
+            int workersAssigned = waterAssignedValue;
             CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeProduceWater * waterAssignedValue, remainingTime =>
             {
-                //update time
                 WaterAssignedText.text = TimerManager.FormatTime(remainingTime);
             }, () =>
             {
                 resourceQuantities[ResourceType.Water] = resourceQuantities[ResourceType.Water] + waterAssignedValue;
                 WaterAssignedText.text = "Finished";
-                availableWorkersText.text = (++availableWorkers).ToString();
+                availableWorkers += workersAssigned;
+                availableWorkersText.text = availableWorkers.ToString();
             }));
         }
 
         int budsAssignedValue;
         if (int.TryParse(BudsAssignedText.text, out budsAssignedValue) && budsAssignedValue != 0)
         {
+            int workersAssigned = budsAssignedValue;
             CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeProduceBuds * budsAssignedValue, remainingTime =>
             {
-                //update time
                 BudsAssignedText.text = TimerManager.FormatTime(remainingTime);
             }, () =>
             {
                 resourceQuantities[ResourceType.Buds] = resourceQuantities[ResourceType.Buds] + budsAssignedValue;
                 BudsAssignedText.text = "Finished";
-                availableWorkersText.text = (++availableWorkers).ToString();
+                availableWorkers += workersAssigned;
+                availableWorkersText.text = availableWorkers.ToString();
             }));
         }
 
         int honeyAssignedValue;
         if (int.TryParse(HoneyAssignedText.text, out honeyAssignedValue) && honeyAssignedValue != 0)
-        {
+        {   
+            int workersAssigned = honeyAssignedValue;
             CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeConvertHoney * honeyAssignedValue, remainingTime =>
             {
-                //update time
                 HoneyAssignedText.text = TimerManager.FormatTime(remainingTime);
             }, () =>
             {
                 finishGoodQuantities[ResourceType.Honey] = finishGoodQuantities[ResourceType.Honey] + honeyAssignedValue;
                 HoneyAssignedText.text = "Finished";
-                availableWorkersText.text = (++availableWorkers).ToString();
+                availableWorkers += workersAssigned;
+                availableWorkersText.text = availableWorkers.ToString();
             }));
         }
 
         int propolisAssignedValue;
         if (int.TryParse(PropolisAssignedText.text, out propolisAssignedValue) && propolisAssignedValue != 0)
         {
+            int workersAssigned = propolisAssignedValue;
             CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeConvertPropolis * propolisAssignedValue, remainingTime =>
             {
-                //update time
                 PropolisAssignedText.text = TimerManager.FormatTime(remainingTime);
             }, () =>
             {
                 finishGoodQuantities[ResourceType.Propolis] = finishGoodQuantities[ResourceType.Propolis] + propolisAssignedValue;
                 PropolisAssignedText.text = "Finished";
-                availableWorkersText.text = (++availableWorkers).ToString();
+                availableWorkers += workersAssigned;
+                availableWorkersText.text = availableWorkers.ToString();
             }));
         }
 
         int royalJellyAssignedValue;
         if (int.TryParse(RoyalJellyAssignedText.text, out royalJellyAssignedValue) && royalJellyAssignedValue != 0)
         {
+            int workersAssigned = royalJellyAssignedValue;
             CoroutineManager.Instance.StartCoroutine(TimerManager.StartCountdown(timeConvertRoyalJelly * royalJellyAssignedValue, remainingTime =>
             {
-                //update time
                 RoyalJellyAssignedText.text = TimerManager.FormatTime(remainingTime);
             }, () =>
             {
                 finishGoodQuantities[ResourceType.RoyalJelly] = finishGoodQuantities[ResourceType.RoyalJelly] + royalJellyAssignedValue;
                 RoyalJellyAssignedText.text = "Finished";
-                availableWorkersText.text = (++availableWorkers).ToString();
+                availableWorkers += royalJellyAssignedValue;
+                availableWorkersText.text = availableWorkers.ToString();
             }));
         }
 
