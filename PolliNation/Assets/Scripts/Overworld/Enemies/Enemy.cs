@@ -143,9 +143,9 @@ public abstract class Enemy : MonoBehaviour
     /// </summary>
     private protected virtual void Roaming()
     {
-        
         //move and rotate wasp towards roamingPosition
         rigidBody.position = UnityEngine.Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed);
+
         // if wasp gets to roamingPosition turn around and loop
         // check before setting rotation to avoid LookRotation zero error
         if (UnityEngine.Vector3.Distance(rigidBody.position, roamingPosition) <= 0.1f)
@@ -165,19 +165,9 @@ public abstract class Enemy : MonoBehaviour
     {
         // chase bee
         rigidBody.position = UnityEngine.Vector3.MoveTowards(rigidBody.position, 
-        new UnityEngine.Vector3(bee.transform.position.x, waspHeight ,bee.transform.position.z), Time.fixedDeltaTime * speed);
+        new UnityEngine.Vector3(bee.transform.position.x, waspHeight, bee.transform.position.z), Time.fixedDeltaTime * speed);
         transform.rotation = UnityEngine.Quaternion.Slerp(rigidBody.rotation, 
         UnityEngine.Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
-    }
-
-    /// <summary>
-    /// Method called when bee health reaches 0. 
-    /// Bee health class returns player to hive when health hits 0,
-    /// specific enemy classes can add other behaviors if desired.
-    /// </summary>
-    private protected virtual void OnKill()
-    {
-        Debug.Log("Bee killed");
     }
 
     /// <summary>
@@ -206,6 +196,16 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Method called when bee health reaches 0. 
+    /// Bee health class returns player to hive when health hits 0,
+    /// specific enemy classes can add other behaviors if desired.
+    /// </summary>
+    private protected virtual void OnKill()
+    {
+        Debug.Log("Bee killed");
+    }
+
     /////// Unity lifecycle methods ///////
 
     protected virtual void Awake()
@@ -213,7 +213,7 @@ public abstract class Enemy : MonoBehaviour
         // find bee game object 
         bee = GameObject.Find("Overworld_Bee");
         // Get bee height to set wasp height slightly above
-        waspHeight = bee.transform.position.y + 2;
+        waspHeight = bee.transform.position.y;
         // gets rigidbody component from gameObject script is attached to
         rigidBody = gameObject.GetComponent<Rigidbody>();
     }
