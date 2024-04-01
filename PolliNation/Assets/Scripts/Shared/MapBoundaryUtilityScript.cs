@@ -9,7 +9,7 @@ public static class MapBoundaryUtilityScript
     ///  tagged with <c>boundaryTag</c>
     /// </summary>
     /// <param name="boundaryTag">The tag on the map boundary objects</param>
-    /// <return>Minimum distance from origin to a boundary.</return>   
+    /// <returns>Minimum distance from origin to a boundary.</returns>   
    public static float FindMinBoundaryDistance(string boundaryTag) {
 
         //get all of the boundary walls with tag

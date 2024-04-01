@@ -1,5 +1,6 @@
+
 using System;
-using Palmmedia.ReportGenerator.Core;
+using System.Numerics;
 using UnityEngine;
 
 /// <summary>
@@ -15,10 +16,11 @@ public abstract class Enemy : MonoBehaviour
     protected float prevAttackTime;
     protected float attackCooldown;
     protected float patrolRange;
-    protected Vector3 startingPosition;
-    protected Vector3 roamingPosition;
+    protected UnityEngine.Vector3 startingPosition;
+    protected UnityEngine.Vector3 roamingPosition;
     protected GameObject bee;
     private Rigidbody rigidBody;
+    private float waspHeight = 2;
 
     private enum State 
     {
@@ -69,7 +71,7 @@ public abstract class Enemy : MonoBehaviour
     /// </summary>
     private protected void ChangeState() 
     {
-        float distance = Vector3.Distance(transform.position, bee.transform.position);
+        float distance = UnityEngine.Vector3.Distance(transform.position, bee.transform.position);
 
         if (attackRange < distance && distance <= chaseRange)
         {
@@ -84,45 +86,49 @@ public abstract class Enemy : MonoBehaviour
     
 
     /// <summary>
-    /// Method to set a target roaming position 
+    /// Generates a random position to use as a roaming target for an enemy. 
     /// </summary>
-    private Vector3 GetRoamingPosition() 
+    /// <returns> a random target roaming position for the enemy </returns>
+    private UnityEngine.Vector3 GetRoamingPosition() 
     {
-        Vector3 targetVector;
+        UnityEngine.Vector3 targetVector;
+        UnityEngine.Vector3 targetPosition;
         int loopCounter = 0;
         do 
         {
             targetVector = RandomTargetVector();
             loopCounter += 1;
-            if (loopCounter > 1000) {
+            targetPosition = startingPosition + targetVector;
+            if (loopCounter > 10000) {
                 Debug.Log("Broke GetRoamingPositionLoop");
+                targetPosition = new UnityEngine.Vector3(25,0,25);
                 break;
             }
-        } while (!CheckPositionInBounds(startingPosition + targetVector));
-        return startingPosition + targetVector;
+        } 
+        while (!CheckPositionInBounds(startingPosition, targetPosition));
+        return targetPosition;
     }
 
     /// <summary>
     /// Method to get a random vector of wasp patrol range
     /// </summary>
-    private Vector3 RandomTargetVector()
+    private UnityEngine.Vector3 RandomTargetVector()
     {   
         // find point on circumference of circle with radius of patrol range
         float x,z, zSign;
         x = UnityEngine.Random.Range(-patrolRange, patrolRange);
-        //xSign = UnityEngine.Random.Range(0,2)*2 -1;
-        //x *= xSign;
         z = (float) Math.Sqrt(Math.Pow(patrolRange,2) - Math.Pow(x,2));
         zSign = UnityEngine.Random.Range(0,2)*2 -1;
         z *= zSign;
-        return new Vector3(x,0,z);
+        return new UnityEngine.Vector3(x,waspHeight,z);
     }
 
     /// <summary>
-    /// Method check if path hits a map boundary wall. 
+    /// Check if path between two points intersects a boundary wall
     /// </summary>
-    protected Boolean CheckPositionInBounds(UnityEngine.Vector3 position){
-        if (Physics.Linecast(position, startingPosition, out RaycastHit hitInfo))
+    /// <returns> True 
+    protected Boolean CheckPositionInBounds(UnityEngine.Vector3 startPos, UnityEngine.Vector3 endPos){
+        if (Physics.Linecast(startPos, endPos, out RaycastHit hitInfo))
         {
             if (hitInfo.transform.CompareTag("Meadow_Boundary")) {
                 return false;
@@ -133,32 +139,35 @@ public abstract class Enemy : MonoBehaviour
 
 
     /// <summary>
-    /// Method called when wasp is in roaming state.
+    /// Roaming state behvaior - enemy will roam back and forth of patrol route.
     /// </summary>
     private protected virtual void Roaming()
     {
         
         //move and rotate wasp towards roamingPosition
-        rigidBody.position = Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed);
+        rigidBody.position = UnityEngine.Vector3.MoveTowards(rigidBody.position, roamingPosition, Time.fixedDeltaTime * speed);
         // if wasp gets to roamingPosition turn around and loop
         // check before setting rotation to avoid LookRotation zero error
-        if (Vector3.Distance(rigidBody.position, roamingPosition) <= 0.1f)
+        if (UnityEngine.Vector3.Distance(rigidBody.position, roamingPosition) <= 0.1f)
         {   
             roamingPosition = startingPosition;
             startingPosition = rigidBody.position;
         } 
-        transform.rotation = Quaternion.Lerp(rigidBody.rotation, Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.fixedDeltaTime * speed);
+        transform.rotation = UnityEngine.Quaternion.Lerp(rigidBody.rotation, 
+        UnityEngine.Quaternion.LookRotation(roamingPosition - rigidBody.position), Time.fixedDeltaTime * speed);
     
     }
 
     /// <summary>
-    /// Method called when wasp is in Chase state.
+    /// Chase state behavior - enemy will chase the bee.
     /// </summary>
     private protected virtual void Chase()
     {
         // chase bee
-        rigidBody.position = Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.fixedDeltaTime * speed);
-        transform.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
+        rigidBody.position = UnityEngine.Vector3.MoveTowards(rigidBody.position, 
+        new UnityEngine.Vector3(bee.transform.position.x, waspHeight ,bee.transform.position.z), Time.fixedDeltaTime * speed);
+        transform.rotation = UnityEngine.Quaternion.Slerp(rigidBody.rotation, 
+        UnityEngine.Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
     }
 
     /// <summary>
@@ -172,13 +181,16 @@ public abstract class Enemy : MonoBehaviour
     }
 
     /// <summary>
-    /// Method called when enemy is in attack mode. 
+    /// Attack Mode behavior - enemy will continue chasing bee and attack. 
     /// </summary>
     private protected virtual void Attack()
     {
         // continue chasing bee
-        rigidBody.position = Vector3.MoveTowards(rigidBody.position, bee.transform.position, Time.fixedDeltaTime * speed);
-        transform.rotation = Quaternion.Slerp(rigidBody.rotation, Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
+        rigidBody.position = UnityEngine.Vector3.MoveTowards(rigidBody.position, 
+        new UnityEngine.Vector3(bee.transform.position.x, waspHeight, bee.transform.position.z),
+         Time.fixedDeltaTime * speed);
+        transform.rotation = UnityEngine.Quaternion.Slerp(rigidBody.rotation, 
+        UnityEngine.Quaternion.LookRotation(bee.transform.position - rigidBody.position), Time.fixedDeltaTime * speed);
 
         if (Time.time > prevAttackTime + attackCooldown)
         {
@@ -200,6 +212,8 @@ public abstract class Enemy : MonoBehaviour
     {
         // find bee game object 
         bee = GameObject.Find("Overworld_Bee");
+        // Get bee height to set wasp height slightly above
+        waspHeight = bee.transform.position.y + 2;
         // gets rigidbody component from gameObject script is attached to
         rigidBody = gameObject.GetComponent<Rigidbody>();
     }
@@ -235,7 +249,7 @@ public abstract class Enemy : MonoBehaviour
     private protected void LateUpdate()
     {
         //prevent wasp from rotation on x and z axis on collisions
-        transform.localEulerAngles = new Vector3(0,transform.localEulerAngles.y,0);
+        transform.localEulerAngles = new UnityEngine.Vector3(0,transform.localEulerAngles.y,0);
     }
     
     // logging when wasps hit stuff for testing purposes 
