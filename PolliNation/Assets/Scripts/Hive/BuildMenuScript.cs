@@ -9,7 +9,6 @@ using System.ComponentModel;
 public class BuildMenuScript : MonoBehaviour
 {
     private GameObject menuButtonObject;
-    private GameObject buildingImageObject;
     private ILaunchMenuButton launchMenuButton;
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
@@ -107,12 +106,6 @@ public class BuildMenuScript : MonoBehaviour
         //}
     }
 
-    // Function to handle selecting a building
-    //public void SelectBuilding(Building building)
-    //{
-    //    selectedBuilding = building;
-    //    Debug.Log("Selected building: " + building.Type);
-    //}
 
     // Methods to handle the selecting a building
     public void GatheringClick()
@@ -134,87 +127,9 @@ public class BuildMenuScript : MonoBehaviour
     }
 
 
-    // Wrapper function for building button choise
-    //public void HandleBuildingClick(BaseEventData eventData)
-    //{
-    //    PointerEventData pointerEventData = eventData as PointerEventData;
-    //    if (pointerEventData != null)
-    //    {
-    //        GameObject clickedImage = EventSystem.current.currentSelectedGameObject;
-    //        //string buttonName = UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject.name;
-
-    //        if (clickedImage != null)
-    //        {
-    //            string buttonName = clickedImage.name;
-    //            Debug.Log("The button name is:" + buttonName);
-    //            switch (buttonName)
-    //            {
-    //                case "Storage Building Image":
-    //                    selectedBuildingType = BuildingType.Storage;
-    //                    Debug.Log("Storage building selected");
-    //                    break;
-    //                case "Gathering Building Image":
-    //                    selectedBuildingType = BuildingType.Gathering;
-    //                    Debug.Log("Gathering building selected");
-    //                    break;
-    //                case "Conversion Building Image":
-    //                    selectedBuildingType = BuildingType.Production;
-    //                    Debug.Log("Production building selected");
-    //                    break;
-    //                default:
-    //                    Debug.LogError("That is not a valid button");
-    //                    break;
-    //            }
-
-    //        }
-    //        else
-    //        {
-    //            Debug.LogWarning("No game object image was selected");
-    //        }
-
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning("No PointerEventData received");
-    //    }
-
-    //} 
 
 
-    // Simplified wrapper function to try to consolidate handle click for buildings
-    //public void HandleBuildingClick(GameObject clickedObject)
-    //{
-    //    string buildingName = clickedObject.name;
-    //    if (buildingName.Contains("Gathering"))
-    //    {
-    //        selectedBuildingType = BuildingType.Gathering;
-    //        Debug.Log("Gathering building selected");
-    //    }else if (buildingName.Contains("Storage"))
-    //    {
-    //        selectedBuildingType = BuildingType.Storage;
-    //        Debug.Log("Storage building selected");
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("Invalid building type selected");
-    //    }
-    //}
-
-    //public void OnImageClick()
-    //{
-    //    GameObject clickedObject = EventSystem.current.currentSelectedGameObject;
-    //    if (clickedObject != null)
-    //    {
-    //        HandleBuildingClick(clickedObject);
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("No GameObject clicked");
-    //    }
-    //}
-
-
-    // Function to handle selecting a resource
+    // Methods to handle selecting a resource
     public void SelectResource(Resource resource)
     {
         selectedResource = resource;
@@ -266,23 +181,18 @@ public class BuildMenuScript : MonoBehaviour
         if (selectedBuildingType == BuildingType.Gathering)
         {
             // Check if the player can afford to build the selected building
-            // Commenting for now for future implementation of methods in Building class
-
-
-            //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0,0,0));
-            //if Building.CanAfford(BuildingType.Gathering) instead of if(selectedBuilding
-
+            
             if (Building.CanAfford(BuildingType.Gathering, myInventory))
             {
-                // Temp position for instantiation
+                // Temp placeholder position for building prefab instantiation
                 Vector3 position = new Vector3(0, 0, 0);
 
                 GameObject newBuildingObject = Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
 
-                // Get the Building component from the instantiated object
+                // Get the Building component from the prefab
                 Building newBuilding = newBuildingObject.GetComponent<Building>();
 
-                // Associate the building with the selected resource
+                // Associate the building with the selected resource 
                 if (newBuilding != null)
                 {
                     newBuilding.ResourceType = selectedResourceType;
@@ -293,13 +203,11 @@ public class BuildMenuScript : MonoBehaviour
                     Debug.LogError("Failed to get Building component from instantiated object.");
                 }
             }
-            //if (selectedBuilding.CanAfford(BuildingType.Gathering))
-            //{
-            //    // Temp position for instantiation
-            //    Vector3 position = new Vector3(0, 0, 0);
-            //    Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
-            //    Debug.Log("Building instantiated: " + selectedBuildingType);
-            //}
+            else
+            {
+                Debug.Log("Insufficient resources for this building");
+            }
+        
            
         }else if(selectedBuildingType == BuildingType.Storage)
         {
@@ -307,11 +215,13 @@ public class BuildMenuScript : MonoBehaviour
             {
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
+
                 GameObject newBuildingObject = Instantiate(buildingStoragePrefab, position, Quaternion.identity);
-                // Get the Building component from the instantiated object
+
+                
                 Building newBuilding = newBuildingObject.GetComponent<Building>();
 
-                // Associate the building with the selected resource
+     
                 if (newBuilding != null)
                 {
                     newBuilding.ResourceType = selectedResourceType;
@@ -322,14 +232,10 @@ public class BuildMenuScript : MonoBehaviour
                     Debug.LogError("Failed to get Building component from instantiated object.");
                 }
             }
-
-            //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));
-            //if (selectedBuilding.CanAfford(BuildingType.Storage))
-            //{
-            //    Vector3 position = new Vector3(0, 0, 0);
-            //    Instantiate(buildingStoragePrefab, position, Quaternion.identity);
-            //    Debug.Log("Building instantiated: " + selectedBuildingType);
-            //}
+            else
+            {
+                Debug.Log("Insufficient resources for this building");
+            }
 
         }
         else if(selectedBuildingType == BuildingType.Production)
@@ -338,11 +244,12 @@ public class BuildMenuScript : MonoBehaviour
             {
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
+
                 GameObject newBuildingObject = Instantiate(buildingProductionPrefab, position, Quaternion.identity);
-                // Get the Building component from the instantiated object
+                
                 Building newBuilding = newBuildingObject.GetComponent<Building>();
 
-                // Associate the building with the selected resource
+                
                 if (newBuilding != null)
                 {
                     newBuilding.ResourceType = selectedResourceType;
@@ -353,14 +260,10 @@ public class BuildMenuScript : MonoBehaviour
                     Debug.LogError("Failed to get Building component from instantiated object.");
                 }
             }
-
-            //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));
-            //if (selectedBuilding.CanAfford(BuildingType.Storage))
-            //{
-            //    Vector3 position = new Vector3(0, 0, 0);
-            //    Instantiate(buildingProductionPrefab, position, Quaternion.identity);
-            //    Debug.Log("Building instantiated: " + selectedBuildingType);
-            //}
+            else
+            {
+                Debug.Log("Insufficient resources for this building");
+            }
         }
         else
         {
@@ -368,20 +271,6 @@ public class BuildMenuScript : MonoBehaviour
         }
     }
 
-    // Potentially create a helper method to call build method and make build take in a vector3 position
-
-    //public void BuildWrapper()
-    //{
-    //    //Check if build menu was open from a tile
-    //    if(currentTile != null)
-    //    {
-    //        Build(currentTile.transform.position);
-    //    }
-    //    else
-    //    {
-    //        Build(Vector3.zero);
-    //    }
-    //}
 
     public void OpenMenuForTile(Tile tile)
     {   

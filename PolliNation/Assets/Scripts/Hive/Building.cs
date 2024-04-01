@@ -45,15 +45,16 @@ public class Building : MonoBehaviour
         }
         else if(type == BuildingType.Storage)
         {
-            //return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 10 &&
-            //    myInventory.GetResourceCount(global::ResourceType.Pollen) >= 5;
-            return true;
-        
-        }else if(type == BuildingType.Production)
+            return inventory.GetResourceCount(global::ResourceType.Nectar) >= 10 &&
+                inventory.GetResourceCount(global::ResourceType.Pollen) >= 5;
+
+
+        }
+        else if(type == BuildingType.Production)
         {
-            //return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 20 &&
-            //        myInventory.GetResourceCount(global::ResourceType.Pollen) >= 10;
-            return true;
+            return inventory.GetResourceCount(global::ResourceType.Nectar) >= 20 &&
+                inventory.GetResourceCount(global::ResourceType.Pollen) >= 10;
+            
         }
         else
         {
