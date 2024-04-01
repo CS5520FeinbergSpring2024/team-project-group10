@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System;
+using System.ComponentModel;
 
 public class BuildMenuScript : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class BuildMenuScript : MonoBehaviour
     public GameObject buildingStoragePrefab;
     public GameObject buildingProductionPrefab;
     public Resource selectedResource;
+    public InventoryScriptableObject myInventory;
 
     // Reference to the future data class 
     //public DataClass buildingData; 
@@ -112,7 +114,7 @@ public class BuildMenuScript : MonoBehaviour
     //    Debug.Log("Selected building: " + building.Type);
     //}
 
-    // Separate methods to handle the selecting a building
+    // Methods to handle the selecting a building
     public void GatheringClick()
     {
         selectedBuildingType = BuildingType.Gathering;
@@ -270,12 +272,26 @@ public class BuildMenuScript : MonoBehaviour
             //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0,0,0));
             //if Building.CanAfford(BuildingType.Gathering) instead of if(selectedBuilding
 
-            if (Building.CanAfford(BuildingType.Gathering))
+            if (Building.CanAfford(BuildingType.Gathering, myInventory))
             {
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
-                Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
-                Debug.Log("Building instantiated: " + selectedBuildingType);
+
+                GameObject newBuildingObject = Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
+
+                // Get the Building component from the instantiated object
+                Building newBuilding = newBuildingObject.GetComponent<Building>();
+
+                // Associate the building with the selected resource
+                if (newBuilding != null)
+                {
+                    newBuilding.ResourceType = selectedResourceType;
+                    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
+                }
+                else
+                {
+                    Debug.LogError("Failed to get Building component from instantiated object.");
+                }
             }
             //if (selectedBuilding.CanAfford(BuildingType.Gathering))
             //{
@@ -287,12 +303,24 @@ public class BuildMenuScript : MonoBehaviour
            
         }else if(selectedBuildingType == BuildingType.Storage)
         {
-            if (Building.CanAfford(BuildingType.Gathering))
+            if (Building.CanAfford(BuildingType.Gathering, myInventory))
             {
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
-                Instantiate(buildingStoragePrefab, position, Quaternion.identity);
-                Debug.Log("Building instantiated: " + selectedBuildingType);
+                GameObject newBuildingObject = Instantiate(buildingStoragePrefab, position, Quaternion.identity);
+                // Get the Building component from the instantiated object
+                Building newBuilding = newBuildingObject.GetComponent<Building>();
+
+                // Associate the building with the selected resource
+                if (newBuilding != null)
+                {
+                    newBuilding.ResourceType = selectedResourceType;
+                    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
+                }
+                else
+                {
+                    Debug.LogError("Failed to get Building component from instantiated object.");
+                }
             }
 
             //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));
@@ -306,12 +334,24 @@ public class BuildMenuScript : MonoBehaviour
         }
         else if(selectedBuildingType == BuildingType.Production)
         {
-            if (Building.CanAfford(BuildingType.Gathering))
+            if (Building.CanAfford(BuildingType.Gathering, myInventory))
             {
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
-                Instantiate(buildingProductionPrefab, position, Quaternion.identity);
-                Debug.Log("Building instantiated: " + selectedBuildingType);
+                GameObject newBuildingObject = Instantiate(buildingProductionPrefab, position, Quaternion.identity);
+                // Get the Building component from the instantiated object
+                Building newBuilding = newBuildingObject.GetComponent<Building>();
+
+                // Associate the building with the selected resource
+                if (newBuilding != null)
+                {
+                    newBuilding.ResourceType = selectedResourceType;
+                    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
+                }
+                else
+                {
+                    Debug.LogError("Failed to get Building component from instantiated object.");
+                }
             }
 
             //Building selectedBuilding = new Building(selectedBuildingType, 0, selectedResourceType, new Vector3(0, 0, 0));

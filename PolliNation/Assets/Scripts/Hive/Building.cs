@@ -2,18 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Made Building class a normal C# class that is not a MonoBehaviour
+
 public class Building : MonoBehaviour
 {
     public InventoryScriptableObject myInventory;
     [SerializeField]
     private BuildingType myNewBuildingType;
+    [SerializeField]
+    private ResourceType myResourceType;
     public BuildingType Type
     { get { return myNewBuildingType; } set { myNewBuildingType = value; } }
     public int Cost
     { get; set; }
-    public ResourceType? ResourceType 
-    { get; set; }
+    public ResourceType? ResourceType
+    { get { return myResourceType; } set => myResourceType = (ResourceType)value; }
     public Vector3 Position
     { get; set; }
 
@@ -31,13 +33,14 @@ public class Building : MonoBehaviour
         Position = position;
     }
 
-    // Potentially make static
-    public static bool CanAfford(BuildingType type)
+    // Made method static to check if a Building can be afforded based on what is in the inventory
+    // After pollen or nectar has been collected to the required amount
+    public static bool CanAfford(BuildingType type, InventoryScriptableObject inventory)
     {
         if (type == BuildingType.Gathering)
         {
-            //return myInventory.GetResourceCount(global::ResourceType.Nectar) >= 5;
-            return true;
+            return inventory.GetResourceCount(global::ResourceType.Pollen) >= 5;
+            
             
         }
         else if(type == BuildingType.Storage)

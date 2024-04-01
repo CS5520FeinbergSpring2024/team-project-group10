@@ -7590,10 +7590,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c533704e05783446899ad3018300f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedBuilding: {fileID: 0}
   buildingGatheringPrefab: {fileID: 1173837564942887432, guid: 23526c0a47a1f1a4194c459b8aacfd89, type: 3}
   buildingStoragePrefab: {fileID: 3067881542520758940, guid: 0199bb0bac626e643b9b1b3fb66727df, type: 3}
   buildingProductionPrefab: {fileID: 7817771779846944282, guid: b4375b63c58528343a46f34d7074c8f6, type: 3}
   selectedResource: {fileID: 0}
+  myInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
 --- !u!1 &7942903629677750598
 GameObject:
   m_ObjectHideFlags: 0

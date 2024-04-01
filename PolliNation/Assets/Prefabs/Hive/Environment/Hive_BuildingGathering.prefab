@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
+  myNewBuildingType: 0
+  myResourceType: 0
 --- !u!1 &1939766943611262341
 GameObject:
   m_ObjectHideFlags: 0
