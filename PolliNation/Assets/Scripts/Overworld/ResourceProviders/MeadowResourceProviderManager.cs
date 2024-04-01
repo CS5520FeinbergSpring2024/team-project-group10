@@ -117,14 +117,8 @@ public class MeadowResourceProviderManager : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         SpawnObjects(_pollenProviderPrefab, _numPollenProviders);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }
