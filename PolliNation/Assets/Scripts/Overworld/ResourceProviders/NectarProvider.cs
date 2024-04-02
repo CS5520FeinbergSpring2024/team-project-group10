@@ -1,18 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class NectarProvider : MonoBehaviour
+/// <summary>
+/// Provides nectar. Extends FlowerResourceProvider.
+/// </summary>
+public class NectarProvider : FlowerResourceProvider
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+    new void Awake() {
+        base.Awake();
+        // Not really necessary since it defaults to pollen.
+        SetValues(ResourceType.Nectar);
+        TotalRegenerationCycles = 3;
     }
 }
+
