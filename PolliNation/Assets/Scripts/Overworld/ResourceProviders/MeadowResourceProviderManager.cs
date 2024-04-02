@@ -18,7 +18,9 @@ public class MeadowResourceProviderManager : MonoBehaviour
 
     // For polar locations. Generated locations fall in
     // the ring between these two radii.
-    private readonly int _locationOuterRadius = 50;
+    private string _boundaryWallTag = "Meadow_Boundary";
+    // Set radius in case boundaryTag doesn't exist in world.
+    private float _locationOuterRadius = 50;
     private readonly int _locationInnerRadius = 15;
 
     // For flower rotations.
@@ -115,6 +117,10 @@ public class MeadowResourceProviderManager : MonoBehaviour
         {
             Debug.LogError(e);
         }
+    }
+
+    void Awake() {
+        _locationOuterRadius = MapBoundaryUtilityScript.FindMinBoundaryDistance(_boundaryWallTag);
     }
 
     void Start()
