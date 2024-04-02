@@ -14,6 +14,8 @@ public class MeadowResourceProviderManager : MonoBehaviour
     private int _numPollenProviders = 24;
     [SerializeField]
     private GameObject _pollenProviderPrefab;
+    [SerializeField]
+    private float _pollenProviderMinDistanceApart = 3;
 
     // Other fields.
     private List<GameObject> _pollenProviders = new();
@@ -24,8 +26,6 @@ public class MeadowResourceProviderManager : MonoBehaviour
     // Set radius in case boundaryTag doesn't exist in world.
     private float _locationOuterRadius = 50;
     private readonly int _locationInnerRadius = 15;
-    [SerializeField]
-    private float _minDistanceApart = 3;
 
     // For flower rotations.
     private readonly int _xRotationDegrees = 10;
@@ -136,7 +136,7 @@ public class MeadowResourceProviderManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Spawn <c>count</c> number of the given <c>prefab</c> at random locations.
+    /// Spawn up to <c>count</c> number of the given <c>prefab</c> at random locations.
     /// </summary>
     /// <param name="prefab">The prefab to spawn objects from.</param>
     /// <param name="count">The number of objects to spawn.</param>
@@ -147,7 +147,7 @@ public class MeadowResourceProviderManager : MonoBehaviour
             for (int i = 0; i < count; i++)
             {
                 Vector3 location = GenerateRandomLocationWithValidDistance(
-                    _pollenProviders, _minDistanceApart);
+                    _pollenProviders, _pollenProviderMinDistanceApart);
                 if (!Vector3.positiveInfinity.Equals(location))
                 {
                     Debug.Log("valid");
