@@ -5,7 +5,7 @@ using UnityEngine;
 /// Instantiates PollenProvider objects in the scene. Manages their placement
 /// and values.
 /// </summary>
-public class MeadowResourceProviderManager : MonoBehaviour
+public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmissionRateConverter
 {
     // Fields to in editor.
 
@@ -36,6 +36,12 @@ public class MeadowResourceProviderManager : MonoBehaviour
     private readonly int _totalCollectableAmountMax = 45;
     private readonly int _regenerationTimeSecondsMin = 5;
     private readonly int _regenerationTimeSecondsMax = 15;
+
+    // For visual representation of flowers' capacity.
+    // These may need to be adjusted to obtain good visual distinction.
+    private readonly int _particleEmissionRateMin = 0;
+    private readonly int _particleEmissionRateMax = 25;
+    private int _amountToEmissionConversionFactor;
 
     /// <summary>
     /// Generates a random Vector3 location on the plane within the 
@@ -105,6 +111,7 @@ public class MeadowResourceProviderManager : MonoBehaviour
                 FlowerResourceProvider providerScript =
                         instance.GetComponent<FlowerResourceProvider>();
                 SetRandomProductionValues(providerScript);
+                providerScript.EmissionRateConverter = this;
             }
         }
         catch (UnassignedReferenceException e)
@@ -117,8 +124,34 @@ public class MeadowResourceProviderManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Convert a value on the totalCollectableAmount scale to its equivalent on the
+    /// particleEmissionRate scale.
+    /// </summary>
+    /// <param name="amount">Amount of the resource available to collect.</param>
+    /// <returns>The equivalent of the given amount on the particle emmision rate scale.</returns>
+    public float EmissionRateFromResourceAmount(float amount)
+    {
+        if (amount <= _totalCollectableAmountMin)
+        {
+            return _particleEmissionRateMin;
+        }
+        if (amount > _totalCollectableAmountMax)
+        {
+            return _particleEmissionRateMax;
+        }
+        return (amount - _totalCollectableAmountMin) * _amountToEmissionConversionFactor
+                    + _particleEmissionRateMin;
+    }
+
     void Start()
     {
+        // Set up emission rate conversion.
+        _amountToEmissionConversionFactor = 
+                (_totalCollectableAmountMax - _totalCollectableAmountMin)
+                / (_particleEmissionRateMax - _particleEmissionRateMin);
+
+        // Spawn objects.
         SpawnObjects(_pollenProviderPrefab, _numPollenProviders);
     }
 }
