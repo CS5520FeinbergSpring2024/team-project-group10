@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using OpenCover.Framework.Model;
 using UnityEngine;
 
 /// <summary>
@@ -31,6 +32,16 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
     private protected float _partialUnitsForCollection;
     private protected bool _currentlyCollecting;
     private protected bool _currentlyRegenerating;
+    private protected ParticleSystem _particleSystem;
+
+    /// <summary>
+    /// The IResourceAmountToEmissionRateConverter to use to convert this object's
+    /// amount of collectable resources to a particle emission rate.
+    /// </summary>
+    public IResourceAmountToEmissionRateConverter EmissionRateConverter
+    {
+        get; set;
+    }
 
     /// <summary>
     /// The type of resource that this produces. Either Pollen or Nectar.
@@ -324,6 +335,39 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
         _currentlyRegenerating = false;
     }
 
+    /// <summary>
+    /// Set the emission rate over time for this flower's particles to match
+    /// this flower's amount of collectable resources.
+    /// </summary>
+    public void UpdateParticleRate()
+    {
+        const string funcTag = "UpdateParticleRate";
+        if (EmissionRateConverter != null)
+        {
+            float rate = EmissionRateConverter.EmissionRateFromResourceAmount(AmountRemaining);
+            if (_particleSystem != null)
+            {
+                // This seems to be the only way to get it to access emission.rateOverTime.
+                var e = _particleSystem.emission;
+                e.rateOverTime = rate;
+            }
+            else
+            {
+                {
+                    Debug.Log(FormatLogMessage(
+                        funcTag,
+                        "Cannot set particle emission rate. _particleSystem is null."));
+                }
+            }
+        }
+        else
+        {
+            Debug.Log(FormatLogMessage(
+                funcTag,
+                "Cannot convert amount to particle emission rate. EmissionRateConverter is null."));
+        }
+    }
+
     // Unity lifecycle methods.
 
     private protected void Awake()
@@ -335,6 +379,7 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
         }
         // Set default starting values.
         SetValues();
+        _particleSystem = GetComponent<ParticleSystem>();
     }
 
     private protected void OnTriggerEnter(Collider other)
@@ -368,6 +413,7 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
         {
             Regenerate();
         }
+        UpdateParticleRate();
     }
 
     // Utility Methods
