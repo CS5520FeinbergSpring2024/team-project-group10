@@ -150,17 +150,13 @@ public class MeadowResourceProviderManager : MonoBehaviour
                     _pollenProviders, _pollenProviderMinDistanceApart);
                 if (!Vector3.positiveInfinity.Equals(location))
                 {
-                    Debug.Log("valid");
                     GameObject instance = Instantiate(prefab,
-                                                  GenerateRandomRingLocation(),
+                                                  location,
                                                   GenerateRandomRotation());
                     FlowerResourceProvider providerScript =
                             instance.GetComponent<FlowerResourceProvider>();
                     SetRandomProductionValues(providerScript);
                     _pollenProviders.Add(instance);
-                }
-                else {
-                    Debug.Log("invalid");
                 }
             }
         }
