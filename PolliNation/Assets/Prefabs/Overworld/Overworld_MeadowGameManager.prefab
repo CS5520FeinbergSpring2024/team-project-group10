@@ -78,6 +78,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3578916544553879173}
   - component: {fileID: 5099514420821538048}
+  - component: {fileID: 1403089581480521474}
   m_Layer: 0
   m_Name: Overworld_MeadowGameManager
   m_TagString: Untagged
@@ -115,3 +116,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _numPollenProviders: 24
   _pollenProviderPrefab: {fileID: 8090212740446701295, guid: 6818b5f47177d4b8fb9178b287c270a5, type: 3}
+--- !u!114 &1403089581480521474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6357836885836393115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97e04da783fa048a9be3c91c18456416, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wasp: {fileID: 7599335676633998008, guid: f47990e300b834750a871e567dfe868b, type: 3}
+  numWasps: 5
+  minDistanceFromOthers: 15
