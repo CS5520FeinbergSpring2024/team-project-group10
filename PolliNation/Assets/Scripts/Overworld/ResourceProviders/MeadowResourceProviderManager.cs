@@ -6,7 +6,7 @@ using UnityEngine;
 /// Instantiates PollenProvider and NectarProvider objects in the scene. 
 /// Manages their placement and values.
 /// </summary>
-public class MeadowResourceProviderManager : MonoBehaviour
+public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmissionRateConverter
 {
     // Fields to in editor.
     // PollenProvider
@@ -39,8 +39,9 @@ public class MeadowResourceProviderManager : MonoBehaviour
     private readonly int _zRotationDegrees = 10;
 
     // Storing settings in distionaries easier functions.
-    private readonly string _pollenKey = "PollenKey";
-    private readonly string _nectarKey = "NectarKey";
+    private readonly Type _pollenKey = typeof(PollenProvider);
+    private readonly Type _nectarKey = typeof(NectarProvider);
+    private readonly List<Type> _acceptedKeys = new();
 
     // For generating production constraints.
     /* A future version could tie these values to the player's progress,
@@ -67,12 +68,23 @@ public class MeadowResourceProviderManager : MonoBehaviour
 
     // Settings dictionaries for easier programming.
     // Shared
-    Dictionary<string, int> _secondsToCollectTotalMin = new();
-    Dictionary<string, int> _secondsToCollectTotalMax = new();
-    Dictionary<string, int> _totalCollectableAmountMin = new();
-    Dictionary<string, int> _totalCollectableAmountMax = new();
-    Dictionary<string, int> _regenerationTimeSecondsMin = new();
-    Dictionary<string, int> _regenerationTimeSecondsMax = new();
+    private readonly Dictionary<Type, int> _secondsToCollectTotalMin = new();
+    private readonly Dictionary<Type, int> _secondsToCollectTotalMax = new();
+    private readonly Dictionary<Type, int> _totalCollectableAmountMin = new();
+    private readonly Dictionary<Type, int> _totalCollectableAmountMax = new();
+    private readonly Dictionary<Type, int> _regenerationTimeSecondsMin = new();
+    private readonly Dictionary<Type, int> _regenerationTimeSecondsMax = new();
+
+    // For visual representation of flowers' capacity.
+    // These may need to be adjusted to obtain good visual distinction.
+    private readonly int _pollenParticleEmissionRateMin = 0;
+    private readonly int _pollenParticleEmissionRateMax = 25;
+    private readonly int _nectarParticleEmissionRateMin = 0;
+    private readonly int _nectarParticleEmissionRateMax = 25;
+
+    private readonly Dictionary<Type, int> _particleEmissionRateMin = new();
+    private readonly Dictionary<Type, int> _particleEmissionRateMax = new();
+    private readonly Dictionary<Type, int> _amountToEmissionConversionFactor = new();
 
     /// <summary>
     /// Generates a random Vector3 location on the plane within the 
@@ -152,7 +164,7 @@ public class MeadowResourceProviderManager : MonoBehaviour
     /// <param name="FlowerResourceProvider">The FlowerResourceProvider for which to set
     /// values.</param>
     /// <param name="settingsKey">The key to use to look up production value settings.</param>
-    private void SetRandomProductionValues(FlowerResourceProvider provider, string settingsKey)
+    private void SetRandomProductionValues(FlowerResourceProvider provider, Type settingsKey)
     {
         if (provider != null)
         {
@@ -174,7 +186,7 @@ public class MeadowResourceProviderManager : MonoBehaviour
     /// <param name="instanceList">The list in which to store spawned instances.</param>
     /// <param name="settingsKey">The key to use to look up production value settings.</param>
     /// <param name="count">The number of objects to spawn.</param>
-    private void SpawnObjects(GameObject prefab, List<GameObject> instanceList, string settingsKey, int count = 1)
+    private void SpawnObjects(GameObject prefab, List<GameObject> instanceList, Type settingsKey, int count = 1)
     {
         try
         {
@@ -185,11 +197,12 @@ public class MeadowResourceProviderManager : MonoBehaviour
                 if (!Vector3.positiveInfinity.Equals(location))
                 {
                     GameObject instance = Instantiate(prefab,
-                                                  GenerateRandomRingLocation(),
+                                                  location,
                                                   GenerateRandomRotation());
                     FlowerResourceProvider providerScript =
                             instance.GetComponent<FlowerResourceProvider>();
                     SetRandomProductionValues(providerScript, settingsKey);
+                    providerScript.EmissionRateConverter = this;
                     instanceList.Add(instance);
                 }
             }
@@ -204,9 +217,41 @@ public class MeadowResourceProviderManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Convert a value on the totalCollectableAmount scale to its equivalent on the
+    /// particleEmissionRate scale.
+    /// </summary>
+    /// <param name="amount">Amount of the resource available to collect.</param>
+    /// <param name="settingsKey">The key to use to look up production value settings. 
+    /// Typically the type of the object calling this method.</param>
+    /// <returns>The equivalent of the given amount on the particle emmision rate scale or -1 if the
+    /// given settingsKey is not recognized.</returns>
+    public float EmissionRateFromResourceAmount(float amount, Type settingsKey)
+    {
+        if (settingsKey == null || !_acceptedKeys.Contains(settingsKey)) {
+            Debug.Log(string.Format("[{0}: {0}] Error: settingsKey {0} not recognized.", 
+                      GetType(), "EmissionRateFromResourceAmount", settingsKey));
+            return -1;
+        }
+        if (amount <= _totalCollectableAmountMin[settingsKey])
+        {
+            return _particleEmissionRateMin[settingsKey];
+        }
+        if (amount > _totalCollectableAmountMax[settingsKey])
+        {
+            return _particleEmissionRateMax[settingsKey];
+        }
+        return (amount - _totalCollectableAmountMin[settingsKey]) * _amountToEmissionConversionFactor[settingsKey]
+                    + _particleEmissionRateMin[settingsKey];
+    }
+
     void Awake()
     {
         _locationOuterRadius = MapBoundaryUtilityScript.FindMinBoundaryDistance(_boundaryWallTag);
+
+        // Recognized dictionary keys.
+        _acceptedKeys.Add(_pollenKey);
+        _acceptedKeys.Add(_nectarKey);
 
         // Add individual settings to dictionaries.
         _secondsToCollectTotalMin.Add(_pollenKey, _pollenSecondsToCollectTotalMin);
@@ -215,6 +260,9 @@ public class MeadowResourceProviderManager : MonoBehaviour
         _totalCollectableAmountMax.Add(_pollenKey, _pollenTotalCollectableAmountMax);
         _regenerationTimeSecondsMin.Add(_pollenKey, _pollenRegenerationTimeSecondsMin);
         _regenerationTimeSecondsMax.Add(_pollenKey, _pollenRegenerationTimeSecondsMax);
+        _particleEmissionRateMin.Add(_pollenKey, _pollenParticleEmissionRateMin);
+        _particleEmissionRateMax.Add(_pollenKey, _pollenParticleEmissionRateMax);
+        _amountToEmissionConversionFactor.Add(_pollenKey, 0);
 
         _secondsToCollectTotalMin.Add(_nectarKey, _nectarSecondsToCollectTotalMin);
         _secondsToCollectTotalMax.Add(_nectarKey, _nectarSecondsToCollectTotalMax);
@@ -222,10 +270,22 @@ public class MeadowResourceProviderManager : MonoBehaviour
         _totalCollectableAmountMax.Add(_nectarKey, _nectarTotalCollectableAmountMax);
         _regenerationTimeSecondsMin.Add(_nectarKey, _nectarRegenerationTimeSecondsMin);
         _regenerationTimeSecondsMax.Add(_nectarKey, _nectarRegenerationTimeSecondsMax);
+        _particleEmissionRateMin.Add(_nectarKey, _nectarParticleEmissionRateMin);
+        _particleEmissionRateMax.Add(_nectarKey, _nectarParticleEmissionRateMax);
+        _amountToEmissionConversionFactor.Add(_nectarKey, 0);
     }
 
     void Start()
     {
+        // Set up emission rate conversion.
+        _amountToEmissionConversionFactor[_pollenKey] =
+                (_totalCollectableAmountMax[_pollenKey] - _totalCollectableAmountMin[_pollenKey])
+                / (_particleEmissionRateMax[_pollenKey] - _particleEmissionRateMin[_pollenKey]);
+        _amountToEmissionConversionFactor[_nectarKey] =
+                (_totalCollectableAmountMax[_nectarKey] - _totalCollectableAmountMin[_nectarKey])
+                / (_particleEmissionRateMax[_nectarKey] - _particleEmissionRateMin[_nectarKey]);
+
+        // Spawn objects.
         SpawnObjects(_pollenProviderPrefab, _pollenProviders, _pollenKey, _numPollenProviders);
         SpawnObjects(_nectarProviderPrefab, _nectarProviders, _nectarKey, _numNectarProviders);
     }
