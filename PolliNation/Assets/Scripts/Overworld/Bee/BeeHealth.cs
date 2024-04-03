@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,12 +7,28 @@ public class BeeHealth : MonoBehaviour
 {
     private int maxHealth = 100;
     private int health;
+    public int Health
+    {
+        get { return health;}
+    }
     public event EventHandler OnHealthChanged;
+    // set to determine healing rate
+    private int healthRegerationPerSetTime = 1;
+    private int setTime = 5;
+    // For preventing healing while under attack
+    private float lastAttack;
+    private float healDelay = 5;
     
     void Awake()
     {
         health = maxHealth;
     }
+
+    void Start()
+    {   
+        StartCoroutine(RegenerateHealth());
+    }
+
 
     /// <summary>
     /// Method adjust health based on damage and 
@@ -19,7 +36,8 @@ public class BeeHealth : MonoBehaviour
     /// Event handler added to notify listeners on change to health;
     /// </summary>
     public void TakeDamage(int damage)
-    {
+    {   
+        lastAttack = Time.time;
         health -= damage;
         // if bee health goes to 0 return to hive
         if(health <= 0) {
@@ -29,8 +47,25 @@ public class BeeHealth : MonoBehaviour
         OnHealthChanged?.Invoke(this, EventArgs.Empty); 
     }
 
-    public int Health
+    /// <summary>
+    /// if bee health is below max health will regenerate health
+    /// at set amount per set time interval
+    /// </summary>
+    IEnumerator RegenerateHealth()
     {
-        get { return health;}
+        while (true) {
+        // if health is below max and bee hasn't been attacked 
+        // for atleast healDelay seconds (to prevent healing while under attack)
+        if (health < maxHealth && Time.time > lastAttack + healDelay)
+        {   
+            health += healthRegerationPerSetTime;
+            OnHealthChanged?.Invoke(this, EventArgs.Empty); 
+            yield return new WaitForSeconds(setTime);
+        }
+        else
+        {
+            yield return null;
+        }
+    }
     }
 }

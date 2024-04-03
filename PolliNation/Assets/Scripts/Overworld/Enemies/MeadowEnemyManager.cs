@@ -39,8 +39,11 @@ public class MeadowEnemyManager : MonoBehaviour
             if (spawnPositionAvailable) 
             {
                 UnityEngine.Vector3 enemyPositon =  RandomEnemySpawnPosition();
+                if (!Vector3.positiveInfinity.Equals(enemyPositon))
+                {
                 Instantiate(enemyPrefab, enemyPositon, UnityEngine.Quaternion.identity);
                 enemyStartingPositions.Add(enemyPositon);
+                } 
             }
         }
 
@@ -75,6 +78,7 @@ public class MeadowEnemyManager : MonoBehaviour
             {
                 Debug.Log("No spawn position found that meets minDistance from other enemies criteria. Stopped spawning.");
                 spawnPositionAvailable = false;
+                generatedPosition = Vector3.positiveInfinity;
                 break;
             }
         } 
