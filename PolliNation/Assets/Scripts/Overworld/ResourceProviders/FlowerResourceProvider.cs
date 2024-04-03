@@ -344,7 +344,7 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
         const string funcTag = "UpdateParticleRate";
         if (EmissionRateConverter != null)
         {
-            float rate = EmissionRateConverter.EmissionRateFromResourceAmount(AmountRemaining);
+            float rate = EmissionRateConverter.EmissionRateFromResourceAmount(AmountRemaining, GetType());
             if (_particleSystem != null)
             {
                 // This seems to be the only way to get it to access emission.rateOverTime.
