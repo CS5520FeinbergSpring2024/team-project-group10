@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ResourceType;
 
 
 public class Building : MonoBehaviour
@@ -10,14 +11,17 @@ public class Building : MonoBehaviour
     private BuildingType myNewBuildingType;
     [SerializeField]
     private ResourceType myResourceType;
+    [SerializeField]
+    private Vector2Int tileId; // TileId stored as x, z coordinates
     public BuildingType Type
     { get { return myNewBuildingType; } set { myNewBuildingType = value; } }
-    public int Cost
+    
+    public ResourceType ResourceType
+    { get { return myResourceType; } set { myResourceType = value; } }
+    
+    public Vector2Int TileID 
     { get; set; }
-    public ResourceType? ResourceType
-    { get { return myResourceType; } set => myResourceType = (ResourceType)value; }
-    public Vector3 Position
-    { get; set; }
+    
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +29,11 @@ public class Building : MonoBehaviour
         
     }
 
-    public Building(BuildingType type, int cost, ResourceType? resourceType, Vector3 position)
+    public Building(BuildingType type, ResourceType resourceType, Vector2Int tileID)
     {
         Type = type;
-        Cost = cost;
         ResourceType = resourceType;
-        Position = position;
+        TileID = tileID;
     }
 
     // Made method static to check if a Building can be afforded based on what is in the inventory
@@ -39,21 +42,21 @@ public class Building : MonoBehaviour
     {
         if (type == BuildingType.Gathering)
         {
-            return inventory.GetResourceCount(global::ResourceType.Pollen) >= 5;
+            return inventory.GetResourceCount(ResourceType.Pollen) >= 5;
             
             
         }
         else if(type == BuildingType.Storage)
         {
-            return inventory.GetResourceCount(global::ResourceType.Nectar) >= 10 &&
-                inventory.GetResourceCount(global::ResourceType.Pollen) >= 5;
+            return inventory.GetResourceCount(ResourceType.Nectar) >= 10 &&
+                inventory.GetResourceCount(ResourceType.Pollen) >= 5;
 
 
         }
         else if(type == BuildingType.Production)
         {
-            return inventory.GetResourceCount(global::ResourceType.Nectar) >= 20 &&
-                inventory.GetResourceCount(global::ResourceType.Pollen) >= 10;
+            return inventory.GetResourceCount(ResourceType.Nectar) >= 20 &&
+                inventory.GetResourceCount(ResourceType.Pollen) >= 10;
             
         }
         else
