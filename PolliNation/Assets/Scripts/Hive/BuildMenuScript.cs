@@ -130,11 +130,6 @@ public class BuildMenuScript : MonoBehaviour
 
 
     // Methods to handle selecting a resource
-    public void SelectResource(Resource resource)
-    {
-        selectedResource = resource;
-        Debug.Log("Selected resource: " + resource);
-    }
 
     public void NectarResourceClick()
     {
@@ -173,7 +168,7 @@ public class BuildMenuScript : MonoBehaviour
     public void RoyalJellyResourceClick()
     {
         selectedResourceType = ResourceType.RoyalJelly;
-        Debug.Log("Nectar resource selected");
+        Debug.Log("Royal Jelly resource selected");
     }
 
     public void Build()
@@ -211,7 +206,7 @@ public class BuildMenuScript : MonoBehaviour
            
         }else if(selectedBuildingType == BuildingType.Storage)
         {
-            if (Building.CanAfford(BuildingType.Gathering, myInventory))
+            if (Building.CanAfford(BuildingType.Storage, myInventory))
             {
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
@@ -240,7 +235,7 @@ public class BuildMenuScript : MonoBehaviour
         }
         else if(selectedBuildingType == BuildingType.Production)
         {
-            if (Building.CanAfford(BuildingType.Gathering, myInventory))
+            if (Building.CanAfford(BuildingType.Production, myInventory))
             {
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
