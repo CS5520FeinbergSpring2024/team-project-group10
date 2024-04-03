@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -13,12 +14,17 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
     private int _numPollenProviders = 24;
     [SerializeField]
     private GameObject _pollenProviderPrefab;
+    [SerializeField]
+    private float _pollenProviderMinDistanceApart = 3;
 
     // Other fields.
+    private List<GameObject> _pollenProviders = new();
 
     // For polar locations. Generated locations fall in
     // the ring between these two radii.
-    private readonly int _locationOuterRadius = 50;
+    private string _boundaryWallTag = "Meadow_Boundary";
+    // Set radius in case boundaryTag doesn't exist in world.
+    private float _locationOuterRadius = 50;
     private readonly int _locationInnerRadius = 15;
 
     // For flower rotations.
@@ -60,6 +66,47 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
     }
 
     /// <summary>
+    /// Attempts to generate a random location that is at least minDistance away from all of the
+    /// GameObjects in others. If one cannot be found within maxIterations, returns
+    /// Vector3.positiveInfinity.
+    /// </summary>
+    /// <param name="others">The game objects to stay minDistance away from.</param>
+    /// <param name="minDistance">The minimum distance between this location and those of the
+    /// objects in others.</param>
+    /// <param name="maxIterations">The number of times to try finding a valid location.</param>
+    /// <returns>The generated valid location or Vector3.positiveInfinity if no valid location
+    /// could be found in maxIterations attempts.</returns>
+    private Vector3 GenerateRandomLocationWithValidDistance(List<GameObject> others,
+                                                            float minDistance,
+                                                            int maxIterations = 1000)
+    {
+        if (others == null || minDistance <= 0)
+        {
+            return GenerateRandomRingLocation();
+        }
+        Vector3 location = GenerateRandomRingLocation();
+        for (int i = 0; i < maxIterations; i++)
+        {
+            bool valid = true;
+            foreach (GameObject existingObj in others)
+            {
+                if (Vector3.Distance(location, existingObj.transform.position) < minDistance)
+                {
+                    valid = false;
+                }
+            }
+            if (valid)
+            {
+                return location;
+            }
+            location = GenerateRandomRingLocation();
+        }
+        Debug.Log("[MeadowResourceProviderManager]"
+                  + " Could not find location at least " + minDistance + " away from others.");
+        return Vector3.positiveInfinity;
+    }
+
+    /// <summary>
     /// Generates a Quaternion rotation with random x and z rotations within
     /// +- _xRotationDegrees and +- _zRotationDegrees, respectively, and a y-rotation
     /// between 0 and 360.
@@ -95,7 +142,7 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
     }
 
     /// <summary>
-    /// Spawn <c>count</c> number of the given <c>prefab</c> at random locations.
+    /// Spawn up to <c>count</c> number of the given <c>prefab</c> at random locations.
     /// </summary>
     /// <param name="prefab">The prefab to spawn objects from.</param>
     /// <param name="count">The number of objects to spawn.</param>
@@ -105,13 +152,19 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
         {
             for (int i = 0; i < count; i++)
             {
-                GameObject instance = Instantiate(prefab,
-                                                  GenerateRandomRingLocation(),
+                Vector3 location = GenerateRandomLocationWithValidDistance(
+                    _pollenProviders, _pollenProviderMinDistanceApart);
+                if (!Vector3.positiveInfinity.Equals(location))
+                {
+                    GameObject instance = Instantiate(prefab,
+                                                  location,
                                                   GenerateRandomRotation());
-                FlowerResourceProvider providerScript =
-                        instance.GetComponent<FlowerResourceProvider>();
-                SetRandomProductionValues(providerScript);
-                providerScript.EmissionRateConverter = this;
+                    FlowerResourceProvider providerScript =
+                            instance.GetComponent<FlowerResourceProvider>();
+                    SetRandomProductionValues(providerScript);
+                    providerScript.EmissionRateConverter = this;
+                    _pollenProviders.Add(instance);
+                }
             }
         }
         catch (UnassignedReferenceException e)
@@ -144,10 +197,15 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
                     + _particleEmissionRateMin;
     }
 
+    void Awake()
+    {
+        _locationOuterRadius = MapBoundaryUtilityScript.FindMinBoundaryDistance(_boundaryWallTag);
+    }
+
     void Start()
     {
         // Set up emission rate conversion.
-        _amountToEmissionConversionFactor = 
+        _amountToEmissionConversionFactor =
                 (_totalCollectableAmountMax - _totalCollectableAmountMin)
                 / (_particleEmissionRateMax - _particleEmissionRateMin);
 
