@@ -7,7 +7,7 @@ public class TaskScriptableObject : ScriptableObject
 {
     private List<Task> tasks = new();
     public InventoryScriptableObject UserInventory;
-
+    public event EventHandler OnTaskStatusChange;
     public TaskScriptableObject() 
     {
         // starting tasks
@@ -16,49 +16,54 @@ public class TaskScriptableObject : ScriptableObject
             { ResourceType.Pollen, 100 },
             { ResourceType.Nectar, 100 }
         };
-        Dictionary<ResourceType, int> task1ResourceRewards= new()
+        Dictionary<RewardType, int> task1ResourceRewards= new()
         {
-            { ResourceType.Water, 100 },
+            { RewardType.Water, 100 },
         };
-        Task task1 = new("Quest 1", "Gather 100 pollen and 100 nectar from outside", task1ResourceRequirements, task1ResourceRewards, 5);
+        Task task1 = new("Quest 1", "Gather 100 pollen and 100 nectar from outside", task1ResourceRequirements, task1ResourceRewards);
 
         Dictionary<ResourceType, int> task2ResourceRequirements= new()
         {
             { ResourceType.Pollen, 1000 },
             { ResourceType.Nectar, 1000 }
         };
-        Dictionary<ResourceType, int> task2ResourceRewards= new()
+        Dictionary<RewardType, int> task2ResourceRewards= new()
         {
-            { ResourceType.Buds, 50},
+            { RewardType.Buds, 50},
+            { RewardType.Workers, 5 }
         };
-        Task task2 = new("Quest 2", "Store 1000 pollen and 1000 nectar", task2ResourceRequirements, task2ResourceRewards, 5);
+        Task task2 = new("Quest 2", "Store 1000 pollen and 1000 nectar", task2ResourceRequirements, task2ResourceRewards);
 
         Dictionary<ResourceType, int> task3ResourceRequirements= new()
         {
             { ResourceType.Honey, 100},
         };
-        Dictionary<ResourceType, int> task3ResourceRewards= new()
+        Dictionary<RewardType, int> task3ResourceRewards= new()
         {
-            { ResourceType.Buds, 100},
+            { RewardType.Buds, 100},
+            { RewardType.Workers, 10}
         };
-        Task task3 = new("Quest 3", "Produce 100 Honey", task3ResourceRequirements, task3ResourceRewards, 10);
+        Task task3 = new("Quest 3", "Produce 100 Honey", task3ResourceRequirements, task3ResourceRewards);
 
         Dictionary<ResourceType, int> task4ResourceRequirements= new()
         {
             { ResourceType.Propolis, 10},
         };
-        Dictionary<ResourceType, int> task4ResourceRewards= new();
-        Task task4 = new("Quest 4", "Produce 10 Propolis", task4ResourceRequirements, task4ResourceRewards, 15);
+        Dictionary<RewardType, int> task4ResourceRewards= new()
+        {
+            { RewardType.Workers, 20}
+        };
+        Task task4 = new("Quest 4", "Produce 10 Propolis", task4ResourceRequirements, task4ResourceRewards);
 
         Dictionary<ResourceType, int> task5ResourceRequirements= new()
         {
             { ResourceType.Propolis, 50},
         };
-        Dictionary<ResourceType, int> task5ResourceRewards= new()
+        Dictionary<RewardType, int> task5ResourceRewards= new()
         {
-            { ResourceType.RoyalJelly, 1},
+            { RewardType.RoyalJelly, 1},
         };
-        Task task5 = new("Quest 5", "Store 50 Propolis", task5ResourceRequirements, task5ResourceRewards, 0);
+        Task task5 = new("Quest 5", "Store 50 Propolis", task5ResourceRequirements, task5ResourceRewards);
 
         // add created tasks to SO list
         tasks.Add(task1);
@@ -95,6 +100,7 @@ public class TaskScriptableObject : ScriptableObject
     /// </summary>
     public void AddTask(Task task){
         tasks.Add(task);
+        OnTaskStatusChange?.Invoke(this, EventArgs.Empty); 
     }
 
     /// <summary>
@@ -102,6 +108,7 @@ public class TaskScriptableObject : ScriptableObject
     /// </summary>
     public void RemoveTask(Task task){
         tasks.Remove(task);
+        OnTaskStatusChange?.Invoke(this, EventArgs.Empty); 
     }
 
     /// <summary>
@@ -131,6 +138,7 @@ public class TaskScriptableObject : ScriptableObject
                 if (checkComplete)
                 {
                     task.IsComplete = true;
+                    OnTaskStatusChange?.Invoke(this, EventArgs.Empty); 
                 }
         }
         }
@@ -144,18 +152,28 @@ public class TaskScriptableObject : ScriptableObject
     {
         if(task.IsComplete && !task.IsClaimed)
         {
-            foreach(KeyValuePair<ResourceType, int> entry in task.ResourceRewards)
-            {
-                UserInventory.UpdateInventory(entry.Key, entry.Value);
+            foreach(KeyValuePair<RewardType, int> entry in task.Rewards)
+            {   
+                if (!entry.Key.Equals(RewardType.Workers) && entry.Value != 0)
+                {
+                    if (Enum.TryParse(entry.Key.ToString(), out ResourceType rewardResource) 
+                    && Enum.IsDefined(typeof(ResourceType), rewardResource)) 
+                    {
+                        UserInventory.UpdateInventory(rewardResource, entry.Value);
+                    }
+                } 
+                else if (entry.Key.Equals(RewardType.Workers) && entry.Value != 0) 
+                {
+                        // when HiveScriptableObject is finished add to update workers
+                        // HiveManager.AddWorkers(_workerReward)
+                }
             }
-            // when HiveScriptableObject is finished add to update workers
-            if (task.WorkerReward != 0) 
-            {
-                // HiveManager.AddWorkers(_workerReward)
-            }
-            // update to set as claimed
-            task.IsClaimed = true;
-        } else
+        
+        // update to set as claimed and notify any listeners of event
+        task.IsClaimed = true;
+        OnTaskStatusChange?.Invoke(this, EventArgs.Empty);  
+        }
+        else
         {
             Debug.Log("Cannot claim task reward");
         }
