@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "NewHive", menuName = "Custom/Hive")]
+[CreateAssetMenu(fileName = "NewHive", menuName = "Data/Hive")]
 public class HiveScriptable : ScriptableObject
 {
     
@@ -41,9 +41,7 @@ public class HiveScriptable : ScriptableObject
     // Method to assign workers to a resource type
     public void AssignWorkers(ResourceType resourceType, int numberOfWorkers)
     {
-        if (assignedWorkers[resourceType] + numberOfWorkers >= 0) {
-            assignedWorkers[resourceType] = assignedWorkers[resourceType] + numberOfWorkers;
-        }
+        assignedWorkers[resourceType] = numberOfWorkers;
     }
 
     
@@ -53,12 +51,10 @@ public class HiveScriptable : ScriptableObject
     }
 
     // Method to update the station levels for a specific resource type
-    public void UpdateStationLevels(ResourceType resourceType, int storageLevelIncrease, 
-        int productionLevelIncrease)
+    public void UpdateStationLevels(ResourceType resourceType, int storageLevel, 
+        int productionLevel)
     {
-        var currentLevels = resourceLevels[resourceType];
-        resourceLevels[resourceType] = (currentLevels.storageLevel + storageLevelIncrease,
-            currentLevels.productionLevel + productionLevelIncrease);
+        resourceLevels[resourceType] = (storageLevel, productionLevel);
     }
 
     // Getting the current station level for the resource, if there is no station then its zero
