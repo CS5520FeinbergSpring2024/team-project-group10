@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,14 +6,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewHive", menuName = "Custom/Hive")]
 public class HiveScriptable : ScriptableObject
 {
-    [SerializeField]
-    private List<Building> buildings = new List<Building>();
-    [SerializeField]
-    private Dictionary<ResourceType, int> assignedWorkers = new Dictionary<ResourceType, int>();
-    [SerializeField]
-    private Dictionary<ResourceType, (int storageLevel, int gatheringLevel, int productionLevel)> resourceLevels = 
-        new Dictionary<ResourceType, (int, int, int)>();
     
+    private List<Building> buildings = new List<Building>();
+    private Dictionary<ResourceType, int> assignedWorkers = new Dictionary<ResourceType, int>();
+    private Dictionary<ResourceType, (int storageLevel, int productionLevel)> resourceLevels = 
+        new Dictionary<ResourceType, (int, int)>();
+    
+    public HiveScriptable() { 
+        foreach(ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
+        {
+            assignedWorkers.Add(resourceType, 0);
+        }
+
+        foreach(ResourceType resourceType in Enum.GetValues(typeof(ResourceType))) 
+        { 
+            resourceLevels.Add(resourceType, (0, 0));
+        }
+    }
 
     
     // Method to add a new building to the list of buildings
@@ -31,42 +41,30 @@ public class HiveScriptable : ScriptableObject
     // Method to assign workers to a resource type
     public void AssignWorkers(ResourceType resourceType, int numberOfWorkers)
     {
-        if (assignedWorkers.ContainsKey(resourceType))
-        {
-            assignedWorkers[resourceType] = numberOfWorkers;
-        }
-        else
-        {
-            assignedWorkers.Add(resourceType, numberOfWorkers);
+        if (assignedWorkers[resourceType] + numberOfWorkers >= 0) {
+            assignedWorkers[resourceType] = assignedWorkers[resourceType] + numberOfWorkers;
         }
     }
 
     
     public int GetAssignedWorkers(ResourceType resourceType)
     {
-        return assignedWorkers.ContainsKey(resourceType) ? assignedWorkers[resourceType] : 0;
+        return assignedWorkers[resourceType];
     }
 
     // Method to update the station levels for a specific resource type
     public void UpdateStationLevels(ResourceType resourceType, int storageLevelIncrease, 
-        int gatheringLevelIncrease, int productionLevelIncrease)
+        int productionLevelIncrease)
     {
-        if (resourceLevels.ContainsKey(resourceType))
-        {
-            var currentLevels = resourceLevels[resourceType];
-            resourceLevels[resourceType] = (currentLevels.storageLevel + storageLevelIncrease, 
-                currentLevels.gatheringLevel + gatheringLevelIncrease, currentLevels.productionLevel + productionLevelIncrease);
-        }
-        else
-        {
-            resourceLevels.Add(resourceType, (storageLevelIncrease, gatheringLevelIncrease, productionLevelIncrease));
-        }
+        var currentLevels = resourceLevels[resourceType];
+        resourceLevels[resourceType] = (currentLevels.storageLevel + storageLevelIncrease,
+            currentLevels.productionLevel + productionLevelIncrease);
     }
 
     // Getting the current station level for the resource, if there is no station then its zero
-    public (int storageLevel, int gatheringLevel, int productionLevel) GetStationLevels(ResourceType resourceType)
+    public (int storageLevel, int productionLevel) GetStationLevels(ResourceType resourceType)
     {
-        return resourceLevels.ContainsKey(resourceType) ? resourceLevels[resourceType] : (0, 0, 0);
+        return resourceLevels[resourceType];
     }
 
     // Update is called once per frame
