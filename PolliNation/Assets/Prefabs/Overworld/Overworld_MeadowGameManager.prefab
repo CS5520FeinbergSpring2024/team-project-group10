@@ -116,6 +116,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _numPollenProviders: 24
   _pollenProviderPrefab: {fileID: 8090212740446701295, guid: 6818b5f47177d4b8fb9178b287c270a5, type: 3}
+  _minDistanceApart: 3
+  _numNectarProviders: 16
+  _nectarProviderPrefab: {fileID: 3624508629034726637, guid: 8c322d1a6d332473e8615b74a31198c4, type: 3}
 --- !u!114 &1403089581480521474
 MonoBehaviour:
   m_ObjectHideFlags: 0
