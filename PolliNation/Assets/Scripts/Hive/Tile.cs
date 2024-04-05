@@ -27,6 +27,13 @@ public class Tile : MonoBehaviour
     void Start()
     {
         LoadBuilding();
+
+        // Just placing this here for testing
+        // Get the position of the tile in world space
+        Vector3 tilePosition = transform.position;
+
+        // Round the X and Z coordinates to integers and store them in a Vector2Int
+        tileID = new Vector2Int(Mathf.RoundToInt(tilePosition.x), Mathf.RoundToInt(tilePosition.z));
     }
 
     // Update is called once per frame

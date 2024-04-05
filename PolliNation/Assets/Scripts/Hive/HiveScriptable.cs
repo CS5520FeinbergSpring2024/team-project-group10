@@ -24,7 +24,15 @@ public class HiveScriptable : ScriptableObject
         }
     }
 
-    
+    private void Awake()
+    {
+        // Initialize the buildings list
+        buildings = new List<Building>();
+
+        
+    }
+
+
     // Method to add a new building to the list of buildings
     public void AddBuilding(Building building)
     {

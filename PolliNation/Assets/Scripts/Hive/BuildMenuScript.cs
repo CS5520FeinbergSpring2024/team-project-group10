@@ -199,6 +199,13 @@ public class BuildMenuScript : MonoBehaviour
                 // Temp placeholder position for building prefab instantiation
                 Vector3 position = new Vector3(0, 0, 0);
 
+                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
+                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
+                //Debug.Log("x position is: " + currentTileID.x);
+                //Debug.Log("y position is: " + currentTileID.y);
+                //Debug.Log("Tile ID is: " + currentTileID);
+                //Debug.Log("position is: " + position);
+
                 //GameObject newBuildingObject = Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
 
                 //// Get the Building component from the prefab

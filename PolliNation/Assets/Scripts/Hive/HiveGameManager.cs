@@ -13,6 +13,15 @@ public class HiveGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (hiveScriptable == null)
+        {
+            Debug.LogError("Hive Scriptable is not assigned!");
+            return;
+        }
+        else
+        {
+            Debug.Log("Hive Scriptable is correctly assigned");
+        }
         // Getting all of the buildings from the HiveScriptable and instantiating them
         InstantiateBuildingsFromScriptable();
     }
@@ -63,6 +72,14 @@ public class HiveGameManager : MonoBehaviour
     private void InstantiateBuildingsFromScriptable()
     {
         List<Building> buildings = hiveScriptable.GetBuildings();
+
+        // Check if the list is empty
+        if (buildings == null || buildings.Count == 0)
+        {
+            Debug.LogWarning("No buildings found in HiveScriptable.");
+            return;
+        }
+
         foreach (Building building in buildings)
         {
             InstantiateBuilding(building);
