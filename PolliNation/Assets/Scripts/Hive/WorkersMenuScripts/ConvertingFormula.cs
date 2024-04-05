@@ -5,17 +5,64 @@ using UnityEngine;
 public class Formula
 {
     private Dictionary<ResourceType, int> resourceQuantities;
+    private bool cancel = false;
 
     public Formula(Dictionary<ResourceType, int> resourceQuantities)
     {
         this.resourceQuantities = resourceQuantities;
     }
 
-    public bool Honey(int quantity)
+
+    public bool resourceEnough(ResourceType resourceType, int quantity)
+    {   
+        bool result = false;
+        switch (resourceType) 
+        {
+            case ResourceType.Honey:
+                result = Honey(quantity);
+                break;
+            case ResourceType.Propolis:
+                result = Propolis(quantity);
+                break;
+            case ResourceType.RoyalJelly:
+                result = RoyalJelly(quantity);
+                break;
+        }
+
+        return result;
+    }
+
+    public void Cancel(ResourceType resourceType)
+    { 
+        cancel = true;
+        int quantity = 1;
+        switch(resourceType)
+        {
+            case ResourceType.Honey:
+                Honey(quantity);
+                break;
+            case ResourceType.Propolis:
+                Propolis(quantity);
+                break;
+            case ResourceType.RoyalJelly:
+                RoyalJelly(quantity);
+                break;
+        }
+    }
+
+    private bool Honey(int quantity)
     {
         int nectarRequired = 2 * quantity;
         int pollenRequired = 1 * quantity;
 
+        if (cancel)
+        {
+            resourceQuantities[ResourceType.Nectar] += nectarRequired;
+            resourceQuantities[ResourceType.Pollen] += pollenRequired;
+            return true;
+        }
+
+        cancel = false;
         if (resourceQuantities.Count != 0)
         {
             resourceQuantities.TryGetValue(ResourceType.Nectar, out int nectarInventory);
@@ -32,10 +79,19 @@ public class Formula
         return false;
     }
 
-    public bool Propolis(int quantity)
+    private bool Propolis(int quantity)
     {
         int nectarRequired = 3 * quantity;
         int budsRequired = 3 * quantity;
+
+        if (cancel)
+        {
+            resourceQuantities[ResourceType.Nectar] += nectarRequired;
+            resourceQuantities[ResourceType.Buds] += budsRequired;
+            return true;
+        }
+
+        cancel = false;
 
         if (resourceQuantities.Count != 0)
         {
@@ -53,11 +109,21 @@ public class Formula
         return false;
     }
 
-    public bool RoyalJelly(int quantity)
+    private bool RoyalJelly(int quantity)
     {
         int nectarRequired = 2 * quantity;
         int pollenRequired = 2 * quantity;
         int waterRequired = 2 * quantity;
+
+        if (cancel)
+        {
+            resourceQuantities[ResourceType.Nectar] += nectarRequired;
+            resourceQuantities[ResourceType.Pollen] += pollenRequired;
+            resourceQuantities[ResourceType.Water] += waterRequired;
+            return true;
+        }
+
+        cancel = false;
 
         if (resourceQuantities.Count != 0)
         {
