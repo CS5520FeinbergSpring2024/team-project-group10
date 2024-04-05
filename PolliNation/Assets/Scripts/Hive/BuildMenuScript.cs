@@ -13,6 +13,7 @@ public class BuildMenuScript : MonoBehaviour
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
     private Tile currentTile;
+    private Vector2Int currentTileID;
     private BuildingType selectedBuildingType;
     private ResourceType selectedResourceType;
     public Building selectedBuilding;
@@ -21,6 +22,7 @@ public class BuildMenuScript : MonoBehaviour
     public GameObject buildingProductionPrefab;
     public Resource selectedResource;
     public InventoryScriptableObject myInventory;
+    public HiveGameManager hiveGameManager;
 
     // Reference to the future data class 
     //public DataClass buildingData; 
@@ -45,6 +47,21 @@ public class BuildMenuScript : MonoBehaviour
         else
         {
             Debug.LogError("Menu button object reference not set.");
+        }
+
+        // Finding the Hive_GameManager object in the scene
+        GameObject hiveGameManagerObject = GameObject.Find("Hive_GameManager");
+        if (hiveGameManagerObject != null)
+        {
+            hiveGameManager = hiveGameManagerObject.GetComponent<HiveGameManager>();
+            if (hiveGameManager == null)
+            {
+                Debug.LogError("HiveGameManager component could not be found in Hive_GameManager object.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Hive_GameManager object not found in the scene.");
         }
 
     }
@@ -182,21 +199,22 @@ public class BuildMenuScript : MonoBehaviour
                 // Temp placeholder position for building prefab instantiation
                 Vector3 position = new Vector3(0, 0, 0);
 
-                GameObject newBuildingObject = Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
+                //GameObject newBuildingObject = Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
 
-                // Get the Building component from the prefab
-                Building newBuilding = newBuildingObject.GetComponent<Building>();
+                //// Get the Building component from the prefab
+                //Building newBuilding = newBuildingObject.GetComponent<Building>();
 
-                // Associate the building with the selected resource 
-                if (newBuilding != null)
-                {
-                    newBuilding.ResourceType = selectedResourceType;
-                    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
-                }
-                else
-                {
-                    Debug.LogError("Failed to get Building component from instantiated object.");
-                }
+                //// Associate the building with the selected resource 
+                //if (newBuilding != null)
+                //{
+                //    newBuilding.ResourceType = selectedResourceType;
+                //    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
+                //}
+                //else
+                //{
+                //    Debug.LogError("Failed to get Building component from instantiated object.");
+                //}
+                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
             }
             else
             {
@@ -211,21 +229,21 @@ public class BuildMenuScript : MonoBehaviour
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
 
-                GameObject newBuildingObject = Instantiate(buildingStoragePrefab, position, Quaternion.identity);
+                //GameObject newBuildingObject = Instantiate(buildingStoragePrefab, position, Quaternion.identity);
 
                 
-                Building newBuilding = newBuildingObject.GetComponent<Building>();
+                //Building newBuilding = newBuildingObject.GetComponent<Building>();
 
      
-                if (newBuilding != null)
-                {
-                    newBuilding.ResourceType = selectedResourceType;
-                    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
-                }
-                else
-                {
-                    Debug.LogError("Failed to get Building component from instantiated object.");
-                }
+                //if (newBuilding != null)
+                //{
+                //    newBuilding.ResourceType = selectedResourceType;
+                //    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
+                //}
+                //else
+                //{
+                //    Debug.LogError("Failed to get Building component from instantiated object.");
+                //}
             }
             else
             {
@@ -240,20 +258,20 @@ public class BuildMenuScript : MonoBehaviour
                 // Temp position for instantiation
                 Vector3 position = new Vector3(0, 0, 0);
 
-                GameObject newBuildingObject = Instantiate(buildingProductionPrefab, position, Quaternion.identity);
+                //GameObject newBuildingObject = Instantiate(buildingProductionPrefab, position, Quaternion.identity);
                 
-                Building newBuilding = newBuildingObject.GetComponent<Building>();
+                //Building newBuilding = newBuildingObject.GetComponent<Building>();
 
                 
-                if (newBuilding != null)
-                {
-                    newBuilding.ResourceType = selectedResourceType;
-                    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
-                }
-                else
-                {
-                    Debug.LogError("Failed to get Building component from instantiated object.");
-                }
+                //if (newBuilding != null)
+                //{
+                //    newBuilding.ResourceType = selectedResourceType;
+                //    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
+                //}
+                //else
+                //{
+                //    Debug.LogError("Failed to get Building component from instantiated object.");
+                //}
             }
             else
             {
@@ -271,6 +289,8 @@ public class BuildMenuScript : MonoBehaviour
     {   
         // tile use for bind building by tile.SetCurrentBuilding() method
         currentTile = tile;
+
+        currentTileID = tile.tileID; // Store the tile ID
 
         // Show the build menu    
         setOpen();

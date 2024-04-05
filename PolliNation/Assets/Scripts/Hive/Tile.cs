@@ -20,6 +20,7 @@ public class Tile : MonoBehaviour
 {
     private BuildMenuScript buildMenu;
     private Building currentBuilding;
+    public Vector2Int tileID;
     //private DataClass buildingData;
 
     // Start is called before the first frame update
