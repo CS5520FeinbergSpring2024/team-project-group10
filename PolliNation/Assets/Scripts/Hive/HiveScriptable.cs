@@ -6,8 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewHive", menuName = "Data/Hive")]
 public class HiveScriptable : ScriptableObject
 {
-    
-    private List<Building> buildings = new List<Building>();
+    private List<Building> buildings;
     private Dictionary<ResourceType, int> assignedWorkers = new Dictionary<ResourceType, int>();
     private Dictionary<ResourceType, (int storageLevel, int productionLevel)> resourceLevels = 
         new Dictionary<ResourceType, (int, int)>();
@@ -24,10 +23,11 @@ public class HiveScriptable : ScriptableObject
         }
     }
 
-    private void Awake()
+    private void OnEnable()
     {
-        // Initialize the buildings list
-        buildings = new List<Building>();
+        // Ensure the buildings list is initialized
+        if (buildings == null)
+            buildings = new List<Building>();
     }
 
 
@@ -35,11 +35,14 @@ public class HiveScriptable : ScriptableObject
     public void AddBuilding(Building building)
     {
         buildings.Add(building);
+        Debug.Log("Building added to list. Total buildings: " + buildings.Count);
+        Debug.Log("Building prefab reference: " + building.gameObject);
     }
 
   
     public List<Building> GetBuildings()
     {
+        Debug.Log("Number of buildings in the list: " + buildings.Count);
         return buildings;
     }
 

@@ -9,7 +9,6 @@ public class Building : MonoBehaviour
     public InventoryScriptableObject myInventory;
     [SerializeField]
     private BuildingType myNewBuildingType;
-    [SerializeField]
     private ResourceType myResourceType;
     [SerializeField]
     private Vector2Int tileId; // TileId stored as x, z coordinates

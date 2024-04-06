@@ -200,27 +200,11 @@ public class BuildMenuScript : MonoBehaviour
                 Vector3 position = new Vector3(0, 0, 0);
 
                 // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
+                // Commented for now because it needs a Tile game object to get its position in 3D
+                // The current tile is an image on a canvas so I don't think it doesnt exist in 3D space
+                // to base another 3D object's position off of
                 //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
-                //Debug.Log("x position is: " + currentTileID.x);
-                //Debug.Log("y position is: " + currentTileID.y);
-                //Debug.Log("Tile ID is: " + currentTileID);
-                //Debug.Log("position is: " + position);
-
-                //GameObject newBuildingObject = Instantiate(buildingGatheringPrefab, position, Quaternion.identity);
-
-                //// Get the Building component from the prefab
-                //Building newBuilding = newBuildingObject.GetComponent<Building>();
-
-                //// Associate the building with the selected resource 
-                //if (newBuilding != null)
-                //{
-                //    newBuilding.ResourceType = selectedResourceType;
-                //    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
-                //}
-                //else
-                //{
-                //    Debug.LogError("Failed to get Building component from instantiated object.");
-                //}
+                
                 hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
             }
             else
@@ -239,21 +223,6 @@ public class BuildMenuScript : MonoBehaviour
                 // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
                 //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
 
-                //GameObject newBuildingObject = Instantiate(buildingStoragePrefab, position, Quaternion.identity);
-
-
-                //Building newBuilding = newBuildingObject.GetComponent<Building>();
-
-
-                //if (newBuilding != null)
-                //{
-                //    newBuilding.ResourceType = selectedResourceType;
-                //    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
-                //}
-                //else
-                //{
-                //    Debug.LogError("Failed to get Building component from instantiated object.");
-                //}
                 hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
             }
             else
@@ -272,20 +241,6 @@ public class BuildMenuScript : MonoBehaviour
                 // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
                 //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
 
-                //GameObject newBuildingObject = Instantiate(buildingProductionPrefab, position, Quaternion.identity);
-
-                //Building newBuilding = newBuildingObject.GetComponent<Building>();
-
-
-                //if (newBuilding != null)
-                //{
-                //    newBuilding.ResourceType = selectedResourceType;
-                //    Debug.Log("Building instantiated: " + selectedBuildingType + " with resource: " + selectedResourceType);
-                //}
-                //else
-                //{
-                //    Debug.LogError("Failed to get Building component from instantiated object.");
-                //}
                 hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
             }
             else
