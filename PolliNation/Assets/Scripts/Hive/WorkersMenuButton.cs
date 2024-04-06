@@ -4,35 +4,33 @@ using UnityEngine.UI;
 
 public class WorkersMenuButton : MonoBehaviour, ILaunchMenuButton
 {
-    //WorkersMenuScript workersMenuScript;
-    //Button workersMenuButton;
+    WorkersMenuScript workersMenuScript;
+    Button workersMenuButton;
 
     void Start()
     {
-        //workersMenuScript = GameObject.FindObjectOfType<WorkersMenuScript>(true);
-        //workersMenuButton = GetComponentInChildren<Button>();
+        workersMenuScript = GameObject.FindObjectOfType<WorkersMenuScript>(true);
+        workersMenuButton = GetComponentInChildren<Button>();
     }
 
     public void ClickButton()
     {
-        /*Debug.Log("ClickButton method called");
-        workersMenuScript.setOpen();
-        Debug.Log("Build button was clicked");
+        workersMenuScript.SetOpen();
 
         // Make the BuildButtonImage invisible
         if (workersMenuButton != null)
         {
             workersMenuButton.enabled = false;
-        }*/
+        }
     }
 
     public void ReappearButton()
     {
-        /*// Make the BuildButtonImage visible again
+        // Make the BuildButtonImage visible again
         if (workersMenuButton != null)
         {
             workersMenuButton.enabled = true;
-        }*/
+        }
     }
 
 
