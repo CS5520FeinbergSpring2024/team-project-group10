@@ -38,11 +38,10 @@ public class WorkersMenuScript : MonoBehaviour
 
     void Start()
     {
-        //SetClose();
+        SetClose();
         LoadData();
 
-        /*menuButtonObject = GameObject.Find("WorkersMenuButton");
-
+        menuButtonObject = GameObject.Find("WorkersMenuObject");
         if (menuButtonObject != null)
         {
             launchMenuButton = menuButtonObject.GetComponent<ILaunchMenuButton>();
@@ -54,7 +53,7 @@ public class WorkersMenuScript : MonoBehaviour
         else
         {
             Debug.LogError("Menu button object reference not set.");
-        }*/
+        }
     }
 
 
@@ -185,7 +184,11 @@ public class WorkersMenuScript : MonoBehaviour
     public void SetOpen()
     {
         gameObject.SetActive(true);
-        gameObject.transform.parent.gameObject.SetActive(true);
+        Canvas canvas = GetComponentInChildren<Canvas>(true);
+        if (canvas != null)
+        {
+            canvas.gameObject.SetActive(true);
+        }
         //update building reousrce everytime it opens
         LoadBuildingResource();
     }
