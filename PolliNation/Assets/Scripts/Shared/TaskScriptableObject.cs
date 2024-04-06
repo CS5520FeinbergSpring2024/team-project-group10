@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 
 [CreateAssetMenu(fileName ="Tasks", menuName = "Data/TaskScriptableObject")]
@@ -20,7 +21,7 @@ public class TaskScriptableObject : ScriptableObject
         {
             { RewardType.Water, 100 },
         };
-        Task task1 = new("Quest 1", "Gather 100 pollen and 100 nectar from outside", task1ResourceRequirements, task1ResourceRewards);
+        Task task1 = new("First Harvest", "Gather 100 pollen and 100 nectar from outside", task1ResourceRequirements, task1ResourceRewards);
 
         Dictionary<ResourceType, int> task2ResourceRequirements= new()
         {
@@ -32,7 +33,7 @@ public class TaskScriptableObject : ScriptableObject
             { RewardType.Buds, 50},
             { RewardType.Workers, 5 }
         };
-        Task task2 = new("Quest 2", "Store 1000 pollen and 1000 nectar", task2ResourceRequirements, task2ResourceRewards);
+        Task task2 = new("Store and More", "Store 1000 pollen and 1000 nectar", task2ResourceRequirements, task2ResourceRewards);
 
         Dictionary<ResourceType, int> task3ResourceRequirements= new()
         {
@@ -40,10 +41,11 @@ public class TaskScriptableObject : ScriptableObject
         };
         Dictionary<RewardType, int> task3ResourceRewards= new()
         {
+            { RewardType.Water, 100},
             { RewardType.Buds, 100},
             { RewardType.Workers, 10}
         };
-        Task task3 = new("Quest 3", "Produce 100 Honey", task3ResourceRequirements, task3ResourceRewards);
+        Task task3 = new("Production Underway", "Produce 100 Honey", task3ResourceRequirements, task3ResourceRewards);
 
         Dictionary<ResourceType, int> task4ResourceRequirements= new()
         {
@@ -51,9 +53,13 @@ public class TaskScriptableObject : ScriptableObject
         };
         Dictionary<RewardType, int> task4ResourceRewards= new()
         {
+            { RewardType.Water, 100},
+            { RewardType.Buds, 100},
+            { RewardType.Honey, 10},
+            { RewardType.Propolis, 10},
             { RewardType.Workers, 20}
         };
-        Task task4 = new("Quest 4", "Produce 10 Propolis", task4ResourceRequirements, task4ResourceRewards);
+        Task task4 = new("Manage The Hive", "Produce 10 Propolis", task4ResourceRequirements, task4ResourceRewards);
 
         Dictionary<ResourceType, int> task5ResourceRequirements= new()
         {
@@ -63,19 +69,15 @@ public class TaskScriptableObject : ScriptableObject
         {
             { RewardType.RoyalJelly, 1},
         };
-        Task task5 = new("Quest 5", "Store 50 Propolis", task5ResourceRequirements, task5ResourceRewards);
+        Task task5 = new("Build, Buzz, Bee!", "Store 50 Propolis", task5ResourceRequirements, task5ResourceRewards);
 
         // add created tasks to SO list
-        tasks.Add(task1);
         tasks.Add(task2);
         tasks.Add(task3);
         tasks.Add(task4);
         tasks.Add(task5);
-
-        // add listener on UserInventory Event Handler
-        if (UserInventory != null) {
-            UserInventory.OnInventoryChanged += CheckRequirements;
-        }
+        // adding last because scroll group is displaying last first for Task Menu
+        tasks.Add(task1);
     }
     
     /// <summary>
@@ -116,7 +118,7 @@ public class TaskScriptableObject : ScriptableObject
     /// have been met upon changes to inventory values. If requirements are met 
     /// task is marked as completed. 
     /// </summary>
-    private void CheckRequirements(object sender, System.EventArgs e) {
+    public void CheckRequirements() {
         foreach(Task task in tasks)
         {
             // is task is not already completed 

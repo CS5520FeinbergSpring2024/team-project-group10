@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Bee
+  - Enemy
+  - Meadow_Boundary
+  - Overworld_Hive
   layers:
   - Default
   - TransparentFX
