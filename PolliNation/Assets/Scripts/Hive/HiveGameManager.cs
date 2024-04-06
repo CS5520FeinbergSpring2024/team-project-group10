@@ -44,6 +44,13 @@ public class HiveGameManager : MonoBehaviour
                 Debug.Log("Building instantiated: " + buildingType + " with resource: " + resourceType);
                 // And adding the building to the list in the SO
                 hiveScriptable.AddBuilding(newBuilding);
+               
+                List<Building> addedBuildings = hiveScriptable.GetBuildings();
+                Debug.Log("Current builds in scriptable are:");
+                foreach (Building building in addedBuildings)
+                {
+                    Debug.Log("Building Type: " + building.Type + ", Resource Type: " + building.ResourceType);
+                }
             }
             else
             {
@@ -76,14 +83,18 @@ public class HiveGameManager : MonoBehaviour
         // Check if the list is empty
         if (buildings == null || buildings.Count == 0)
         {
-            Debug.LogWarning("No buildings found in HiveScriptable.");
+            Debug.Log("No buildings found in HiveScriptable as yet.");
             return;
         }
-
-        foreach (Building building in buildings)
+        else
         {
-            InstantiateBuilding(building);
+            foreach (Building building in buildings)
+            {
+                InstantiateBuilding(building);
+            }
         }
+
+       
     }
 
     // Method to instantiate a new building

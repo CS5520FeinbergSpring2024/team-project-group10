@@ -234,14 +234,17 @@ public class BuildMenuScript : MonoBehaviour
             if (Building.CanAfford(BuildingType.Storage, myInventory))
             {
                 // Temp position for instantiation
-                Vector3 position = new Vector3(0, 0, 0);
+                Vector3 position = new Vector3(5, 0, 0);
+
+                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
+                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
 
                 //GameObject newBuildingObject = Instantiate(buildingStoragePrefab, position, Quaternion.identity);
 
-                
+
                 //Building newBuilding = newBuildingObject.GetComponent<Building>();
 
-     
+
                 //if (newBuilding != null)
                 //{
                 //    newBuilding.ResourceType = selectedResourceType;
@@ -251,6 +254,7 @@ public class BuildMenuScript : MonoBehaviour
                 //{
                 //    Debug.LogError("Failed to get Building component from instantiated object.");
                 //}
+                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
             }
             else
             {
@@ -263,13 +267,16 @@ public class BuildMenuScript : MonoBehaviour
             if (Building.CanAfford(BuildingType.Production, myInventory))
             {
                 // Temp position for instantiation
-                Vector3 position = new Vector3(0, 0, 0);
+                Vector3 position = new Vector3(10, 0, 0);
+
+                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
+                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
 
                 //GameObject newBuildingObject = Instantiate(buildingProductionPrefab, position, Quaternion.identity);
-                
+
                 //Building newBuilding = newBuildingObject.GetComponent<Building>();
 
-                
+
                 //if (newBuilding != null)
                 //{
                 //    newBuilding.ResourceType = selectedResourceType;
@@ -279,6 +286,7 @@ public class BuildMenuScript : MonoBehaviour
                 //{
                 //    Debug.LogError("Failed to get Building component from instantiated object.");
                 //}
+                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
             }
             else
             {

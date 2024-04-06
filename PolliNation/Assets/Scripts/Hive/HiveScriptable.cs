@@ -28,8 +28,6 @@ public class HiveScriptable : ScriptableObject
     {
         // Initialize the buildings list
         buildings = new List<Building>();
-
-        
     }
 
 
