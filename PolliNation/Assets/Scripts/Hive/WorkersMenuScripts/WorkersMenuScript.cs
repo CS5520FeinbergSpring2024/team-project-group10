@@ -9,7 +9,6 @@ using UnityEngine;
 /// </summary>
 public class WorkersMenuScript : MonoBehaviour
 {
-    public InventoryScriptableObject userInventory;
     //public HiveScriptable hiveScriptableObject;
     public TextMeshProUGUI NectarAssignedText;
     public TextMeshProUGUI PollenAssignedText;
@@ -19,19 +18,6 @@ public class WorkersMenuScript : MonoBehaviour
     public TextMeshProUGUI PropolisAssignedText;
     public TextMeshProUGUI RoyalJellyAssignedText;
     public TextMeshProUGUI availableWorkersText;
-
-    // used to show how many resource created and its limit,
-    // for example 10/100, 10 is resource created and 100 is the storage limit.
-    public TextMeshProUGUI NectarProducedText;
-    public TextMeshProUGUI PollenProducedText;
-    public TextMeshProUGUI WaterProducedText;
-    public TextMeshProUGUI BudsProducedText;
-
-    // the time used for converting. The timer is counting down, and
-    // will increase product when finish count down. 
-    public TextMeshProUGUI HoneyCountDownText;
-    public TextMeshProUGUI PropolisCountDownText;
-    public TextMeshProUGUI RoyalJellyCountDownText;
 
     private Resource resource;
     private GameObject menuButtonObject;
