@@ -34,29 +34,10 @@ public class HiveGameManager : MonoBehaviour
 
     public void Build(BuildingType buildingType, ResourceType resourceType, Vector3 position)
     {
-        GameObject buildingPrefab = GetBuildingPrefab(buildingType);
-        if (buildingPrefab != null)
+        Building newBuilding = InstantiateBuilding(buildingType, resourceType, position);
+        if (newBuilding != null)
         {
-            // Instantiate the building prefab at the specified position
-            GameObject newBuildingObject = Instantiate(buildingPrefab, position, Quaternion.identity);
-
-            // Get the Building component from the instantiated object
-            Building newBuilding = newBuildingObject.GetComponent<Building>();
-
-            // Associate the building with the selected resource 
-            if (newBuilding != null)
-            {
-                Debug.Log("Building component instantiated successfully.");
-                newBuilding.ResourceType = resourceType;
-                Debug.Log("Building instantiated: " + buildingType + " with resource: " + resourceType);
-                // And adding the building to the list in the SO
-                hiveScriptable.AddBuilding(newBuilding);
-             
-            }
-            else
-            {
-                Debug.LogError("Failed to get Building component from instantiated object.");
-            }
+            hiveScriptable.AddBuilding(newBuilding);
         }
     }
 
@@ -88,52 +69,58 @@ public class HiveGameManager : MonoBehaviour
             return;
         }
 
+
         // Iterate over each building in the list
         foreach (Building building in buildings)
         {
-            // Check if the building object is not null
-            if (building != null)
+            // Instantiate the building from the building data
+            Building newBuilding = InstantiateBuilding(building.Type, building.ResourceType, building.transform.position);
+
+            // Check if the instantiation was successful
+            if (newBuilding != null)
             {
-                Debug.Log("Building component instantiated successfully.");
-                // Confirm that the GetBuildingPrefab method is functioning correctly
-                GameObject buildingPrefab = GetBuildingPrefab(building.Type);
-
-                // Check if the buildingPrefab is not null
-                if (buildingPrefab != null)
-                {
-                    // Instantiate the building prefab at the specified position
-                    GameObject newBuildingObject = Instantiate(buildingPrefab, building.transform.position, Quaternion.identity);
-
-                    // Get the Building component from the instantiated object
-                    Building newBuilding = newBuildingObject.GetComponent<Building>();
-
-                    // Associate the building with the selected resource 
-                    if (newBuilding != null)
-                    {
-                        Debug.Log("Building component instantiated successfully.");
-                        newBuilding.ResourceType = building.ResourceType;
-                        Debug.Log("Building instantiated: " + building.Type + " with resource: " + building.ResourceType);
-                    }
-                    else
-                    {
-                        Debug.LogError("Failed to get Building component from instantiated object.");
-                    }
-                }
-                else
-                {
-                    Debug.LogError("Failed to get building prefab for building type: " + building.Type);
-                }
+                Debug.Log("Building instantiated: " + newBuilding.Type + " with resource: " + newBuilding.ResourceType);
             }
             else
             {
-                Debug.LogError("Building object is null.");
+                Debug.LogError("Failed to instantiate building from HiveScriptable: " + building.Type);
             }
         }
 
     }
 
+    private Building InstantiateBuilding(BuildingType buildingType, ResourceType resourceType, Vector3 position)
+    {
+        GameObject buildingPrefab = GetBuildingPrefab(buildingType);
+        if (buildingPrefab != null)
+        {
+            // Instantiate the building prefab at the specified position
+            GameObject newBuildingObject = Instantiate(buildingPrefab, position, Quaternion.identity);
 
-   
+            // Get the Building component from the instantiated object
+            Building newBuilding = newBuildingObject.GetComponent<Building>();
+
+            // Associate the building with the selected resource 
+            if (newBuilding != null)
+            {
+                Debug.Log("Building component instantiated successfully.");
+                newBuilding.ResourceType = resourceType;
+                Debug.Log("Building instantiated: " + buildingType + " with resource: " + resourceType);
+                return newBuilding;
+            }
+            else
+            {
+                Debug.LogError("Failed to get Building component from instantiated object.");
+                return null;
+            }
+        }
+        else
+        {
+            Debug.LogError("Failed to get building prefab for building type: " + buildingType);
+            return null;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()
