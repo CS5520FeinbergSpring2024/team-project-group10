@@ -1,91 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// Receive buildMenuScript class, load building has
-/// already been set up when start. 
-/// 
 /// Provide:
 /// 
 /// public method OpenBuildMenu() for click button 
 /// allows open buildMenu.
 /// 
-/// public method SetCurrentBuilding() allows BuildMenuScript
-/// class access and bind building to the tile.
-/// 
 /// </summary>
 public class Tile : MonoBehaviour
 {
     private BuildMenuScript buildMenu;
-    private Building currentBuilding;
     public Vector2 tileID;
-    //private DataClass buildingData;
 
     // Start is called before the first frame update
     void Start()
     {
-        LoadBuilding();
-
-        // Just placing this here for testing
-        // Get the position of the tile in world space
-        Vector3 tilePosition = transform.position;
-
-        // Round the X and Z coordinates to integers and store them in a Vector2
-        tileID = new Vector2(tilePosition.x, tilePosition.z);
+        // Set tileID as this tile's x and z coordinates as a Vector2
+        tileID = new Vector2(transform.position.x, transform.position.z);
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    //logic to load building data create building prefab
-    void LoadBuilding()
-    {
-        /*if (buildingData != null)
-        {
-            //load current building binded to this tile
-            currentBuilding = buildingData.GetBuildingForTile(tileId);
-
-            if (currentBuilding != null)
-            {
-                BuildCurrentBuilding();
-            }
-
-        }*/
-    }
-
-    public void OpenBuildMenu() 
+    public void OpenBuildMenu(Vector2 tileID) 
     {
         buildMenu = GameObject.FindObjectOfType<BuildMenuScript>(true);
         if (buildMenu != null) 
         {   
             //pass current tile to the buildMenu and open the buildMenu screen
-            buildMenu.OpenMenuForTile(this);
+            buildMenu.OpenMenuForTile(tileID);
         }
        
     }
 
-    //bind specific building to the tile
-    public void SetCurrentBuilding(Building building)
-    {
-        currentBuilding = building;
+    void OnMouseDown() {
+        Debug.Log(tileID);
+        OpenBuildMenu(tileID);
     }
-
-
-    //instantiating a building prefab at the position of the tile in the game world
-    private void BuildCurrentBuilding()
-    {
-        if (currentBuilding != null)
-        { 
-            Instantiate(currentBuilding, transform.position, Quaternion.identity);
-        }
-    }
-
-
-
 }

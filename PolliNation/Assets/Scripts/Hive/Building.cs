@@ -1,17 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static ResourceType;
-
 
 public class Building : MonoBehaviour
 {
-    public InventoryScriptableObject myInventory;
     [SerializeField]
     private BuildingType myNewBuildingType;
     private ResourceType myResourceType;
     [SerializeField]
-    private Vector2Int tileId; // TileId stored as x, z coordinates
+    private Vector2 tileId; // TileId stored as x, z coordinates
     public BuildingType Type
     { get { return myNewBuildingType; } set { myNewBuildingType = value; } }
     
@@ -19,14 +14,7 @@ public class Building : MonoBehaviour
     { get { return myResourceType; } set { myResourceType = value; } }
     
     public Vector2 TileID 
-    { get { return TileID; } set { TileID = value; } }
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    { get { return tileId; } set { tileId = value; } }
 
     public Building(BuildingType type, ResourceType resourceType, Vector2 tileID)
     {
@@ -63,14 +51,6 @@ public class Building : MonoBehaviour
             Debug.Log("Building type not valid");
             return false;         
         }
-        
-    }
-
-
-
-    // Update is called once per frame
-    void Update()
-    {
         
     }
 }

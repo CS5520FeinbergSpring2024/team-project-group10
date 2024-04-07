@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewHive", menuName = "Data/Hive")]
 public class HiveScriptable : ScriptableObject
 {
-    private List<Building> buildings = new List<Building>();
+    private readonly List<Building> buildings = new();
     private int availableWorkers = 0;
     private Dictionary<ResourceType, int> assignedWorkers = new Dictionary<ResourceType, int>();
     private Dictionary<ResourceType, (int storageLevel, int productionLevel)> resourceLevels = 
@@ -83,11 +82,5 @@ public class HiveScriptable : ScriptableObject
     public (int storageLevel, int productionLevel) GetStationLevels(ResourceType resourceType)
     {
         return resourceLevels[resourceType];
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

@@ -1,8 +1,4 @@
-using JetBrains.Annotations;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 
@@ -37,13 +33,6 @@ public class BuildButtonScript : MonoBehaviour, ILaunchMenuButton
         {
             buildButtonImage.enabled = true;
         }
-    }
-
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
 }

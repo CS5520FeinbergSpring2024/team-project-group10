@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2009940927287406765}
   - component: {fileID: 6781618157660648940}
+  - component: {fileID: 4381519841571860742}
   m_Layer: 0
   m_Name: Hive_Tile
   m_TagString: Untagged
@@ -46,6 +47,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795f944adaf824bd8a8c7079bcf5f2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileID: {x: 0, y: 0}
+--- !u!65 &4381519841571860742
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723228858672708521}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 0.1, z: 5}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8640636549332984292
 GameObject:
   m_ObjectHideFlags: 0

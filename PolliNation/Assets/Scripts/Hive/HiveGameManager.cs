@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class HiveGameManager : MonoBehaviour
 {
@@ -21,15 +19,9 @@ public class HiveGameManager : MonoBehaviour
         else
         {
             Debug.Log("Hive Scriptable is correctly assigned");
+            // Getting all of the buildings from the HiveScriptable and instantiating them
+            InstantiateBuildingsFromScriptable();
         }
-
-        // Getting all of the buildings from the HiveScriptable and instantiating them
-        // Commented for now because the data in the SO needs to be saved in persistent
-        // storage so that the prefabs can be re-instantaited. The building is
-        // a component of the prefab. But during new game session the prefab is no longer
-        // instantiated so the component will be null unless it is saved somewhere and then retrieved
-
-        // InstantiateBuildingsFromScriptable();
     }
 
     public void Build(BuildingType buildingType, ResourceType resourceType, Vector3 position)
@@ -69,12 +61,13 @@ public class HiveGameManager : MonoBehaviour
             return;
         }
 
-
         // Iterate over each building in the list
         foreach (Building building in buildings)
         {
+            Debug.Log(building);
             // Instantiate the building from the building data
-            Building newBuilding = InstantiateBuilding(building.Type, building.ResourceType, building.transform.position);
+            Vector3 position = new Vector3(building.TileID.x, 2f, building.TileID.y);
+            Building newBuilding = InstantiateBuilding(building.Type, building.ResourceType, position);
 
             // Check if the instantiation was successful
             if (newBuilding != null)
@@ -105,6 +98,7 @@ public class HiveGameManager : MonoBehaviour
             {
                 Debug.Log("Building component instantiated successfully.");
                 newBuilding.ResourceType = resourceType;
+                newBuilding.TileID = new Vector2(position.x, position.z);
                 Debug.Log("Building instantiated: " + buildingType + " with resource: " + resourceType);
                 return newBuilding;
             }
