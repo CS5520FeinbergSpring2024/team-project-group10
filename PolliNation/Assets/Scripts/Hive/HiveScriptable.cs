@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewHive", menuName = "Data/Hive")]
 public class HiveScriptable : ScriptableObject
 {
-    private List<Building> buildings;
+    private List<Building> buildings = new List<Building>();
     private Dictionary<ResourceType, int> assignedWorkers = new Dictionary<ResourceType, int>();
     private Dictionary<ResourceType, (int storageLevel, int productionLevel)> resourceLevels = 
         new Dictionary<ResourceType, (int, int)>();
@@ -21,13 +21,6 @@ public class HiveScriptable : ScriptableObject
         { 
             resourceLevels.Add(resourceType, (0, 0));
         }
-    }
-
-    private void OnEnable()
-    {
-        // Ensure the buildings list is initialized
-        if (buildings == null)
-            buildings = new List<Building>();
     }
 
 
