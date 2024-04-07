@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6845310585418313638}
+  - component: {fileID: 3216811569365937946}
   m_Layer: 0
   m_Name: Hive_GameManager
   m_TagString: Untagged
@@ -32,6 +33,22 @@ Transform:
   - {fileID: 2880627891686087096}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3216811569365937946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217983983542215389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a095d928a886e3e40b4493b8e0e17d9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingGatheringPrefab: {fileID: 1173837564942887432, guid: 23526c0a47a1f1a4194c459b8aacfd89, type: 3}
+  buildingStoragePrefab: {fileID: 3067881542520758940, guid: 0199bb0bac626e643b9b1b3fb66727df, type: 3}
+  buildingProductionPrefab: {fileID: 7817771779846944282, guid: b4375b63c58528343a46f34d7074c8f6, type: 3}
+  hiveScriptable: {fileID: 11400000, guid: ca52e1306bdf0784c9c0cee15aa6b9eb, type: 2}
 --- !u!1 &4568314361521832429
 GameObject:
   m_ObjectHideFlags: 0

@@ -20,12 +20,21 @@ public class Tile : MonoBehaviour
 {
     private BuildMenuScript buildMenu;
     private Building currentBuilding;
+    public Vector2 tileID;
     //private DataClass buildingData;
 
     // Start is called before the first frame update
     void Start()
     {
         LoadBuilding();
+
+        // Just placing this here for testing
+        // Get the position of the tile in world space
+        Vector3 tilePosition = transform.position;
+
+        // Round the X and Z coordinates to integers and store them in a Vector2
+        tileID = new Vector2(tilePosition.x, tilePosition.z);
+        
     }
 
     // Update is called once per frame
