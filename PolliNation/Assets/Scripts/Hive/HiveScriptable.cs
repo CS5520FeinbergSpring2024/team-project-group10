@@ -6,7 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "NewHive", menuName = "Data/Hive")]
 public class HiveScriptable : ScriptableObject
 {
-    
     private List<Building> buildings = new List<Building>();
     private int availableWorkers = 0;
     private Dictionary<ResourceType, int> assignedWorkers = new Dictionary<ResourceType, int>();
@@ -26,16 +25,19 @@ public class HiveScriptable : ScriptableObject
         }
     }
 
-    
+
     // Method to add a new building to the list of buildings
     public void AddBuilding(Building building)
     {
         buildings.Add(building);
+        Debug.Log("Building added to list. Total buildings: " + buildings.Count);
+        Debug.Log("Building prefab reference: " + building.gameObject);
     }
 
   
     public List<Building> GetBuildings()
     {
+        Debug.Log("Number of buildings in the list: " + buildings.Count);
         return buildings;
     }
 

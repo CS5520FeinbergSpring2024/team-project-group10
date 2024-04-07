@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a220f57a660560743a901a16c2865d8f, type: 3}
   m_Name: NewHive
   m_EditorClassIdentifier: 
+  buildings: []
+  buildingPrefabs: []

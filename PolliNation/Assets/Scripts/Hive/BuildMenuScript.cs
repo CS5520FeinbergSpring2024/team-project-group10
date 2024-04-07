@@ -1,6 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System;
+using System.ComponentModel;
 
 public class BuildMenuScript : MonoBehaviour
 {
@@ -8,9 +12,16 @@ public class BuildMenuScript : MonoBehaviour
     private ILaunchMenuButton launchMenuButton;
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
-    private Tile currentTile;
+    private Vector2 currentTileID;
+    private BuildingType selectedBuildingType;
+    private ResourceType selectedResourceType;
     public Building selectedBuilding;
+    public GameObject buildingGatheringPrefab;
+    public GameObject buildingStoragePrefab;
+    public GameObject buildingProductionPrefab;
     public Resource selectedResource;
+    public InventoryScriptableObject myInventory;
+    public HiveGameManager hiveGameManager;
 
     // Reference to the future data class 
     //public DataClass buildingData; 
@@ -37,6 +48,21 @@ public class BuildMenuScript : MonoBehaviour
             Debug.LogError("Menu button object reference not set.");
         }
 
+        // Finding the Hive_GameManager object in the scene
+        GameObject hiveGameManagerObject = GameObject.Find("Hive_GameManager");
+        if (hiveGameManagerObject != null)
+        {
+            hiveGameManager = hiveGameManagerObject.GetComponent<HiveGameManager>();
+            if (hiveGameManager == null)
+            {
+                Debug.LogError("HiveGameManager component could not be found in Hive_GameManager object.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Hive_GameManager object not found in the scene.");
+        }
+
     }
 
     // Update is called once per frame
@@ -45,7 +71,6 @@ public class BuildMenuScript : MonoBehaviour
 
     }
 
-    // potentially split to open and close separately
 
     public void setOpen()
     {
@@ -97,37 +122,130 @@ public class BuildMenuScript : MonoBehaviour
         //}
     }
 
-    // Function to handle selecting a building
-    public void SelectBuilding(Building building)
+
+    // Methods to handle the selecting a building
+    public void GatheringClick()
     {
-        selectedBuilding = building;
-        Debug.Log("Selected building: " + building.name);
+        selectedBuildingType = BuildingType.Gathering;
+        Debug.Log("Gathering building selected");
     }
 
-    // Function to handle selecting a resource
-    public void SelectResource(Resource resource)
+    public void StorageClick()
     {
-        selectedResource = resource;
-        Debug.Log("Selected resource: " + resource);
+        selectedBuildingType = BuildingType.Storage;
+        Debug.Log("Storage building selected");
+    }
+
+    public void ProductionClick()
+    {
+        selectedBuildingType = BuildingType.Production;
+        Debug.Log("Production building selected");
+    }
+
+
+
+
+    // Methods to handle selecting a resource
+
+    public void NectarResourceClick()
+    {
+        selectedResourceType = ResourceType.Nectar;
+        Debug.Log("Nectar resource selected");
+    }
+    public void PollenResourceClick()
+    {
+        selectedResourceType = ResourceType.Pollen;
+        Debug.Log("Pollen resource selected");
+    }
+    public void WaterResourceClick()
+    {
+        selectedResourceType = ResourceType.Water;
+        Debug.Log("Water resource selected");
+    }
+
+    public void BudsResourceClick()
+    {
+        selectedResourceType = ResourceType.Buds;
+        Debug.Log("Buds resource selected");
+    }
+
+    public void HoneyResourceClick()
+    {
+        selectedResourceType = ResourceType.Honey;
+        Debug.Log("Honey resource selected");
+    }
+
+    public void PropolisResourceClick()
+    {
+        selectedResourceType = ResourceType.Propolis;
+        Debug.Log("Propolis resource selected");
+    }
+
+    public void RoyalJellyResourceClick()
+    {
+        selectedResourceType = ResourceType.RoyalJelly;
+        Debug.Log("Royal Jelly resource selected");
     }
 
     public void Build()
     {
-        if (selectedBuilding != null)
+        if (selectedBuildingType == BuildingType.Gathering)
         {
             // Check if the player can afford to build the selected building
-            // Commenting for now for future implementation of methods in Building class
+            
+            if (Building.CanAfford(BuildingType.Gathering, myInventory))
+            {
+                // Temp placeholder position for building prefab instantiation
+                Vector3 position = new Vector3(0, 0, 0);
 
-            //if (selectedBuilding.CanAfford())
-            //{
-            //    // Instantiate the selected building at its specified position
-            //    Instantiate(selectedBuilding, selectedBuilding.Position, Quaternion.identity);
-            //    Debug.Log("Building instantiated: " + selectedBuilding.name);
-            //}
-            //else
-            //{
-            //    Debug.LogWarning("Cannot afford to build: " + selectedBuilding.name);
-            //}
+                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
+                // Commented for now because it needs a Tile game object to get its position in 3D
+                // The current tile is an image on a canvas so I don't think it doesnt exist in 3D space
+                // to base another 3D object's position off of
+                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
+                
+                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
+            }
+            else
+            {
+                Debug.Log("Insufficient resources for this building");
+            }
+        
+           
+        }else if(selectedBuildingType == BuildingType.Storage)
+        {
+            if (Building.CanAfford(BuildingType.Storage, myInventory))
+            {
+                // Temp position for instantiation
+                Vector3 position = new Vector3(5, 0, 0);
+
+                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
+                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
+
+                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
+            }
+            else
+            {
+                Debug.Log("Insufficient resources for this building");
+            }
+
+        }
+        else if(selectedBuildingType == BuildingType.Production)
+        {
+            if (Building.CanAfford(BuildingType.Production, myInventory))
+            {
+                // Temp position for instantiation
+                Vector3 position = new Vector3(10, 0, 0);
+
+                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
+                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
+
+                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
+            }
+            else
+            {
+                Debug.Log("Insufficient resources for this building");
+            }
         }
         else
         {
@@ -135,10 +253,10 @@ public class BuildMenuScript : MonoBehaviour
         }
     }
 
+
     public void OpenMenuForTile(Tile tile)
     {   
-        // tile use for bind building by tile.SetCurrentBuilding() method
-        currentTile = tile;
+        currentTileID = tile.tileID; // Store the tile ID
 
         // Show the build menu    
         setOpen();
