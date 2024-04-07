@@ -12,8 +12,7 @@ public class BuildMenuScript : MonoBehaviour
     private ILaunchMenuButton launchMenuButton;
     private List<Building> buildingsList;
     private List<ResourceType> resourceList;
-    private Tile currentTile;
-    private Vector2Int currentTileID;
+    private Vector2 currentTileID;
     private BuildingType selectedBuildingType;
     private ResourceType selectedResourceType;
     public Building selectedBuilding;
@@ -257,9 +256,6 @@ public class BuildMenuScript : MonoBehaviour
 
     public void OpenMenuForTile(Tile tile)
     {   
-        // tile use for bind building by tile.SetCurrentBuilding() method
-        currentTile = tile;
-
         currentTileID = tile.tileID; // Store the tile ID
 
         // Show the build menu    

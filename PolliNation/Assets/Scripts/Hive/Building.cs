@@ -18,8 +18,8 @@ public class Building : MonoBehaviour
     public ResourceType ResourceType
     { get { return myResourceType; } set { myResourceType = value; } }
     
-    public Vector2Int TileID 
-    { get; set; }
+    public Vector2 TileID 
+    { get { return TileID; } set { TileID = value; } }
     
 
     // Start is called before the first frame update
@@ -28,7 +28,7 @@ public class Building : MonoBehaviour
         
     }
 
-    public Building(BuildingType type, ResourceType resourceType, Vector2Int tileID)
+    public Building(BuildingType type, ResourceType resourceType, Vector2 tileID)
     {
         Type = type;
         ResourceType = resourceType;
