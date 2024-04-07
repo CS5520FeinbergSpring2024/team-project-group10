@@ -115,10 +115,10 @@ public class TaskMenuTask : MonoBehaviour
         }
         Vector2 newSize = new Vector2(viewWidth / actualRewardsPerRow - padding, (viewHeight / numRows) - padding);
         // case where there is a single full row height scale is off so fixed here
-        if (rewardCount % maxRewardsPerRow  == 0 && numRows == 1)
+        if ((rewardCount % maxRewardsPerRow  == 0 || rewardCount == 2) && numRows == 1)
         {
             newSize.y -= 75;
-        }
+        } 
         rewardsContentsGO.transform.localScale =  newSize / originalSize;
 
         // What to display if task is/ is not completed and/or claimed

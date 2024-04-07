@@ -8,6 +8,7 @@ public class TaskScriptableObject : ScriptableObject
 {
     private List<Task> tasks = new();
     public InventoryScriptableObject UserInventory;
+    public HiveScriptable hive;
     public event EventHandler OnTaskStatusChange;
     public TaskScriptableObject() 
     {
@@ -20,6 +21,7 @@ public class TaskScriptableObject : ScriptableObject
         Dictionary<RewardType, int> task1ResourceRewards= new()
         {
             { RewardType.Water, 100 },
+            {RewardType.Workers, 10}
         };
         Task task1 = new("First Harvest", "Gather 100 pollen and 100 nectar from outside", task1ResourceRequirements, task1ResourceRewards);
 
@@ -31,7 +33,7 @@ public class TaskScriptableObject : ScriptableObject
         Dictionary<RewardType, int> task2ResourceRewards= new()
         {
             { RewardType.Buds, 50},
-            { RewardType.Workers, 5 }
+            { RewardType.Workers, 10 }
         };
         Task task2 = new("Store and More", "Store 1000 pollen and 1000 nectar", task2ResourceRequirements, task2ResourceRewards);
 
@@ -166,8 +168,7 @@ public class TaskScriptableObject : ScriptableObject
                 } 
                 else if (entry.Key.Equals(RewardType.Workers) && entry.Value != 0) 
                 {
-                        // when HiveScriptableObject is finished add to update workers
-                        // HiveManager.AddWorkers(_workerReward)
+                        hive.AddWorkers(entry.Value);
                 }
             }
         

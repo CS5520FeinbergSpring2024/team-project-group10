@@ -36,6 +36,7 @@ public class TaskButton : MonoBehaviour
             if (task.IsComplete && !task.IsClaimed)
             {
                 checkUnclaimedRewards = true;
+                break;
             } 
         }
         if (checkUnclaimedRewards == true)
@@ -47,7 +48,6 @@ public class TaskButton : MonoBehaviour
             button.GetComponent<Animator>().enabled = false;
             // reset roation back to default
             button.transform.rotation = Quaternion.identity;
-            checkUnclaimedRewards = false;
         }
         }
     }
