@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using OpenCover.Framework.Model;
 using UnityEngine;
 
 /// <summary>
