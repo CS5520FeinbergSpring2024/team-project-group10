@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BuildMenuScript : MonoBehaviour
@@ -142,13 +143,13 @@ public class BuildMenuScript : MonoBehaviour
             return;
         }
 
-        // Check if the player can afford to build the selected building
-        if (Building.CanAfford((BuildingType)selectedBuildingType, myInventory))
+        // Check if the player can afford to build the selected building and consume those resources
+        if (ConsumeResources((BuildingType) selectedBuildingType))
         {
-            // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
+            // Converting the tileID from a Vector2 to a Vector3 for positioning in the world space
             Vector3 position = new Vector3(currentTileID.x, 2f, currentTileID.y);
             
-            hiveGameManager.Build((BuildingType)selectedBuildingType, (ResourceType)selectedResourceType, position);
+            hiveGameManager.Build((BuildingType) selectedBuildingType, (ResourceType) selectedResourceType, position);
             exitMenu();
 
         }
@@ -156,6 +157,19 @@ public class BuildMenuScript : MonoBehaviour
         {
             Debug.Log("Insufficient resources for this building");
         }
+    }
+
+    // Consumes resources required to build the given building type
+    // Returns true if succeeded and false if not (due to lack of resources)
+    private bool ConsumeResources(BuildingType buildingType) {
+        Dictionary<ResourceType, int> formula = Building.buildingFormulas[buildingType];
+        if (Building.CanAfford(formula, myInventory)) {
+            foreach (ResourceType resource in formula.Keys) {
+                myInventory.UpdateInventory(resource, -formula[resource]);
+            }
+            return true;
+        }
+        return false;
     }
 
 

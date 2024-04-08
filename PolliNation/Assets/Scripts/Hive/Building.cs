@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Building : MonoBehaviour
@@ -16,6 +17,25 @@ public class Building : MonoBehaviour
     public Vector2 TileID 
     { get { return tileId; } set { tileId = value; } }
 
+    // Static dictionary containing resource requirments for each building.
+    // Used to check whether building can be built and to consume resources when build
+    public static Dictionary<BuildingType, Dictionary<ResourceType, int>> buildingFormulas = new() {
+        { BuildingType.Storage, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 5 }
+            }
+        },
+        { BuildingType.Gathering, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 10 },
+                { ResourceType.Pollen, 5 }
+            }
+        },
+        { BuildingType.Production, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 20 },
+                { ResourceType.Pollen, 10 }
+            }
+        },
+    };
+
     public Building(BuildingType type, ResourceType resourceType, Vector2 tileID)
     {
         Type = type;
@@ -25,32 +45,13 @@ public class Building : MonoBehaviour
 
     // Made method static to check if a Building can be afforded based on what is in the inventory
     // After pollen or nectar has been collected to the required amount
-    public static bool CanAfford(BuildingType type, InventoryScriptableObject inventory)
+    public static bool CanAfford(Dictionary<ResourceType, int> formula, InventoryScriptableObject inventory)
     {
-        if (type == BuildingType.Gathering)
-        {
-            return inventory.GetResourceCount(ResourceType.Pollen) >= 5;
-            
-            
+        foreach (ResourceType resource in formula.Keys) {
+            if (inventory.GetResourceCount(resource) < formula[resource]) {
+                return false;
+            }
         }
-        else if(type == BuildingType.Storage)
-        {
-            return inventory.GetResourceCount(ResourceType.Nectar) >= 10 &&
-                inventory.GetResourceCount(ResourceType.Pollen) >= 5;
-
-
-        }
-        else if(type == BuildingType.Production)
-        {
-            return inventory.GetResourceCount(ResourceType.Nectar) >= 20 &&
-                inventory.GetResourceCount(ResourceType.Pollen) >= 10;
-            
-        }
-        else
-        {
-            Debug.Log("Building type not valid");
-            return false;         
-        }
-        
+        return true;
     }
 }
