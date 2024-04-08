@@ -16,25 +16,6 @@ public class Building : MonoBehaviour
     public Vector2 TileID 
     { get { return tileId; } set { tileId = value; } }
 
-    // Static dictionary containing resource requirments for each building.
-    // Used to check whether building can be built and to consume resources when build
-    public static Dictionary<BuildingType, Dictionary<ResourceType, int>> buildingFormulas = new() {
-        { BuildingType.Storage, new Dictionary<ResourceType, int>() {
-                { ResourceType.Nectar, 5 }
-            }
-        },
-        { BuildingType.Gathering, new Dictionary<ResourceType, int>() {
-                { ResourceType.Nectar, 10 },
-                { ResourceType.Pollen, 5 }
-            }
-        },
-        { BuildingType.Production, new Dictionary<ResourceType, int>() {
-                { ResourceType.Nectar, 20 },
-                { ResourceType.Pollen, 10 }
-            }
-        },
-    };
-
     public Building(BuildingType type, ResourceType resourceType, Vector2 tileID)
     {
         Type = type;
@@ -75,6 +56,52 @@ public class Building : MonoBehaviour
         Renderer resourceDisplayRenderer = gameObject.transform.GetChild(0).GetChild(6).gameObject.GetComponent<Renderer>();
         resourceDisplayRenderer.material = resourceMaterial;
     }
+
+    // Static dictionary containing the resources that can be associated with each building type
+    public static Dictionary<BuildingType, List<ResourceType>> buildingResources = new() {
+        { BuildingType.Storage, new List<ResourceType>() {
+                ResourceType.Nectar,
+                ResourceType.Pollen,
+                ResourceType.Buds,
+                ResourceType.Water,
+                ResourceType.Honey,
+                ResourceType.Propolis,
+                ResourceType.RoyalJelly
+            }
+        },
+        { BuildingType.Gathering, new List<ResourceType>() {
+                ResourceType.Nectar,
+                ResourceType.Pollen,
+                ResourceType.Buds,
+                ResourceType.Water
+            }
+        },
+        { BuildingType.Production, new List<ResourceType>() {
+                ResourceType.Honey,
+                ResourceType.Propolis,
+                ResourceType.RoyalJelly
+            }
+        },
+    };
+
+    // Static dictionary containing resource requirments for each building.
+    // Used to check whether building can be built and to consume resources when build
+    public static Dictionary<BuildingType, Dictionary<ResourceType, int>> buildingFormulas = new() {
+        { BuildingType.Storage, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 5 }
+            }
+        },
+        { BuildingType.Gathering, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 10 },
+                { ResourceType.Pollen, 5 }
+            }
+        },
+        { BuildingType.Production, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 20 },
+                { ResourceType.Pollen, 10 }
+            }
+        },
+    };
 
     // Made method static to check if a Building can be afforded based on what is in the inventory
     // After pollen or nectar has been collected to the required amount

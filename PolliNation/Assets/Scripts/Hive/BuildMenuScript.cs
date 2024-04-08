@@ -142,6 +142,11 @@ public class BuildMenuScript : MonoBehaviour
             Debug.LogWarning("No resource selected!");
             return;
         }
+        // Check if building/resource types are a valid match
+        if (!Building.buildingResources[(BuildingType)selectedBuildingType].Contains((ResourceType) selectedResourceType)) {
+            Debug.LogWarning("Invalid building/resource pair!");
+            return;
+        }
 
         // Check if the player can afford to build the selected building and consume those resources
         if (ConsumeResources((BuildingType) selectedBuildingType))
