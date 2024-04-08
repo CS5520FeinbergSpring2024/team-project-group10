@@ -149,6 +149,8 @@ public class BuildMenuScript : MonoBehaviour
             Vector3 position = new Vector3(currentTileID.x, 2f, currentTileID.y);
             
             hiveGameManager.Build((BuildingType)selectedBuildingType, (ResourceType)selectedResourceType, position);
+            exitMenu();
+
         }
         else
         {

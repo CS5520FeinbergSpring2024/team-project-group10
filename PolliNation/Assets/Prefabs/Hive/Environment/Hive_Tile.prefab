@@ -47,7 +47,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 795f944adaf824bd8a8c7079bcf5f2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hiveGameManager: {fileID: 0}
   tileID: {x: 0, y: 0}
+  yellowMat: {fileID: 2100000, guid: 6a773d48843f60f479b18546fa8b930b, type: 2}
+  greenMat: {fileID: 2100000, guid: 49352aa73c298594eba551c99dbedee6, type: 2}
 --- !u!65 &4381519841571860742
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -613,7 +616,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 43f98fa777c54544baba510526113e2d, type: 2}
+  - {fileID: 2100000, guid: 6a773d48843f60f479b18546fa8b930b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

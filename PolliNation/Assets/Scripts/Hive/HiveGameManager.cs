@@ -7,6 +7,8 @@ public class HiveGameManager : MonoBehaviour
     public GameObject buildingStoragePrefab;
     public GameObject buildingProductionPrefab;
     public HiveScriptable hiveScriptable;
+    // Flag used to enable/disable building on a tile
+    public bool building = false;
 
     // Start is called before the first frame update
     void Start()
@@ -117,8 +119,22 @@ public class HiveGameManager : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    public bool IsOccupied(Vector2 tileID) {
+        List<Building> buildings = hiveScriptable.GetBuildings();
+
+        // Check if the list is empty
+        if (buildings == null || buildings.Count == 0) {
+            Debug.Log("No buildings found in HiveScriptable as yet.");
+            return false;
+        }
+
+        // Iterate over each building in the list
+        foreach (Building building in buildings) {
+            if (building.TileID == tileID) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
