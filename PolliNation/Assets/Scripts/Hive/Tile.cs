@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
     private BuildMenuScript buildMenu;
     public HiveGameManager hiveGameManager;
     public Vector2 tileID;
+    private bool occupied = false; // used to reduce usage of IsOccupied()
 
     // Fields related to changing tile color
     private GameObject hexagon;
@@ -47,12 +48,14 @@ public class Tile : MonoBehaviour
 
     void Update() {
         // Update tile color based on whether it is available for building
-        if (hiveGameManager.building && isYellow && !hiveGameManager.IsOccupied(tileID)) {
-            Debug.Log("Changed to green");
+        if (hiveGameManager.building && !occupied && isYellow) {
+            if (hiveGameManager.IsOccupied(tileID)) {
+                occupied = true;
+                return;
+            }
             isYellow = false;
             hexagon.GetComponent<Renderer>().material = greenMat;
         } else if (!hiveGameManager.building && !isYellow) {
-            Debug.Log("Changed to yellow");
             isYellow = true;
             hexagon.GetComponent<Renderer>().material = yellowMat;
         }
