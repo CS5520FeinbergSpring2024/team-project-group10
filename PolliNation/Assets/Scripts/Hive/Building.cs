@@ -1,13 +1,12 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Building : MonoBehaviour
 {
-    [SerializeField]
-    private BuildingType myNewBuildingType;
+    [SerializeField] private BuildingType myNewBuildingType;
     private ResourceType myResourceType;
-    [SerializeField]
-    private Vector2 tileId; // TileId stored as x, z coordinates
+    [SerializeField] private Vector2 tileId; // TileId stored as x, z coordinates
     public BuildingType Type
     { get { return myNewBuildingType; } set { myNewBuildingType = value; } }
     
@@ -41,6 +40,40 @@ public class Building : MonoBehaviour
         Type = type;
         ResourceType = resourceType;
         TileID = tileID;
+    }
+
+    // Programatically sets the building's resource display
+    public void UpdateResourceDisplay(ResourceType resourceType) {
+        Material resourceMaterial;
+        switch (resourceType) {
+            case ResourceType.Nectar:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Nectar");
+                break;
+            case ResourceType.Pollen:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Pollen");
+                break;
+            case ResourceType.Buds:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Buds");
+                break;
+            case ResourceType.Water:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Water");
+                break;
+            case ResourceType.Honey:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Honey");
+                break;
+            case ResourceType.Propolis:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Propolis");
+                break;
+            case ResourceType.RoyalJelly:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-RoyalJelly");
+                break;
+            default:
+                Debug.Log("Invalid resource");
+                resourceMaterial = null;
+                break;
+        }
+        Renderer resourceDisplayRenderer = gameObject.transform.GetChild(0).GetChild(6).gameObject.GetComponent<Renderer>();
+        resourceDisplayRenderer.material = resourceMaterial;
     }
 
     // Made method static to check if a Building can be afforded based on what is in the inventory

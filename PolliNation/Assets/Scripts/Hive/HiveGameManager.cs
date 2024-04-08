@@ -100,6 +100,7 @@ public class HiveGameManager : MonoBehaviour
             {
                 Debug.Log("Building component instantiated successfully.");
                 newBuilding.ResourceType = resourceType;
+                newBuilding.UpdateResourceDisplay(resourceType);
                 newBuilding.TileID = new Vector2(position.x, position.z);
                 Debug.Log("Building instantiated: " + buildingType + " with resource: " + resourceType);
                 return newBuilding;
