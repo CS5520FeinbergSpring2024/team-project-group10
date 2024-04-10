@@ -32,6 +32,12 @@ public class HiveGameManager : MonoBehaviour
         if (newBuilding != null)
         {
             hiveScriptable.AddBuilding(newBuilding);
+            (int, int) stationLevels = hiveScriptable.GetStationLevels(resourceType);
+            if (buildingType == BuildingType.Storage) {
+                hiveScriptable.UpdateStationLevels(resourceType, stationLevels.Item1 + 1, stationLevels.Item2);
+            } else {
+                hiveScriptable.UpdateStationLevels(resourceType, stationLevels.Item1, stationLevels.Item2 + 1);
+            }
         }
     }
 
