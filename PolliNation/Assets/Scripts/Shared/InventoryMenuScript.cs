@@ -40,18 +40,19 @@ public class InventoryMenuScript : MonoBehaviour
             LoadStorageLimits();
             LoadProductionRates();
             UserInventory.OnInventoryChanged += InventoryUpdated;
-            UserInventory.OnInventoryStorageLimitsChanged += InventoryStorageUpdated;
+            hive.OnStationLevelChanged += InventoryStorageAndProductionUpdated;
         }
     }
 
     // called on inventory count update
     private void InventoryUpdated(object sender, System.EventArgs e) {
-        LoadStorageLimits();
+        LoadData();
     }
 
-    // called on inventory storage limit update
-    private void InventoryStorageUpdated(object sender, System.EventArgs e) {
-        LoadData();
+    // called on inventory storage or production rate update
+    private void InventoryStorageAndProductionUpdated(object sender, System.EventArgs e) {
+        LoadStorageLimits();
+        LoadProductionRates();
     }
 
     public void LoadData()
@@ -94,7 +95,7 @@ public class InventoryMenuScript : MonoBehaviour
 
     public void LoadProductionRates()
     {
-        if (UserInventory != null)
+        if (hive != null)
         {
             PollenProductionRateText.text = hive.GetStationLevels(ResourceType.Pollen).productionLevel.ToString();
             NectarProductionRateText.text = hive.GetStationLevels(ResourceType.Nectar).productionLevel.ToString();
@@ -106,7 +107,7 @@ public class InventoryMenuScript : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Inventory Scriptable Object asset is null");
+            Debug.LogWarning("hive scriptable asset is null");
         }
     }
     
