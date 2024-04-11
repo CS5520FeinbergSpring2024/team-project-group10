@@ -12,10 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c561851935c5f4f598696a2285aaf012, type: 3}
   m_Name: UserInventory
   m_EditorClassIdentifier: 
-  _nectarCount: 0
-  _pollenCount: 0
-  _waterCount: 0
-  _budsCount: 0
-  _honeyCount: 0
-  _propolisCount: 0
-  _royalJellyCount: 0
+  hive: {fileID: 11400000, guid: ca52e1306bdf0784c9c0cee15aa6b9eb, type: 2}

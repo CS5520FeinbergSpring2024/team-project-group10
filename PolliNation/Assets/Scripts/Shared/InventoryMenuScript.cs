@@ -5,6 +5,7 @@ using TMPro;
 public class InventoryMenuScript : MonoBehaviour
 {   
     public InventoryScriptableObject UserInventory;
+    public HiveScriptable hive;
     public TextMeshProUGUI HoneyAmountText;
     public TextMeshProUGUI PropolisAmountText;
     public TextMeshProUGUI RoyalJellyAmountText;
@@ -12,9 +13,6 @@ public class InventoryMenuScript : MonoBehaviour
     public TextMeshProUGUI NectarAmountText;
     public TextMeshProUGUI WaterAmountText;
     public TextMeshProUGUI BudsAmountText;
-
-    /*
-    PLACEHOLDER FOR FUTURE RESOURCE LIMITS
     public TextMeshProUGUI HoneyLimitText;
     public TextMeshProUGUI PropolisLimitText;
     public TextMeshProUGUI RoyalJellyLimitText;
@@ -22,7 +20,13 @@ public class InventoryMenuScript : MonoBehaviour
     public TextMeshProUGUI NectarLimitText;
     public TextMeshProUGUI WaterLimitText;
     public TextMeshProUGUI BudsLimitText;
-    */
+    public TextMeshProUGUI HoneyProductionRateText;
+    public TextMeshProUGUI PropolisProductionRateText;
+    public TextMeshProUGUI RoyalJellyProductionRateText;
+    public TextMeshProUGUI PollenProductionRateText;
+    public TextMeshProUGUI NectarProductionRateText;
+    public TextMeshProUGUI WaterProductionRateText;
+    public TextMeshProUGUI BudsProductionRateText;
 
     // Start is called before the first frame update
     void Start()
@@ -33,9 +37,10 @@ public class InventoryMenuScript : MonoBehaviour
         // on start do intial load of data and add listener
         if (UserInventory != null) {
             LoadData();
+            LoadStorageLimits();
+            LoadProductionRates();
             UserInventory.OnInventoryChanged += InventoryUpdated;
-            //future listener for changes in inventory limits
-            // UserInventory.OnInventoryLimitsChanged += InventoryLimitsUpdated;
+            hive.OnStationLevelChanged += InventoryStorageAndProductionUpdated;
         }
     }
 
@@ -44,11 +49,17 @@ public class InventoryMenuScript : MonoBehaviour
         LoadData();
     }
 
+    // called on inventory storage or production rate update
+    private void InventoryStorageAndProductionUpdated(object sender, System.EventArgs e) {
+        LoadStorageLimits();
+        LoadProductionRates();
+    }
+
     public void LoadData()
     {
         if (UserInventory != null)
         {
-            // Load in inventory data
+            // Load in inventory counts and limits data
             PollenAmountText.text = UserInventory.GetResourceCount(ResourceType.Pollen).ToString();
             NectarAmountText.text = UserInventory.GetResourceCount(ResourceType.Nectar).ToString();
             WaterAmountText.text = UserInventory.GetResourceCount(ResourceType.Water).ToString();
@@ -56,7 +67,6 @@ public class InventoryMenuScript : MonoBehaviour
             HoneyAmountText.text = UserInventory.GetResourceCount(ResourceType.Honey).ToString();
             PropolisAmountText.text = UserInventory.GetResourceCount(ResourceType.Propolis).ToString();
             RoyalJellyAmountText.text = UserInventory.GetResourceCount(ResourceType.RoyalJelly).ToString();
-
         }
         else
         {
@@ -64,27 +74,41 @@ public class InventoryMenuScript : MonoBehaviour
         }
     }
 
-    /*
 
-    // called on inventory limit update (user obtains more storage etc etc)
-
-    private void InventoryLimitsUpdated(object sender, System.EventArgs e) {
+    public void LoadStorageLimits()
+    {
         if (UserInventory != null)
         {
-            // Load in inventory data
-            PollenLimitText.text = UserInventory.GetResourceLimit(ResourceType.Pollen).ToString();
-            NectarLimitText.text = UserInventory.GetResourceLimit(ResourceType.Nectar).ToString();
-            WaterLimitText.text = UserInventory.GetResourceLimit(ResourceType.Water).ToString();
-            BudsLimitText.text = UserInventory.GetResourceLimit(ResourceType.Buds).ToString();
-            HoneyLimitText.text = UserInventory.GetResourceLimit(ResourceType.Honey).ToString();
-            PropolisLimitText.text = UserInventory.GetResourceLimit(ResourceType.Propolis).ToString();
-            RoyalJellyLimitText.text = UserInventory.GetResourceLimit(ResourceType.RoyalJelly).ToString();
-
+            PollenLimitText.text = UserInventory.GetStorageLimit(ResourceType.Pollen).ToString();
+            NectarLimitText.text = UserInventory.GetStorageLimit(ResourceType.Nectar).ToString();
+            WaterLimitText.text = UserInventory.GetStorageLimit(ResourceType.Water).ToString();
+            BudsLimitText.text = UserInventory.GetStorageLimit(ResourceType.Buds).ToString();
+            HoneyLimitText.text = UserInventory.GetStorageLimit(ResourceType.Honey).ToString();
+            PropolisLimitText.text = UserInventory.GetStorageLimit(ResourceType.Propolis).ToString();
+            RoyalJellyLimitText.text = UserInventory.GetStorageLimit(ResourceType.RoyalJelly).ToString();
         }
         else
         {
             Debug.LogWarning("Inventory Scriptable Object asset is null");
         }
-    */
+    }
+
+    public void LoadProductionRates()
+    {
+        if (hive != null)
+        {
+            PollenProductionRateText.text = hive.GetStationLevels(ResourceType.Pollen).productionLevel.ToString();
+            NectarProductionRateText.text = hive.GetStationLevels(ResourceType.Nectar).productionLevel.ToString();
+            WaterProductionRateText.text = hive.GetStationLevels(ResourceType.Water).productionLevel.ToString();
+            BudsProductionRateText.text = hive.GetStationLevels(ResourceType.Buds).productionLevel.ToString();
+            HoneyProductionRateText.text = hive.GetStationLevels(ResourceType.Honey).productionLevel.ToString();
+            PropolisProductionRateText.text = hive.GetStationLevels(ResourceType.Propolis).productionLevel.ToString();
+            RoyalJellyProductionRateText.text = hive.GetStationLevels(ResourceType.RoyalJelly).productionLevel.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("hive scriptable asset is null");
+        }
+    }
     
 }

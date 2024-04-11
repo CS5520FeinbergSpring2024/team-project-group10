@@ -10,6 +10,7 @@ public class HiveScriptable : ScriptableObject
     private Dictionary<ResourceType, int> assignedWorkers = new Dictionary<ResourceType, int>();
     private Dictionary<ResourceType, (int storageLevel, int productionLevel)> resourceLevels = 
         new Dictionary<ResourceType, (int, int)>();
+    public event EventHandler OnStationLevelChanged;
     
     public HiveScriptable() { 
 
@@ -76,6 +77,8 @@ public class HiveScriptable : ScriptableObject
         int productionLevel)
     {
         resourceLevels[resourceType] = (storageLevel, productionLevel);
+        // notify subscribers
+        OnStationLevelChanged?.Invoke(this, EventArgs.Empty); 
     }
 
     // Getting the current station level for the resource, if there is no station then its zero
