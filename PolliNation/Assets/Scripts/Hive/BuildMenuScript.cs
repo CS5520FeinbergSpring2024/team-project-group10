@@ -1,25 +1,13 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
-using System;
-using System.ComponentModel;
 
 public class BuildMenuScript : MonoBehaviour
 {
     private GameObject menuButtonObject;
     private ILaunchMenuButton launchMenuButton;
-    private List<Building> buildingsList;
-    private List<ResourceType> resourceList;
     private Vector2 currentTileID;
-    private BuildingType selectedBuildingType;
-    private ResourceType selectedResourceType;
-    public Building selectedBuilding;
-    public GameObject buildingGatheringPrefab;
-    public GameObject buildingStoragePrefab;
-    public GameObject buildingProductionPrefab;
-    public Resource selectedResource;
+    private BuildingType? selectedBuildingType;
+    private ResourceType? selectedResourceType;
     public InventoryScriptableObject myInventory;
     public HiveGameManager hiveGameManager;
 
@@ -30,8 +18,6 @@ public class BuildMenuScript : MonoBehaviour
     void Start()
     {
         setClose();
-        loadData();
-
 
         menuButtonObject = GameObject.Find("Build Button Object");
 
@@ -65,13 +51,6 @@ public class BuildMenuScript : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-
     public void setOpen()
     {
         Debug.Log("Menu set to open");
@@ -84,69 +63,35 @@ public class BuildMenuScript : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-
-    public void loadData()
-    {
-        // Loading the data from future data class
-        // Commenting for now for future implementation of Data class
-
-        //if (buildingData != null)
-        //{
-        //    // Load buildings and resources data from the data class
-        //    buildingsList = buildingData.LoadBuildings();
-        //    resourceList = buildingData.LoadResources();
-        //    Debug.Log("Data loaded successfully!");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Data class is null");
-        //}
-
-    }
-
-    public void saveChanges()
-    {
-        // Saving data to the future data class
-        // Commenting for now for future implementation of Data class
-
-        //if (buildingData != null)
-        //{
-        //    // Save buildings and resources data to the data class
-        //    buildingData.SaveBuildings(buildingsList);
-        //    buildingData.SaveResources(resourceList);
-        //    Debug.Log("Changes saved");
-        //}
-        //else
-        //{
-        //    Debug.LogWarning("Changes not saved");
-        //}
-    }
-
-
     // Methods to handle the selecting a building
     public void GatheringClick()
     {
+        if (selectedBuildingType != BuildingType.Gathering) {
+            selectedResourceType = null;
+        }
         selectedBuildingType = BuildingType.Gathering;
         Debug.Log("Gathering building selected");
     }
 
     public void StorageClick()
     {
+        if (selectedBuildingType != BuildingType.Storage) {
+            selectedResourceType = null;
+        }
         selectedBuildingType = BuildingType.Storage;
         Debug.Log("Storage building selected");
     }
 
     public void ProductionClick()
     {
+        if (selectedBuildingType != BuildingType.Production) {
+            selectedResourceType = null;
+        }
         selectedBuildingType = BuildingType.Production;
         Debug.Log("Production building selected");
     }
 
-
-
-
     // Methods to handle selecting a resource
-
     public void NectarResourceClick()
     {
         selectedResourceType = ResourceType.Nectar;
@@ -189,74 +134,53 @@ public class BuildMenuScript : MonoBehaviour
 
     public void Build()
     {
-        if (selectedBuildingType == BuildingType.Gathering)
-        {
-            // Check if the player can afford to build the selected building
-            
-            if (Building.CanAfford(BuildingType.Gathering, myInventory))
-            {
-                // Temp placeholder position for building prefab instantiation
-                Vector3 position = new Vector3(0, 0, 0);
-
-                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
-                // Commented for now because it needs a Tile game object to get its position in 3D
-                // The current tile is an image on a canvas so I don't think it doesnt exist in 3D space
-                // to base another 3D object's position off of
-                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
-                
-                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
-            }
-            else
-            {
-                Debug.Log("Insufficient resources for this building");
-            }
-        
-           
-        }else if(selectedBuildingType == BuildingType.Storage)
-        {
-            if (Building.CanAfford(BuildingType.Storage, myInventory))
-            {
-                // Temp position for instantiation
-                Vector3 position = new Vector3(5, 0, 0);
-
-                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
-                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
-
-                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
-            }
-            else
-            {
-                Debug.Log("Insufficient resources for this building");
-            }
-
+        if (selectedBuildingType == null) {
+            Debug.LogWarning("No building selected!");
+            return;
         }
-        else if(selectedBuildingType == BuildingType.Production)
+        if (selectedResourceType == null) {
+            Debug.LogWarning("No resource selected!");
+            return;
+        }
+        // Check if building/resource types are a valid match
+        if (!Building.buildingResources[(BuildingType)selectedBuildingType].Contains((ResourceType) selectedResourceType)) {
+            Debug.LogWarning("Invalid building/resource pair!");
+            return;
+        }
+
+        // Check if the player can afford to build the selected building and consume those resources
+        if (ConsumeResources((BuildingType) selectedBuildingType))
         {
-            if (Building.CanAfford(BuildingType.Production, myInventory))
-            {
-                // Temp position for instantiation
-                Vector3 position = new Vector3(10, 0, 0);
+            // Converting the tileID from a Vector2 to a Vector3 for positioning in the world space
+            Vector3 position = new Vector3(currentTileID.x, 2f, currentTileID.y);
+            
+            hiveGameManager.Build((BuildingType) selectedBuildingType, (ResourceType) selectedResourceType, position);
+            exitMenu();
 
-                // Converting the tileID from a Vector2Int to a Vector3 for positioning in the world space
-                //Vector3 position = new Vector3(currentTileID.x, 0f, currentTileID.y);
-
-                hiveGameManager.Build(selectedBuildingType, selectedResourceType, position);
-            }
-            else
-            {
-                Debug.Log("Insufficient resources for this building");
-            }
         }
         else
         {
-            Debug.LogWarning("No building selected!");
+            Debug.Log("Insufficient resources for this building");
         }
     }
 
+    // Consumes resources required to build the given building type
+    // Returns true if succeeded and false if not (due to lack of resources)
+    private bool ConsumeResources(BuildingType buildingType) {
+        Dictionary<ResourceType, int> formula = Building.buildingFormulas[buildingType];
+        if (Building.CanAfford(formula, myInventory)) {
+            foreach (ResourceType resource in formula.Keys) {
+                myInventory.UpdateInventory(resource, -formula[resource]);
+            }
+            return true;
+        }
+        return false;
+    }
 
-    public void OpenMenuForTile(Tile tile)
+
+    public void OpenMenuForTile(Vector2 tileID)
     {   
-        currentTileID = tile.tileID; // Store the tile ID
+        currentTileID = tileID; // Store the tile ID
 
         // Show the build menu    
         setOpen();
@@ -268,9 +192,6 @@ public class BuildMenuScript : MonoBehaviour
         Canvas canvas = GetComponentInParent<Canvas>();
         canvas.gameObject.SetActive(false);
         Debug.Log("Exit button was clicked");
-
-        saveChanges();
-
 
         if (launchMenuButton != null)
         {

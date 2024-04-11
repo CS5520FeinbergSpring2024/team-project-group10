@@ -1,17 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using static ResourceType;
-
 
 public class Building : MonoBehaviour
 {
-    public InventoryScriptableObject myInventory;
-    [SerializeField]
-    private BuildingType myNewBuildingType;
+    [SerializeField] private BuildingType myNewBuildingType;
     private ResourceType myResourceType;
-    [SerializeField]
-    private Vector2Int tileId; // TileId stored as x, z coordinates
+    [SerializeField] private Vector2 tileId; // TileId stored as x, z coordinates
     public BuildingType Type
     { get { return myNewBuildingType; } set { myNewBuildingType = value; } }
     
@@ -19,14 +14,7 @@ public class Building : MonoBehaviour
     { get { return myResourceType; } set { myResourceType = value; } }
     
     public Vector2 TileID 
-    { get { return TileID; } set { TileID = value; } }
-    
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    { get { return tileId; } set { tileId = value; } }
 
     public Building(BuildingType type, ResourceType resourceType, Vector2 tileID)
     {
@@ -35,42 +23,95 @@ public class Building : MonoBehaviour
         TileID = tileID;
     }
 
-    // Made method static to check if a Building can be afforded based on what is in the inventory
-    // After pollen or nectar has been collected to the required amount
-    public static bool CanAfford(BuildingType type, InventoryScriptableObject inventory)
-    {
-        if (type == BuildingType.Gathering)
-        {
-            return inventory.GetResourceCount(ResourceType.Pollen) >= 5;
-            
-            
+    // Programatically sets the building's resource display
+    public void UpdateResourceDisplay(ResourceType resourceType) {
+        Material resourceMaterial;
+        switch (resourceType) {
+            case ResourceType.Nectar:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Nectar");
+                break;
+            case ResourceType.Pollen:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Pollen");
+                break;
+            case ResourceType.Buds:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Buds");
+                break;
+            case ResourceType.Water:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Water");
+                break;
+            case ResourceType.Honey:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Honey");
+                break;
+            case ResourceType.Propolis:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-Propolis");
+                break;
+            case ResourceType.RoyalJelly:
+                resourceMaterial = Resources.Load<Material>("ResourceImage-RoyalJelly");
+                break;
+            default:
+                Debug.Log("Invalid resource");
+                resourceMaterial = null;
+                break;
         }
-        else if(type == BuildingType.Storage)
-        {
-            return inventory.GetResourceCount(ResourceType.Nectar) >= 10 &&
-                inventory.GetResourceCount(ResourceType.Pollen) >= 5;
-
-
-        }
-        else if(type == BuildingType.Production)
-        {
-            return inventory.GetResourceCount(ResourceType.Nectar) >= 20 &&
-                inventory.GetResourceCount(ResourceType.Pollen) >= 10;
-            
-        }
-        else
-        {
-            Debug.Log("Building type not valid");
-            return false;         
-        }
-        
+        Renderer resourceDisplayRenderer = gameObject.transform.GetChild(0).GetChild(6).gameObject.GetComponent<Renderer>();
+        resourceDisplayRenderer.material = resourceMaterial;
     }
 
+    // Static dictionary containing the resources that can be associated with each building type
+    public static Dictionary<BuildingType, List<ResourceType>> buildingResources = new() {
+        { BuildingType.Storage, new List<ResourceType>() {
+                ResourceType.Nectar,
+                ResourceType.Pollen,
+                ResourceType.Buds,
+                ResourceType.Water,
+                ResourceType.Honey,
+                ResourceType.Propolis,
+                ResourceType.RoyalJelly
+            }
+        },
+        { BuildingType.Gathering, new List<ResourceType>() {
+                ResourceType.Nectar,
+                ResourceType.Pollen,
+                ResourceType.Buds,
+                ResourceType.Water
+            }
+        },
+        { BuildingType.Production, new List<ResourceType>() {
+                ResourceType.Honey,
+                ResourceType.Propolis,
+                ResourceType.RoyalJelly
+            }
+        },
+    };
 
+    // Static dictionary containing resource requirments for each building.
+    // Used to check whether building can be built and to consume resources when build
+    public static Dictionary<BuildingType, Dictionary<ResourceType, int>> buildingFormulas = new() {
+        { BuildingType.Storage, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 5 }
+            }
+        },
+        { BuildingType.Gathering, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 10 },
+                { ResourceType.Pollen, 5 }
+            }
+        },
+        { BuildingType.Production, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 20 },
+                { ResourceType.Pollen, 10 }
+            }
+        },
+    };
 
-    // Update is called once per frame
-    void Update()
+    // Made method static to check if a Building can be afforded based on what is in the inventory
+    // After pollen or nectar has been collected to the required amount
+    public static bool CanAfford(Dictionary<ResourceType, int> formula, InventoryScriptableObject inventory)
     {
-        
+        foreach (ResourceType resource in formula.Keys) {
+            if (inventory.GetResourceCount(resource) < formula[resource]) {
+                return false;
+            }
+        }
+        return true;
     }
 }

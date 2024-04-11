@@ -762,7 +762,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7402588804146335873}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -774,7 +774,7 @@ Transform:
   - {fileID: 427333326196173378}
   - {fileID: 6298327455282599416}
   - {fileID: 8989650872836545752}
-  m_Father: {fileID: 8827855189658991791}
+  m_Father: {fileID: 316758354093223668}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9117130462831997840
 MeshFilter:
@@ -847,38 +847,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &7623882004841982479
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8827855189658991791}
-  m_Layer: 0
-  m_Name: ProductionBuildingObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8827855189658991791
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7623882004841982479}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1531169820114619354}
-  m_Father: {fileID: 316758354093223668}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7817771779846944282
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,7 +877,7 @@ Transform:
   m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8827855189658991791}
+  - {fileID: 1531169820114619354}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5153802061822077494
@@ -924,5 +892,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eaa3be3b35d44b419baf07500c64157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
   myNewBuildingType: 2
+  tileId: {x: 0, y: 0}

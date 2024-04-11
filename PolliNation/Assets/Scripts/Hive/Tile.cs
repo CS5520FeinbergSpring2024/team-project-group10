@@ -1,91 +1,83 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// Receive buildMenuScript class, load building has
-/// already been set up when start. 
-/// 
 /// Provide:
 /// 
 /// public method OpenBuildMenu() for click button 
 /// allows open buildMenu.
 /// 
-/// public method SetCurrentBuilding() allows BuildMenuScript
-/// class access and bind building to the tile.
-/// 
 /// </summary>
 public class Tile : MonoBehaviour
 {
     private BuildMenuScript buildMenu;
-    private Building currentBuilding;
+    public HiveGameManager hiveGameManager;
     public Vector2 tileID;
-    //private DataClass buildingData;
+    private bool occupied = false; // used to reduce usage of IsOccupied()
+
+    // Fields related to changing tile color
+    private GameObject hexagon;
+    private bool isYellow = true; // used to track color and reduce usage of IsOccupied()
+    [SerializeField] private Material yellowMat;
+    [SerializeField] private Material greenMat;
 
     // Start is called before the first frame update
     void Start()
     {
-        LoadBuilding();
+        //  Reference to hexagon object to change its material
+        hexagon = gameObject.transform.GetChild(0).gameObject;
 
-        // Just placing this here for testing
-        // Get the position of the tile in world space
-        Vector3 tilePosition = transform.position;
-
-        // Round the X and Z coordinates to integers and store them in a Vector2
-        tileID = new Vector2(tilePosition.x, tilePosition.z);
+        // Set tileID as this tile's x and z coordinates as a Vector2
+        tileID = new Vector2(transform.position.x, transform.position.z);
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    //logic to load building data create building prefab
-    void LoadBuilding()
-    {
-        /*if (buildingData != null)
+        // Finding the Hive_GameManager object in the scene
+        GameObject hiveGameManagerObject = GameObject.Find("Hive_GameManager");
+        if (hiveGameManagerObject != null)
         {
-            //load current building binded to this tile
-            currentBuilding = buildingData.GetBuildingForTile(tileId);
-
-            if (currentBuilding != null)
+            hiveGameManager = hiveGameManagerObject.GetComponent<HiveGameManager>();
+            if (hiveGameManager == null)
             {
-                BuildCurrentBuilding();
+                Debug.LogError("HiveGameManager component could not be found in Hive_GameManager object.");
             }
-
-        }*/
+        }
+        else
+        {
+            Debug.LogError("Hive_GameManager object not found in the scene.");
+        }
+        
     }
 
-    public void OpenBuildMenu() 
+    void Update() {
+        // Update tile color based on whether it is available for building
+        if (hiveGameManager.building && !occupied && isYellow) {
+            if (hiveGameManager.IsOccupied(tileID)) {
+                occupied = true;
+                return;
+            }
+            isYellow = false;
+            hexagon.GetComponent<Renderer>().material = greenMat;
+        } else if (!hiveGameManager.building && !isYellow) {
+            isYellow = true;
+            hexagon.GetComponent<Renderer>().material = yellowMat;
+        }
+    }
+
+    public void OpenBuildMenu(Vector2 tileID) 
     {
-        buildMenu = GameObject.FindObjectOfType<BuildMenuScript>(true);
+        buildMenu = FindObjectOfType<BuildMenuScript>(true);
         if (buildMenu != null) 
         {   
-            //pass current tile to the buildMenu and open the buildMenu screen
-            buildMenu.OpenMenuForTile(this);
+            //pass current tileID to the buildMenu and open the buildMenu screen
+            buildMenu.OpenMenuForTile(tileID);
         }
        
     }
 
-    //bind specific building to the tile
-    public void SetCurrentBuilding(Building building)
-    {
-        currentBuilding = building;
-    }
-
-
-    //instantiating a building prefab at the position of the tile in the game world
-    private void BuildCurrentBuilding()
-    {
-        if (currentBuilding != null)
-        { 
-            Instantiate(currentBuilding, transform.position, Quaternion.identity);
+    // Opens build menu when in building mode and tile is available
+    void OnMouseDown() {
+        if (hiveGameManager.building && !isYellow) {
+            Debug.Log(tileID);
+            hiveGameManager.building = false;
+            OpenBuildMenu(tileID);
         }
     }
-
-
-
 }
