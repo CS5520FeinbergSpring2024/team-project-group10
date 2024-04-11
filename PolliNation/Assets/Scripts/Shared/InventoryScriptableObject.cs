@@ -11,12 +11,15 @@ public class InventoryScriptableObject : ScriptableObject
     // need to add method to get/set values from/to file with save system upon game start and end
     private Dictionary<ResourceType, int> resourceCounts = new();
     private Dictionary<ResourceType, int> resourceCarryLimits = new();
+    private Dictionary<ResourceType, bool> inventoryFull = new();
     public HiveScriptable hive;
     public event EventHandler OnInventoryChanged;
+    private int storagePerLevel = 1000;
 
     public InventoryScriptableObject() {
         foreach (ResourceType resource in Enum.GetValues(typeof(ResourceType))) {
             resourceCounts.Add(resource, 0);
+            inventoryFull.Add(resource, false);
 
             // set initial user inventory carry only (what the user can "carry" wihtout storage buildings) limits 
             if (resource == ResourceType.Pollen || resource == ResourceType.Nectar 
@@ -46,7 +49,7 @@ public class InventoryScriptableObject : ScriptableObject
     /// <param name="resource"> resource type</param>
     /// <returns> storage limit for resource </returns>
     public int GetStorageLimit(ResourceType resource){
-        int storageCap = Math.Max(resourceCarryLimits[resource], hive.GetStationLevels(resource).storageLevel);
+        int storageCap = Math.Max(resourceCarryLimits[resource], hive.GetStationLevels(resource).storageLevel * storagePerLevel);
         return storageCap;
     }
 
@@ -58,21 +61,29 @@ public class InventoryScriptableObject : ScriptableObject
     public void UpdateInventory(ResourceType resource, int amount) 
     {  
         int newInventoryValue = resourceCounts[resource] + amount;
-        int storageCap = Math.Max(resourceCarryLimits[resource], hive.GetStationLevels(resource).storageLevel);
-        if (newInventoryValue >= 0 && 
-        (newInventoryValue <= storageCap)) 
+        if (newInventoryValue >= 0 &&  (newInventoryValue <= GetStorageLimit(resource))) 
         {
             resourceCounts[resource] = newInventoryValue;
+            inventoryFull[resource] = false;
         }
         else if (newInventoryValue < 0)
         {
             Debug.Log("Not enough resource in inventory");
+            inventoryFull[resource] = false;
         }
         else
         {
-            Debug.Log("Inventory full for resource, cannot add to inventory");
+            // set count to max allowed for resource 
+            resourceCounts[resource] = GetStorageLimit(resource);
+            inventoryFull[resource] = true;
+            Debug.Log("Inventory full for resource, cannot add more to inventory");
         }
         OnInventoryChanged?.Invoke(this, EventArgs.Empty); 
+    }
+
+    public bool InventoryFull(ResourceType resource)
+    {
+        return inventoryFull[resource];
     }
 
 }
