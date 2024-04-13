@@ -44,7 +44,6 @@ public class BeeHealth : MonoBehaviour
         // if bee health goes to 0 return to hive
         if(health <= 0) {
             StartCoroutine(BeeDeath());
-            //SceneManager.LoadScene("Hive");
         }
         // notify any listners
         OnHealthChanged?.Invoke(this, EventArgs.Empty); 
