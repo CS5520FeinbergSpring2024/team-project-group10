@@ -1148,7 +1148,7 @@ GameObject:
   - component: {fileID: 9008032702507502873}
   - component: {fileID: 3807183834142503301}
   - component: {fileID: 8571483421736659456}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: MinimapTracker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
