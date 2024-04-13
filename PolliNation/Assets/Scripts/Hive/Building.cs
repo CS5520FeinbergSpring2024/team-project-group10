@@ -53,8 +53,10 @@ public class Building : MonoBehaviour
                 resourceMaterial = null;
                 break;
         }
-        Renderer resourceDisplayRenderer = gameObject.transform.GetChild(0).GetChild(6).gameObject.GetComponent<Renderer>();
-        resourceDisplayRenderer.material = resourceMaterial;
+        Renderer resourceDisplayRenderer1 = gameObject.transform.GetChild(0).GetChild(6).gameObject.GetComponent<Renderer>();
+        Renderer resourceDisplayRenderer2 = gameObject.transform.GetChild(0).GetChild(7).gameObject.GetComponent<Renderer>();
+        resourceDisplayRenderer1.material = resourceMaterial;
+        resourceDisplayRenderer2.material = resourceMaterial;
     }
 
     // Static dictionary containing the resources that can be associated with each building type
