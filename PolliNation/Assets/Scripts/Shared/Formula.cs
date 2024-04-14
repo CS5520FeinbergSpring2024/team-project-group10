@@ -6,9 +6,20 @@ public class Formula
 {
     private InventoryScriptableObject inventoryScriptableObject;
 
+
+
     public Formula(InventoryScriptableObject inventoryScriptableObject)
     {
         this.inventoryScriptableObject = inventoryScriptableObject;
+
+        foreach (var pair in conversionFormulas)
+        {
+            Debug.Log("Key: " + pair.Key);
+            foreach (var innerPair in pair.Value)
+            {
+                Debug.Log("Inner Key: " + innerPair.Key + ", Inner Value: " + innerPair.Value);
+            }
+        }
     }
     
     // Creating dictionaries for the converted resources with the formulas for each resource
@@ -35,10 +46,24 @@ public class Formula
     public bool ConvertResource(ResourceType resourceType, int assignedWorkers, out int producedQuantity)
     {
         producedQuantity = 0;
-        if (conversionFormulas.TryGetValue(resourceType, out var formula))
+        Debug.Log("Attempting to convert: " + resourceType);
+        Debug.Log("Resource type: " + resourceType);
+        
+        if (!conversionFormulas.ContainsKey(resourceType))
         {
-            // Check if we have enough resources to do the conversion
-            bool enoughResources = true;
+            Debug.LogError("Conversion formula not found for resource type: " + resourceType);
+            return false;
+        }
+        else
+        {
+            Debug.Log("The conversion formula was found");
+        }
+
+        // Access the formula directly from the dictionary
+        var formula = conversionFormulas[resourceType];
+
+        // Check if we have enough resources to do the conversion
+        bool enoughResources = true;
             foreach (var requirement in formula)
             {
                 if (requirement.Key != resourceType && requirement.Value * assignedWorkers > GetResourceCount(requirement.Key))
@@ -48,10 +73,13 @@ public class Formula
                 }
             }
 
+            Debug.Log("You have enough resources for the conversion: " + enoughResources);
+
             if (enoughResources == true)
             {
                 // Calculating how much of the converted resource is gonna be produced
                 producedQuantity = formula[resourceType] * assignedWorkers;
+                Debug.Log("Expected produced quantity is: " + producedQuantity);
 
                 // Update the inventory for the required resources
                 foreach (var requirement in formula)
@@ -61,11 +89,10 @@ public class Formula
                         UpdateResource(requirement.Key, -requirement.Value * assignedWorkers);
                     }
                 }
-
+                Debug.Log("Conversion was successful");
                 return true;
             }
-        }
-
+        Debug.Log("Failed to convert the resoure");
         return false;
     }
 

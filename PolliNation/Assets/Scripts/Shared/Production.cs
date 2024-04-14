@@ -7,7 +7,7 @@ public class Production : MonoBehaviour
 {
     public HiveScriptable hiveScriptableObject;
     public InventoryScriptableObject inventoryScriptableObject;
-    public ResourceType resourceType;
+    //public ResourceType resourceType;
     public float productionInterval = 1f;
     public float productionPerWorker = 1f;
     private Formula formula;
@@ -16,12 +16,16 @@ public class Production : MonoBehaviour
     void Start()
     {
         // Initializng formula
-        formula = new Formula(inventoryScriptableObject); 
+        formula = new Formula(inventoryScriptableObject);
+        Debug.Log("Formula has been initialized .");
         StartCoroutine(ProduceResources());
     }
 
     private IEnumerator ProduceResources()
     {
+        // This is a threshold for starting to produce again
+        // float fullnessThreshold = 0.6f;
+
         while (true)
         {
             yield return new WaitForSeconds(productionInterval);
@@ -32,12 +36,34 @@ public class Production : MonoBehaviour
                 // get the number of assigned workers and produces resources each second 
                 // with one resource being produced per worker
                 int assignedWorkers = hiveScriptableObject.GetAssignedWorkers(resourceType);
+                
                 if (assignedWorkers > 0)
                 {
-                    if (formula.ConvertResource(resourceType, assignedWorkers, out int producedQuantity))
-                    {
-                        inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
-                    }
+                    // Using the check from inventory scriptable to check if the inventory slot for this resource is already full
+                    //if (inventoryScriptableObject.InventoryFull(resourceType))
+                    //{
+                    //    Debug.Log("Skipping production because the inventory slot is full for " + resourceType);
+                    //    continue; 
+                    //}
+                    
+                    // Checking how full is the inventory
+                    //float inventoryFullness = (float)inventoryScriptableObject.GetResourceCount(resourceType)/
+                        //inventoryScriptableObject.GetStorageLimit(resourceType);
+                    //if(inventoryFullness > fullnessThreshold)
+                    //{
+                        // Quick check for the resource thats being processed right now
+                        Debug.Log("Processing resource type: " + resourceType);
+                        if (formula.ConvertResource(resourceType, assignedWorkers, out int producedQuantity))
+                        {
+                            Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
+                            inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
+                        }
+                        else
+                        {
+                            Debug.Log("The conversion failed");
+                        }
+                    //}
+                    
                 }
             }
 
@@ -47,8 +73,21 @@ public class Production : MonoBehaviour
                 int assignedWorkers = hiveScriptableObject.GetAssignedWorkers(resourceType);
                 if (assignedWorkers > 0)
                 {
-                    int producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);
-                    inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
+                    // Using the check from inventory scriptable to check if the inventory slot for this resource is already full
+                    //if (inventoryScriptableObject.InventoryFull(resourceType))
+                    //{
+                    //    Debug.Log("Skipping production because the inventory slot is full for " + resourceType);
+                    //    continue;
+                    //}
+
+                    //float inventoryFullness = (float)inventoryScriptableObject.GetResourceCount(resourceType) / 
+                        //inventoryScriptableObject.GetStorageLimit(resourceType);
+                    //if (inventoryFullness > fullnessThreshold)
+                    //{
+                        int producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);
+                        inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
+                    //}
+                        
                 }
             }
         }
