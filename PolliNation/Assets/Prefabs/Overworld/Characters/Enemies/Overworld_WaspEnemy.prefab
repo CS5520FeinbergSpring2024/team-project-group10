@@ -1211,7 +1211,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
-  pollenKillPenalty: 1
+  pollenKillPenalty: 25
+  nectarKillPenalty: 25
   waspDamage: 5
   waspSpeed: 8
   waspChaseRange: 7

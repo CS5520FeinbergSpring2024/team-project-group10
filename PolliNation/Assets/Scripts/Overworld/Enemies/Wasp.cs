@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem.Android;
 
@@ -5,7 +6,9 @@ using UnityEngine.InputSystem.Android;
 public class Wasp : Enemy
 {
     public InventoryScriptableObject UserInventory;
-    [SerializeField] int pollenKillPenalty = 1;
+    // percentage penalty on inventory on kill
+    [SerializeField] private int pollenKillPenaltyPercent = 25;
+    [SerializeField] private int nectarKillPenaltyPercent = 25;
     [SerializeField] private int waspDamage = 5;
     [SerializeField] private  int waspSpeed = 8;
     [SerializeField] private float waspChaseRange = 7;
@@ -44,16 +47,16 @@ public class Wasp : Enemy
         animator.enabled = true;
     }
 
-    // if enough in inventory on wasp killing bee 1 pollen will be taken
+    // on kill by wasp reduce inventory by set kill penalty percentages
     private protected override void OnKill()
     {
         base.OnKill();
         if (UserInventory != null) 
         {
-            if (UserInventory.GetResourceCount(ResourceType.Pollen) >= pollenKillPenalty)
-            {
-                UserInventory.UpdateInventory(ResourceType.Pollen, -pollenKillPenalty);
-            }
+            int pollenAmount = (int) Math.Floor(UserInventory.GetResourceCount(ResourceType.Pollen) * (pollenKillPenaltyPercent/100.0));
+            int nectarAmount = (int) Math.Floor(UserInventory.GetResourceCount(ResourceType.Nectar) * (nectarKillPenaltyPercent/100.0));
+            UserInventory.UpdateInventory(ResourceType.Pollen, -pollenAmount);
+            UserInventory.UpdateInventory(ResourceType.Nectar, -nectarAmount);
         }
     }
 
