@@ -39,31 +39,17 @@ public class Production : MonoBehaviour
                 
                 if (assignedWorkers > 0)
                 {
-                    // Using the check from inventory scriptable to check if the inventory slot for this resource is already full
-                    //if (inventoryScriptableObject.InventoryFull(resourceType))
-                    //{
-                    //    Debug.Log("Skipping production because the inventory slot is full for " + resourceType);
-                    //    continue; 
-                    //}
-                    
-                    // Checking how full is the inventory
-                    //float inventoryFullness = (float)inventoryScriptableObject.GetResourceCount(resourceType)/
-                        //inventoryScriptableObject.GetStorageLimit(resourceType);
-                    //if(inventoryFullness > fullnessThreshold)
-                    //{
-                        // Quick check for the resource thats being processed right now
-                        Debug.Log("Processing resource type: " + resourceType);
-                        if (formula.ConvertResource(resourceType, assignedWorkers, out int producedQuantity))
-                        {
-                            Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
+                    // Quick check for the resource thats being processed right now
+                    Debug.Log("Processing resource type: " + resourceType);
+                    if (formula.ConvertResource(resourceType, assignedWorkers, out int producedQuantity))
+                    {
+                      Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
                             inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
-                        }
-                        else
-                        {
-                            Debug.Log("The conversion failed");
-                        }
-                    //}
-                    
+                    }
+                    else
+                    {
+                      Debug.Log("The conversion failed");
+                    }                 
                 }
             }
 
@@ -73,21 +59,8 @@ public class Production : MonoBehaviour
                 int assignedWorkers = hiveScriptableObject.GetAssignedWorkers(resourceType);
                 if (assignedWorkers > 0)
                 {
-                    // Using the check from inventory scriptable to check if the inventory slot for this resource is already full
-                    //if (inventoryScriptableObject.InventoryFull(resourceType))
-                    //{
-                    //    Debug.Log("Skipping production because the inventory slot is full for " + resourceType);
-                    //    continue;
-                    //}
-
-                    //float inventoryFullness = (float)inventoryScriptableObject.GetResourceCount(resourceType) / 
-                        //inventoryScriptableObject.GetStorageLimit(resourceType);
-                    //if (inventoryFullness > fullnessThreshold)
-                    //{
-                        int producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);
-                        inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
-                    //}
-                        
+                    int producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);
+                    inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);                      
                 }
             }
         }

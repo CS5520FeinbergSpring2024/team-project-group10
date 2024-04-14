@@ -6,8 +6,6 @@ public class Formula
 {
     private InventoryScriptableObject inventoryScriptableObject;
 
-
-
     public Formula(InventoryScriptableObject inventoryScriptableObject)
     {
         this.inventoryScriptableObject = inventoryScriptableObject;
