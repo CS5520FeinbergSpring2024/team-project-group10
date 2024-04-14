@@ -19,7 +19,7 @@ public class BeeHealth : MonoBehaviour
     private int setTime = 5;
     // For preventing healing while under attack
     private float lastAttack;
-    private float healDelay = 5;
+    private float healDelay = 3;
     
     void Awake()
     {
