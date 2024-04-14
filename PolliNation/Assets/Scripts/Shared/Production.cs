@@ -11,6 +11,7 @@ public class Production : MonoBehaviour
     public float productionInterval = 1f;
     public float productionPerWorker = 1f;
     private Formula formula;
+    private static Production instance;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,22 @@ public class Production : MonoBehaviour
         formula = new Formula(inventoryScriptableObject);
         Debug.Log("Formula has been initialized .");
         StartCoroutine(ProduceResources());
+    }
+
+    private void Awake()
+    {
+        Debug.Log("Production instance created.");
+        // Ensuring only one instance of Production exists and not destroying when we change the scene
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); 
+        }
+        else
+        {
+            // Destroy duplicate instances
+            Destroy(gameObject); 
+        }
     }
 
     private IEnumerator ProduceResources()

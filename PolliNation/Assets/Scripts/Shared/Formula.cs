@@ -19,7 +19,7 @@ public class Formula
             }
         }
     }
-    
+
     // Creating dictionaries for the converted resources with the formulas for each resource
     public static Dictionary<ResourceType, Dictionary<ResourceType, int>> conversionFormulas = new()
     {
@@ -36,7 +36,7 @@ public class Formula
         { ResourceType.RoyalJelly, new Dictionary<ResourceType, int>() {
                 { ResourceType.Nectar, 2 },
                 { ResourceType.Pollen, 2 },
-                { ResourceType.Water, 2 }
+                {ResourceType.Water, 2 }
             }
         },
     };
@@ -75,6 +75,14 @@ public class Formula
 
             if (enoughResources == true)
             {
+            try
+            { // Calculating how much of the converted resource is gonna be produced
+                producedQuantity = formula[resourceType] * assignedWorkers;
+                Debug.Log("Expected produced quantity is: " + producedQuantity);
+            } catch(KeyNotFoundException ex) 
+            { 
+                Debug.LogError("Key not found in formula dictionary: " + ex.Message); 
+            }
                 // Calculating how much of the converted resource is gonna be produced
                 producedQuantity = formula[resourceType] * assignedWorkers;
                 Debug.Log("Expected produced quantity is: " + producedQuantity);
