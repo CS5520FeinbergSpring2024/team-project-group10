@@ -6,7 +6,7 @@ using UnityEngine;
 public class HiveScriptable : ScriptableObject
 {
     private readonly List<Building> buildings = new();
-    private int availableWorkers = 0;
+    [NonSerialized] private int totalWorkers = 0;
     private Dictionary<ResourceType, int> assignedWorkers = new Dictionary<ResourceType, int>();
     private Dictionary<ResourceType, (int storageLevel, int productionLevel)> resourceLevels = 
         new Dictionary<ResourceType, (int, int)>();
@@ -44,27 +44,19 @@ public class HiveScriptable : ScriptableObject
     // Method to add to total available workers 
     public void AddWorkers(int numberOfWorkers)
     {
-        availableWorkers += numberOfWorkers;
+        totalWorkers += numberOfWorkers;
     }
 
     // Method to get number of available workers
-    public int GetAvailableWorkers()
+    public int GetTotalWorkers()
     {
-        return availableWorkers;
+        return totalWorkers;
     }
 
     // Method to assign workers to a resource type
     public void AssignWorkers(ResourceType resourceType, int numberOfWorkers)
     {
-        if (numberOfWorkers <= availableWorkers)
-        {
-            assignedWorkers[resourceType] = numberOfWorkers;
-            availableWorkers -= numberOfWorkers;
-        }
-        else
-        {
-            Debug.Log("Not enough available workers to assign.");
-        }
+        assignedWorkers[resourceType] = numberOfWorkers;
     }
     
     public int GetAssignedWorkers(ResourceType resourceType)
