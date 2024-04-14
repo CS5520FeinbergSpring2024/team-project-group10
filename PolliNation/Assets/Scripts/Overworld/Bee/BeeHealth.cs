@@ -7,6 +7,8 @@ public class BeeHealth : MonoBehaviour
 {
     private int maxHealth = 100;
     private int health;
+    public GameObject deathScreen;
+    private int deathScreenTime = 5;
     public int Health
     {
         get { return health;}
@@ -17,7 +19,7 @@ public class BeeHealth : MonoBehaviour
     private int setTime = 5;
     // For preventing healing while under attack
     private float lastAttack;
-    private float healDelay = 5;
+    private float healDelay = 3;
     
     void Awake()
     {
@@ -41,7 +43,7 @@ public class BeeHealth : MonoBehaviour
         health -= damage;
         // if bee health goes to 0 return to hive
         if(health <= 0) {
-            SceneManager.LoadScene("Hive");
+            StartCoroutine(BeeDeath());
         }
         // notify any listners
         OnHealthChanged?.Invoke(this, EventArgs.Empty); 
@@ -67,5 +69,23 @@ public class BeeHealth : MonoBehaviour
             yield return null;
         }
     }
+    }
+
+        /// <summary>
+    /// if bee health is below max health will regenerate health
+    /// at set amount per set time interval
+    /// </summary>
+    IEnumerator BeeDeath()
+    {
+        if (deathScreen != null)
+        {
+            deathScreen.SetActive(true);
+            yield return new WaitForSeconds(deathScreenTime - 1);
+            SceneManager.LoadScene("Hive");
+            yield return new WaitForSeconds(1);
+            deathScreen.SetActive(false);
+            
+        }
+         yield return null;
     }
 }

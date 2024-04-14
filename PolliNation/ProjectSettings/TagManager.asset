@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Bee
   - Meadow_Boundary
+  - Enemy
+  - Overworld_Hive
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - FogField
   - 
   - 
   - 
