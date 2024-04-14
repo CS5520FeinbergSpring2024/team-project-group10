@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -21,20 +22,16 @@ public class WorkersMenuScript : MonoBehaviour
     public TextMeshProUGUI availableWorkersText;
 
     private HiveScriptable hiveScriptable;
-    private Resource resource;
     private GameObject menuButtonObject;
     private ILaunchMenuButton launchMenuButton;
-    private static int availableWorkers; //make it static prevent to be destoryed when GameObject deactived.
-    private int totalWorkersCount;
+    private int availableWorkers;
     private Dictionary<ResourceType, TextMeshProUGUI> assignedTextMap;
     private Dictionary<ResourceType, int> workersAssigned;
 
 
     void Start()
     {
-
         SetClose();
-        LoadData();
 
         menuButtonObject = GameObject.Find("WorkersMenuObject");
         if (menuButtonObject != null)
@@ -49,11 +46,7 @@ public class WorkersMenuScript : MonoBehaviour
         {
             Debug.LogError("Menu button object reference not set.");
         }
-    }
-
-
-    private void LoadData()
-    {   
+        
         //init game manager
         GameObject GameManagerObject = GameObject.Find("Hive_GameManager");
         if (GameManagerObject != null)
@@ -66,10 +59,7 @@ public class WorkersMenuScript : MonoBehaviour
         }
 
         hiveScriptable = gameManager.hiveScriptable;
-        totalWorkersCount = hiveScriptable.GetAvailableWorkers();
-        availableWorkersText.text = totalWorkersCount.ToString();
-        
-        
+
         //initilize dictionary
         assignedTextMap = new Dictionary<ResourceType, TextMeshProUGUI>
         {
@@ -84,35 +74,31 @@ public class WorkersMenuScript : MonoBehaviour
 
         workersAssigned = new Dictionary<ResourceType, int>();
 
-        //init local workerAssigned Dictionary avoid frequent updating with HiveScriptable 
+        // init local workerAssigned Dictionary avoid frequent updating with HiveScriptable 
         foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
         {
             workersAssigned.Add(resourceType, 0);
         }
 
-        // check what resource building is available
-        LoadBuildingResource();
-        
-
+        LoadData();
     }
 
 
-    private void LoadBuildingResource()
+    private void LoadData()
     {
-        List<Building> buildings = hiveScriptable.GetBuildings();
-
-        foreach (Building building in buildings)
+        foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
         {
-            ResourceType rt = building.ResourceType;
-            workersAssigned.Add(rt, hiveScriptable.GetAssignedWorkers(rt));
+            workersAssigned[resourceType] = hiveScriptable.GetAssignedWorkers(resourceType);
+            assignedTextMap[resourceType].text = workersAssigned[resourceType].ToString();
         }
-
+        availableWorkers = hiveScriptable.GetTotalWorkers() - workersAssigned.Sum(x => x.Value);
+        availableWorkersText.text = availableWorkers.ToString();
     }
 
 
     public void ClickPlus(ResourceType resourceType)
     {
-        if (availableWorkers > 0 && availableWorkers <= totalWorkersCount)
+        if (availableWorkers > 0)
         {
             IncrementAssignedWorkers(assignedTextMap[resourceType], resourceType);
         }
@@ -141,45 +127,24 @@ public class WorkersMenuScript : MonoBehaviour
     {
         if (hiveScriptable.GetStationLevels(resourceType).productionLevel > 0)
         {
-            int assignedValue;
-            // Check if the text can be parsed into an integer
-            if (int.TryParse(assignedText.text, out assignedValue))
-            {
-                assignedText.text = (assignedValue + 1).ToString();
-                availableWorkers--;
-                availableWorkersText.text = availableWorkers.ToString();
-                workersAssigned[resourceType]++;
-
-  
-            }
+            workersAssigned[resourceType]++;
+            assignedText.text = workersAssigned[resourceType].ToString();
+            availableWorkers--;
+            availableWorkersText.text = availableWorkers.ToString();
         }
         else
         {
             Debug.Log(string.Format("No {0} building exist, please build it first", resourceType));
         }
-
-        
     }
 
 
     private void DecrementAssignedWorkers(TextMeshProUGUI assignedText, ResourceType resourceType)
     {
-        if (hiveScriptable.GetStationLevels(resourceType).productionLevel > 0)
-        {
-            int assignedValue;
-            // Check if the text can be parsed into an integer
-            if (int.TryParse(assignedText.text, out assignedValue) && assignedValue > 0)
-            {
-                assignedText.text = (assignedValue - 1).ToString();
-                availableWorkers++;
-                availableWorkersText.text = availableWorkers.ToString();
-                workersAssigned[resourceType]--;
-            }
-        }
-        else
-        {
-            Debug.Log(string.Format("No {0} building exist, please build it first", resourceType));
-        }
+            workersAssigned[resourceType]--;
+            assignedText.text = workersAssigned[resourceType].ToString();
+            availableWorkers++;
+            availableWorkersText.text = availableWorkers.ToString();
     }
 
 
@@ -198,8 +163,7 @@ public class WorkersMenuScript : MonoBehaviour
         {
             canvas.gameObject.SetActive(true);
         }
-        //update building reousrce everytime it opens
-        LoadBuildingResource();
+        LoadData();
     }
 
 
