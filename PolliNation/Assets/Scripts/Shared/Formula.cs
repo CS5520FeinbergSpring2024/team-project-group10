@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,7 +40,7 @@ public class Formula
         },
     };
 
-    public bool ConvertResource(ResourceType resourceType, int assignedWorkers, out int producedQuantity)
+    public bool ConvertResource(ResourceType resourceType, int assignedWorkers, float productionPerWorker, out int producedQuantity)
     {
         producedQuantity = 0;
         Debug.Log("Attempting to convert: " + resourceType);
@@ -64,7 +63,8 @@ public class Formula
         bool enoughResources = true;
             foreach (var requirement in formula)
             {
-                if (requirement.Key != resourceType && requirement.Value * assignedWorkers > GetResourceCount(requirement.Key))
+                if (requirement.Key != resourceType && requirement.Value * assignedWorkers > 
+                inventoryScriptableObject.GetResourceCount(requirement.Key))
                 {
                     enoughResources = false;
                     break;
@@ -76,23 +76,20 @@ public class Formula
             if (enoughResources == true)
             {
             try
-            { // Calculating how much of the converted resource is gonna be produced
-                producedQuantity = formula[resourceType] * assignedWorkers;
+            {   // Calculating how much of the converted resource is gonna be produced
+                // using the production per worker
+                producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);
                 Debug.Log("Expected produced quantity is: " + producedQuantity);
             } catch(KeyNotFoundException ex) 
             { 
                 Debug.LogError("Key not found in formula dictionary: " + ex.Message); 
             }
-                // Calculating how much of the converted resource is gonna be produced
-                producedQuantity = formula[resourceType] * assignedWorkers;
-                Debug.Log("Expected produced quantity is: " + producedQuantity);
-
                 // Update the inventory for the required resources
                 foreach (var requirement in formula)
                 {
                     if (requirement.Key != resourceType)
                     {
-                        UpdateResource(requirement.Key, -requirement.Value * assignedWorkers);
+                        inventoryScriptableObject.UpdateInventory(requirement.Key, -requirement.Value * assignedWorkers);
                     }
                 }
                 Debug.Log("Conversion was successful");
@@ -100,15 +97,5 @@ public class Formula
             }
         Debug.Log("Failed to convert the resoure");
         return false;
-    }
-
-    private int GetResourceCount(ResourceType resourceType)
-    {
-        return inventoryScriptableObject.GetResourceCount(resourceType);
-    }
-
-    private void UpdateResource(ResourceType resourceType, int amount)
-    {
-        inventoryScriptableObject.UpdateInventory(resourceType, amount);
     }
 }

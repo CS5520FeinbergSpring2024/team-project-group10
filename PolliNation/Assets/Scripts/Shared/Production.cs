@@ -1,13 +1,10 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Production : MonoBehaviour
 {
     public HiveScriptable hiveScriptableObject;
     public InventoryScriptableObject inventoryScriptableObject;
-    //public ResourceType resourceType;
     public float productionInterval = 1f;
     public float productionPerWorker = 1f;
     private Formula formula;
@@ -58,10 +55,10 @@ public class Production : MonoBehaviour
                 {
                     // Quick check for the resource thats being processed right now
                     Debug.Log("Processing resource type: " + resourceType);
-                    if (formula.ConvertResource(resourceType, assignedWorkers, out int producedQuantity))
+                    if (formula.ConvertResource(resourceType, assignedWorkers, productionPerWorker, out int producedQuantity))
                     {
                       Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
-                            inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
+                      inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
                     }
                     else
                     {
@@ -81,12 +78,5 @@ public class Production : MonoBehaviour
                 }
             }
         }
-    }
-    
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
