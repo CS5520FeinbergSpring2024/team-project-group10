@@ -5,7 +5,7 @@ using TMPro;
 public class InventoryMenuScript : MonoBehaviour
 {   
     public InventoryDataSingleton UserInventory;
-    public HiveScriptable hive;
+    public HiveDataSingleton hive;
     public TextMeshProUGUI HoneyAmountText;
     public TextMeshProUGUI PropolisAmountText;
     public TextMeshProUGUI RoyalJellyAmountText;
@@ -38,6 +38,8 @@ public class InventoryMenuScript : MonoBehaviour
     {   
         // make the menu not visible upon scene start
         gameObject.SetActive(false);
+
+        hive = new();
         
         // on start do intial load of data and add listener
         if (UserInventory != null) {

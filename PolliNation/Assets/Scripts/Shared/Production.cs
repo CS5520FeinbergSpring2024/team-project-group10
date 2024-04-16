@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Production : MonoBehaviour
 {
-    public HiveScriptable hiveScriptableObject;
+    public HiveDataSingleton hiveSingleton;
     public InventoryDataSingleton inventoryDataSingleton;
     public float productionInterval = 1f;
     public float productionPerWorker = 1f;
@@ -13,6 +13,8 @@ public class Production : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hiveSingleton = new();
+        
         // Initializng formula
         formula = new Formula(inventoryDataSingleton);
         Debug.Log("Formula has been initialized .");
@@ -50,7 +52,7 @@ public class Production : MonoBehaviour
             {
                 // get the number of assigned workers and produces resources each second 
                 // with one resource being produced per worker
-                int assignedWorkers = hiveScriptableObject.GetAssignedWorkers(resourceType);
+                int assignedWorkers = hiveSingleton.GetAssignedWorkers(resourceType);
                 
                 if (assignedWorkers > 0)
                 {
@@ -71,7 +73,7 @@ public class Production : MonoBehaviour
             // Dealing with the raw resources that don't need to use the formula
             foreach (ResourceType resourceType in new ResourceType[] { ResourceType.Nectar, ResourceType.Pollen, ResourceType.Buds, ResourceType.Water })
             {
-                int assignedWorkers = hiveScriptableObject.GetAssignedWorkers(resourceType);
+                int assignedWorkers = hiveSingleton.GetAssignedWorkers(resourceType);
                 if (assignedWorkers > 0)
                 {
                     int producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);

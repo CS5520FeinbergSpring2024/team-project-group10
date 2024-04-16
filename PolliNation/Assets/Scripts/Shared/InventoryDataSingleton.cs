@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Stores inventory data. Inclues update methods for the inventory.
+/// </summary>
 public class InventoryDataSingleton
 {
   // For singleton.
@@ -42,8 +45,18 @@ public class InventoryDataSingleton
     add { Instance._onInventoryChanged += value; }
     remove { Instance._onInventoryChanged -= value; }
   }
-  private HiveScriptable _hive;
+  private HiveDataSingleton _hive;
+  private HiveDataSingleton Hive
+  {
+    get { return Instance._hive; }
+    set { Instance._hive = value; }
+  }
   private int _storagePerLevel = 1000;
+  private int StoragePerLevel
+  {
+    get { return Instance._storagePerLevel; }
+    set { Instance._storagePerLevel = value; }
+  }
 
   public InventoryDataSingleton()
   {
@@ -53,6 +66,8 @@ public class InventoryDataSingleton
       return;
     }
     _instance = this;
+
+    Hive = new HiveDataSingleton();
 
     foreach (ResourceType resource in Enum.GetValues(typeof(ResourceType))) {
         Instance._resourceCounts.Add(resource, 0);
@@ -85,14 +100,11 @@ public class InventoryDataSingleton
   /// </summary>
   /// <param name="resource"> resource type</param>
   /// <returns> storage limit for resource </returns>
-  public int GetStorageLimit(ResourceType resource){
-    // Until hive is a singleton, too.
-    return 100;
-
-      // int storageCap = Math.Max(Instance.resourceCarryLimits[resource], 
-      //                           Instance._hive.GetStationLevels(resource).storageLevel 
-      //                               * Instance._storagePerLevel);
-      // return storageCap;
+  public int GetStorageLimit(ResourceType resource)
+  {
+    int storageCap = Math.Max(ResourceCarryLimits[resource],
+                              Hive.GetStationLevels(resource).storageLevel * StoragePerLevel);
+    return storageCap;
   }
 
   /// <summary>

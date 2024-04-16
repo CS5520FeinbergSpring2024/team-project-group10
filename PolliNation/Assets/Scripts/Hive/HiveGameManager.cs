@@ -6,24 +6,16 @@ public class HiveGameManager : MonoBehaviour
     public GameObject buildingGatheringPrefab;
     public GameObject buildingStoragePrefab;
     public GameObject buildingProductionPrefab;
-    public HiveScriptable hiveScriptable;
+    public HiveDataSingleton hiveSingleton;
     // Flag used to enable/disable building on a tile
     public bool building = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (hiveScriptable == null)
-        {
-            Debug.LogError("Hive Scriptable is not assigned!");
-            return;
-        }
-        else
-        {
-            Debug.Log("Hive Scriptable is correctly assigned");
-            // Getting all of the buildings from the HiveScriptable and instantiating them
-            InstantiateBuildingsFromScriptable();
-        }
+        hiveSingleton = new();
+        // Getting all of the buildings from the HiveSingleton and instantiating them
+        InstantiateBuildingsFromScriptable();
     }
 
     public void Build(BuildingType buildingType, ResourceType resourceType, Vector3 position)
@@ -31,12 +23,12 @@ public class HiveGameManager : MonoBehaviour
         Building newBuilding = InstantiateBuilding(buildingType, resourceType, position);
         if (newBuilding != null)
         {
-            hiveScriptable.AddBuilding(newBuilding);
-            (int, int) stationLevels = hiveScriptable.GetStationLevels(resourceType);
+            hiveSingleton.AddBuilding(newBuilding);
+            (int, int) stationLevels = hiveSingleton.GetStationLevels(resourceType);
             if (buildingType == BuildingType.Storage) {
-                hiveScriptable.UpdateStationLevels(resourceType, stationLevels.Item1 + 1, stationLevels.Item2);
+                hiveSingleton.UpdateStationLevels(resourceType, stationLevels.Item1 + 1, stationLevels.Item2);
             } else {
-                hiveScriptable.UpdateStationLevels(resourceType, stationLevels.Item1, stationLevels.Item2 + 1);
+                hiveSingleton.UpdateStationLevels(resourceType, stationLevels.Item1, stationLevels.Item2 + 1);
             }
         }
     }
@@ -57,15 +49,15 @@ public class HiveGameManager : MonoBehaviour
         }
     }
 
-    // Method to instantiate buildings from the HiveScriptable
+    // Method to instantiate buildings from the hiveSingleton
     private void InstantiateBuildingsFromScriptable()
     {
-        List<Building> buildings = hiveScriptable.GetBuildings();
+        List<Building> buildings = hiveSingleton.GetBuildings();
 
         // Check if the list is empty
         if (buildings == null || buildings.Count == 0)
         {
-            Debug.Log("No buildings found in HiveScriptable as yet.");
+            Debug.Log("No buildings found in hiveSingleton as yet.");
             return;
         }
 
@@ -84,7 +76,7 @@ public class HiveGameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Failed to instantiate building from HiveScriptable: " + building.Type);
+                Debug.LogError("Failed to instantiate building from hiveSingleton: " + building.Type);
             }
         }
 
@@ -127,11 +119,11 @@ public class HiveGameManager : MonoBehaviour
 
     // Update is called once per frame
     public bool IsOccupied(Vector2 tileID) {
-        List<Building> buildings = hiveScriptable.GetBuildings();
+        List<Building> buildings = hiveSingleton.GetBuildings();
 
         // Check if the list is empty
         if (buildings == null || buildings.Count == 0) {
-            Debug.Log("No buildings found in HiveScriptable as yet.");
+            Debug.Log("No buildings found in hiveSingleton as yet.");
             return false;
         }
 
