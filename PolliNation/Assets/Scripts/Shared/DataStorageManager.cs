@@ -3,14 +3,6 @@ using UnityEngine;
 
 /// <summary>
 /// Manages data storage and loading for the different ScriptableObjects.
-/// 
-/// This approach carries some risks since it means that a class (this one) 
-/// other than the ScriptableObject (SO) itself is directly manipulating the
-/// SO's data. It would be preferable to have the SOs manage their data
-/// loading and storage within themselves, however the lifecycle and nature
-/// of SOs seems to prevent that. Given that all of the access that breaks
-/// object encapsulation is happening within this assembly, this risk has
-/// been deemed acceptable.
 /// </summary>
 public class DataStorageManager : MonoBehaviour
 {
@@ -78,12 +70,12 @@ public class DataStorageManager : MonoBehaviour
 
   public void LoadData()
   {
-    LoadInventorySOData();
+    LoadInventoryData();
   }
 
   public void SaveData()
   {
-    SaveInventorySOData();
+    SaveInventoryData();
   }
 
   // ScriptableObject-specific loading and storage.
@@ -91,7 +83,7 @@ public class DataStorageManager : MonoBehaviour
   /// <summary>
   /// Loads the data from the storage files into the InventorySO's dictionaries.
   /// </summary>
-  public void LoadInventorySOData()
+  public void LoadInventoryData()
   {
     if (Instance._inventory != null)
     {
@@ -122,7 +114,7 @@ public class DataStorageManager : MonoBehaviour
   /// <summary>
   /// Saves the data from the InventorySO dictionaries into the storage files.
   /// </summary>
-  public void SaveInventorySOData()
+  public void SaveInventoryData()
   {
     if (Instance._inventory != null)
     {
