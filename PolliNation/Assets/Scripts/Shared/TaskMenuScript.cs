@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TaskMenuScript : MonoBehaviour
 {
-    public TaskScriptableObject Tasks;
+    public TaskDataSingleton Tasks;
     public GameObject TaskGameObject;
     public GameObject ScrollContainer;
 
@@ -14,14 +14,13 @@ public class TaskMenuScript : MonoBehaviour
 
     void Awake()
     {
-         // intial load of tasks into menu
-        if (Tasks != null) {
-            LoadTasks();
-        }
+        // intial load of tasks into menu
+        Tasks = new TaskDataSingleton();
+        LoadTasks();
     }
 
     /// <summary>
-    /// Loads all tasks in TaskScriptableObject into Task Game Objects in menu.
+    /// Loads all tasks in TaskDataSingleton into Task Game Objects in menu.
     /// </summary>
     public void LoadTasks()
     {

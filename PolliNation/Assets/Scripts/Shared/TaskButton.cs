@@ -2,15 +2,18 @@ using UnityEngine;
 
 public class TaskButton : MonoBehaviour
 {
-    public TaskScriptableObject Tasks;
+    public TaskDataSingleton Tasks;
     public GameObject button;
+
+    void Awake()
+    {
+        Tasks = new();
+    }
 
     void Start()
     {
         CheckAnimateButton();
-        if (Tasks != null) {
-            Tasks.OnTaskStatusChange += TasksUpdatedButton;
-        }
+        Tasks.OnTaskStatusChange += TasksUpdatedButton;
     }
 
     /// <summary>
