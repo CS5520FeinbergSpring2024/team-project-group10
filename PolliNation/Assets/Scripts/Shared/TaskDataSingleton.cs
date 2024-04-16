@@ -14,7 +14,7 @@ public class TaskDataSingleton
   }
 
   private List<Task> _tasks;
-  private List<Task> Tasks
+  internal List<Task> Tasks
   {
     get { return Instance._tasks; }
     set { Instance._tasks = value; }

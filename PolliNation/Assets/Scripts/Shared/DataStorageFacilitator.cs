@@ -161,7 +161,7 @@ internal static class DataStorageFacilitator
   }
 
   /// List<Building>
-  
+
   /// <summary>
   /// Serializes the given list and writes it to the given file.
   /// </summary>
@@ -230,9 +230,57 @@ internal static class DataStorageFacilitator
     return list;
   }
 
+  /// List<Task>
+
+  /// <summary>
+  /// Serializes the given list and writes it to the given file.
+  /// </summary>
+  /// <param name="list">The list to serialize.</param>
+  /// <param name="path">The Json file in which to store the serialized data.</param>
+  internal static void SaveTaskList(List<Task> list, string path)
+  {
+    try
+    {
+      list ??= new();
+      string jsonString = JsonConvert.SerializeObject(list);
+      Debug.Log("Writing: " + jsonString);
+      File.WriteAllText(path, jsonString);
+    }
+    // Swallow any exceptions.
+    catch (Exception ex)
+    {
+      Debug.LogException(ex);
+    }
+  }
+
+  /// <summary>
+  /// Deserializes the Json string stored in the give file and returns the
+  /// resulting List<Task>.
+  /// </summary>
+  /// <param name="path">The path to the Json file to deserialize.</param>
+  /// <returns>The List<Task> stored in the file or an empty list.</returns>
+  internal static List<Task> LoadTaskList(string path)
+  {
+    List<Task> list = new();
+    try
+    {
+      if (File.Exists(path))
+      {
+        string jsonString = File.ReadAllText(path);
+        Debug.Log("Read: " + jsonString);
+        list = JsonConvert.DeserializeObject<List<Task>>(jsonString);
+      }
+    }
+    catch (Exception ex)
+    {
+      Debug.LogException(ex);
+    }
+    return list;
+  }
+
   /// int.
   /// Yes, this is silly, but it was faster to code this than creat a new structure.
-  
+
   /// <summary>
   /// Serializes int and writes it to the given file.
   /// </summary>

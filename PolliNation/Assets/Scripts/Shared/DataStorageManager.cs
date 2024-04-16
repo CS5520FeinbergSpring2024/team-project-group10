@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 
 /// <summary>
 /// Manages data storage and loading for the different ScriptableObjects.
@@ -30,11 +31,13 @@ public class DataStorageManager : MonoBehaviour
   // object to store both types of worker data and serialize that.
   private static string _hiveTotalWorkersPath;
   private static string _hiveResourceLevelsPath;
+  private static string _tasksPath;
 
   // Singleton objects whose data to store.
   // These must only be accessed through Instance.<field>.
   private InventoryDataSingleton _inventory;
   private HiveDataSingleton _hive;
+  private TaskDataSingleton _tasks;
 
   private void Awake()
   {
@@ -65,9 +68,11 @@ public class DataStorageManager : MonoBehaviour
         Application.persistentDataPath + "/hiveTotalWorkersPath.json";   
     _hiveResourceLevelsPath = 
         Application.persistentDataPath + "/hiveResourceLevelsPath.json";
+    _tasksPath = Application.persistentDataPath + "/tasksPath.json";
 
     _inventory = new InventoryDataSingleton();
     _hive = new HiveDataSingleton();
+    _tasks = new TaskDataSingleton();
 
     LoadData();
   }
@@ -91,12 +96,14 @@ public class DataStorageManager : MonoBehaviour
   {
     LoadInventoryData();
     LoadHiveData();
+    LoadTaskData();
   }
 
   public void SaveData()
   {
     SaveInventoryData();
     SaveHiveData();
+    SaveTaskData();
   }
 
   // ScriptableObject-specific loading and storage.
@@ -206,6 +213,44 @@ public class DataStorageManager : MonoBehaviour
     else
     {
       Debug.LogError("Hive is null");
+    }
+  }
+
+  /// <summary>
+  /// Loads the data from the storage files into the TaskDataSingleton.
+  /// </summary>
+  public void LoadTaskData()
+  {
+    if (Instance._tasks != null)
+    {
+      List<Task> list = DataStorageFacilitator.LoadTaskList(_tasksPath);
+      if (list != null && list.Count > 0)
+      {
+        Instance._tasks.Tasks = list;
+      }
+      else
+      {
+        Debug.Log("LoadTaskData" + " loaded list is null or empty.");
+      }
+    }
+    else
+    {
+      Debug.LogError("Task is null");
+    }
+  }
+
+  /// <summary>
+  /// Saves the data from the TaskDataSingleton into the storage files.
+  /// </summary>
+  public void SaveTaskData()
+  {
+    if (Instance._tasks != null)
+    {
+      DataStorageFacilitator.SaveTaskList(Instance._tasks.Tasks, _tasksPath);
+    }
+    else
+    {
+      Debug.LogError("Task is null");
     }
   }
 }
