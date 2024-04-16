@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 public class Task
 {
-    private readonly String _title;
-    private readonly String _description;
+    private readonly string _title;
+    private readonly string _description;
     private readonly Dictionary<ResourceType, int> _requirements;
     private readonly Dictionary<RewardType, int> _rewards;
     // for if tasks are later going to associated or only shown by player level
@@ -12,7 +12,7 @@ public class Task
     private bool _isComplete = false;
     private bool _isClaimed = false;
 
-    public Task(String title, String description, 
+    public Task(string title, string description, 
     Dictionary<ResourceType, int> requirements, Dictionary<RewardType, int> rewards, int level = 1)
     {
         _title = title;
