@@ -4,7 +4,7 @@ using TMPro;
 
 public class InventoryMenuScript : MonoBehaviour
 {   
-    public InventoryScriptableObject UserInventory;
+    public InventoryDataSingleton UserInventory;
     public HiveScriptable hive;
     public TextMeshProUGUI HoneyAmountText;
     public TextMeshProUGUI PropolisAmountText;
@@ -27,6 +27,11 @@ public class InventoryMenuScript : MonoBehaviour
     public TextMeshProUGUI NectarProductionRateText;
     public TextMeshProUGUI WaterProductionRateText;
     public TextMeshProUGUI BudsProductionRateText;
+
+    void Awake()
+    {
+        UserInventory = new InventoryDataSingleton();
+    }
 
     // Start is called before the first frame update
     void Start()

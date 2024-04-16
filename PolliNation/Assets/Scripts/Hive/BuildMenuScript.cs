@@ -8,11 +8,16 @@ public class BuildMenuScript : MonoBehaviour
     private Vector2 currentTileID;
     private BuildingType? selectedBuildingType;
     private ResourceType? selectedResourceType;
-    public InventoryScriptableObject myInventory;
+    public InventoryDataSingleton myInventory;
     public HiveGameManager hiveGameManager;
 
     // Reference to the future data class 
     //public DataClass buildingData; 
+
+    void Awake()
+    {
+        myInventory = new InventoryDataSingleton();
+    }
 
     // Start is called before the first frame update
     void Start()

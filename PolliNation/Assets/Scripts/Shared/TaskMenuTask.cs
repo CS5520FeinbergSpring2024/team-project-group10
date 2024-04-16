@@ -23,7 +23,7 @@ public class TaskMenuTask : MonoBehaviour
     public GameObject rewardsViewPortGO;
     public GameObject rewardsContentsGO;
     public TaskScriptableObject Tasks;
-    public InventoryScriptableObject UserInventory;
+    public InventoryDataSingleton UserInventory;
 
     private Dictionary<RewardType, GameObject> RewardDisplays= new();
 
@@ -35,6 +35,7 @@ public class TaskMenuTask : MonoBehaviour
         if (UserInventory != null) {
             UserInventory.OnInventoryChanged += CheckTaskRequirements;
         }
+        UserInventory = new();
     }
     
     /// <summary>

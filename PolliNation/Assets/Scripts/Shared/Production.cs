@@ -4,7 +4,7 @@ using UnityEngine;
 public class Production : MonoBehaviour
 {
     public HiveScriptable hiveScriptableObject;
-    public InventoryScriptableObject inventoryScriptableObject;
+    public InventoryDataSingleton inventoryDataSingleton;
     public float productionInterval = 1f;
     public float productionPerWorker = 1f;
     private Formula formula;
@@ -14,7 +14,7 @@ public class Production : MonoBehaviour
     void Start()
     {
         // Initializng formula
-        formula = new Formula(inventoryScriptableObject);
+        formula = new Formula(inventoryDataSingleton);
         Debug.Log("Formula has been initialized .");
         StartCoroutine(ProduceResources());
     }
@@ -33,6 +33,7 @@ public class Production : MonoBehaviour
             // Destroy duplicate instances
             Destroy(gameObject); 
         }
+        inventoryDataSingleton = new();
     }
 
     private IEnumerator ProduceResources()
@@ -58,7 +59,7 @@ public class Production : MonoBehaviour
                     if (formula.ConvertResource(resourceType, assignedWorkers, productionPerWorker, out int producedQuantity))
                     {
                       Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
-                      inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
+                      inventoryDataSingleton.UpdateInventory(resourceType, producedQuantity);
                     }
                     else
                     {
@@ -74,7 +75,7 @@ public class Production : MonoBehaviour
                 if (assignedWorkers > 0)
                 {
                     int producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);
-                    inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);                      
+                    inventoryDataSingleton.UpdateInventory(resourceType, producedQuantity);                      
                 }
             }
         }

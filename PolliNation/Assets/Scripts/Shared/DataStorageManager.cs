@@ -32,7 +32,7 @@ public class DataStorageManager : MonoBehaviour
 
   // ScriptableObjects whose data to store.
   [SerializeField]
-  private InventoryScriptableObject _inventorySO;
+  private InventoryDataSingleton _inventory;
   
   private void Awake()
   {
@@ -54,6 +54,8 @@ public class DataStorageManager : MonoBehaviour
         Application.persistentDataPath + "/inventoryResourceFull.json";
     _inventoryResourceCarryLimitsPath =
         Application.persistentDataPath + "/inventoryResourceCarryLimits.json";
+
+    _inventory = new InventoryDataSingleton();
 
     LoadData();
   }
@@ -87,7 +89,7 @@ public class DataStorageManager : MonoBehaviour
   /// </summary>
   public void LoadInventorySOData()
   {
-    if (Instance._inventorySO != null)
+    if (Instance._inventory != null)
     {
       Dictionary<ResourceType, int> resourceCounts = 
           DataStorageFacilitator.LoadResourceIntDict(_inventoryResourceCountsPath);
@@ -98,9 +100,9 @@ public class DataStorageManager : MonoBehaviour
       if (resourceCounts != null && inventoryFull != null && carryLimits != null
           && resourceCounts.Count != 0 && inventoryFull.Count != 0 && carryLimits.Count != 0)
       {
-        Instance._inventorySO.resourceCounts = resourceCounts;
-        Instance._inventorySO.inventoryFull = inventoryFull;
-        Instance._inventorySO.resourceCarryLimits = carryLimits;
+        Instance._inventory.ResourceCounts = resourceCounts;
+        Instance._inventory.InventoryFullDict = inventoryFull;
+        Instance._inventory.ResourceCarryLimits = carryLimits;
       }
       else
       {
@@ -109,7 +111,7 @@ public class DataStorageManager : MonoBehaviour
     }
     else
     {
-      Debug.LogError("_inventorySO is null");
+      Debug.LogError("_inventory is null");
     }
   }
 
@@ -118,18 +120,18 @@ public class DataStorageManager : MonoBehaviour
   /// </summary>
   public void SaveInventorySOData()
   {
-    if (Instance._inventorySO != null)
+    if (Instance._inventory != null)
     {
       DataStorageFacilitator.SaveResourceIntDict(
-              Instance._inventorySO.resourceCounts, _inventoryResourceCountsPath);
+              Instance._inventory.ResourceCounts, _inventoryResourceCountsPath);
       DataStorageFacilitator.SaveResourceBoolDict(
-              Instance._inventorySO.inventoryFull, _inventoryResourceFullPath);
+              Instance._inventory.InventoryFullDict, _inventoryResourceFullPath);
       DataStorageFacilitator.SaveResourceIntDict(
-              Instance._inventorySO.resourceCarryLimits, _inventoryResourceCarryLimitsPath);
+              Instance._inventory.ResourceCarryLimits, _inventoryResourceCarryLimitsPath);
     }
     else
     {
-      Debug.LogError("_inventorySO is null");
+      Debug.LogError("_inventory is null");
     }
   }
 }

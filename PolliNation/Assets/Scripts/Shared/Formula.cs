@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class Formula
 {
-    private InventoryScriptableObject inventoryScriptableObject;
+    private InventoryDataSingleton inventoryDataSingleton;
 
-    public Formula(InventoryScriptableObject inventoryScriptableObject)
+    public Formula(InventoryDataSingleton inventoryDataSingleton)
     {
-        this.inventoryScriptableObject = inventoryScriptableObject;
+        this.inventoryDataSingleton = inventoryDataSingleton;
 
         foreach (var pair in conversionFormulas)
         {
@@ -64,7 +64,7 @@ public class Formula
             foreach (var requirement in formula)
             {
                 if (requirement.Key != resourceType && requirement.Value * assignedWorkers > 
-                inventoryScriptableObject.GetResourceCount(requirement.Key))
+                inventoryDataSingleton.GetResourceCount(requirement.Key))
                 {
                     enoughResources = false;
                     break;
@@ -89,7 +89,7 @@ public class Formula
                 {
                     if (requirement.Key != resourceType)
                     {
-                        inventoryScriptableObject.UpdateInventory(requirement.Key, -requirement.Value * assignedWorkers);
+                        inventoryDataSingleton.UpdateInventory(requirement.Key, -requirement.Value * assignedWorkers);
                     }
                 }
                 Debug.Log("Conversion was successful");

@@ -7,11 +7,13 @@ using UnityEngine;
 public class TaskScriptableObject : ScriptableObject
 {
     private List<Task> tasks = new();
-    public InventoryScriptableObject UserInventory;
+    public InventoryDataSingleton UserInventory;
     public HiveScriptable hive;
     public event EventHandler OnTaskStatusChange;
     public TaskScriptableObject() 
     {
+        UserInventory = new InventoryDataSingleton();
+        
         // starting tasks
         Dictionary<ResourceType, int> task1ResourceRequirements= new()
         {
