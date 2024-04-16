@@ -21,24 +21,34 @@ public class HiveDataSingleton
   // data is attached to the singleton instance.
 
   private List<Building> _buildings;
-  private List<Building> Buildings
+  internal List<Building> Buildings
   {
     get { return Instance._buildings; }
+    set {Instance._buildings = value; }
+  }
+  // Buildings are GameObjects and become null, while remaining in the list
+  // if the scene ends. BuildingData provides persistent storage between
+  // scenes.
+  private List<BuildingData> _buildingData;
+  internal List<BuildingData> BuildingData
+  {
+    get { return Instance._buildingData; }
+    set {Instance._buildingData = value; }
   }
   private int _totalWorkers;
-  private int TotalWorkers
+  internal int TotalWorkers
   {
     get { return Instance._totalWorkers; }
     set { Instance._totalWorkers = value; }
   }
   private Dictionary<ResourceType, int> _assignedWorkers;
-  private Dictionary<ResourceType, int> AssignedWorkers
+  internal Dictionary<ResourceType, int> AssignedWorkers
   {
     get { return Instance._assignedWorkers; }
     set { Instance._assignedWorkers = value; }
   }
   private Dictionary<ResourceType, (int storageLevel, int productionLevel)> _resourceLevels;
-  private Dictionary<ResourceType, (int storageLevel, int productionLevel)> ResourceLevels
+  internal Dictionary<ResourceType, (int storageLevel, int productionLevel)> ResourceLevels
   {
     get { return Instance._resourceLevels; }
     set { Instance._resourceLevels = value; }
@@ -59,7 +69,8 @@ public class HiveDataSingleton
     }
     _instance = this;
 
-    Instance._buildings = new();
+    Buildings = new();
+    BuildingData = new();
     TotalWorkers = 0;
     AssignedWorkers = new();
     ResourceLevels = new();
@@ -71,18 +82,29 @@ public class HiveDataSingleton
     }
   }
 
-  // Method to add a new building to the list of buildings
+  // Method to add a new building to the list of buildings and buildingData
   public void AddBuilding(Building building)
   {
     Buildings.Add(building);
     Debug.Log("Building added to list. Total buildings: " + Buildings.Count);
     Debug.Log("Building prefab reference: " + building.gameObject);
+    // Also add serializeable building data, detatched from the GameObject
+    // so it will last beyond the life of the GameObject and scene.
+    BuildingData bd = new(building.Type, building.ResourceType, 
+                          building.TileID, building.transform.position);
+    BuildingData.Add(bd);
   }
 
   public List<Building> GetBuildings()
   {
     Debug.Log("Number of buildings in the list: " + Buildings.Count);
     return Buildings;
+  }
+
+  public List<BuildingData> GetBuildingData()
+  {
+    Debug.Log("Number of buildingData in the list: " + Buildings.Count);
+    return BuildingData;
   }
 
   // Method to add to total available workers 

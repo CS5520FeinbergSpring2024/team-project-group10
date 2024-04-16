@@ -15,7 +15,7 @@ public class HiveGameManager : MonoBehaviour
     {
         hiveSingleton = new();
         // Getting all of the buildings from the HiveSingleton and instantiating them
-        InstantiateBuildingsFromScriptable();
+        InstantiateBuildingsFromSingleton();
     }
 
     public void Build(BuildingType buildingType, ResourceType resourceType, Vector3 position)
@@ -49,25 +49,27 @@ public class HiveGameManager : MonoBehaviour
         }
     }
 
-    // Method to instantiate buildings from the hiveSingleton
-    private void InstantiateBuildingsFromScriptable()
+    // Method to instantiate buildings from the hiveSingleton BuildingData
+    private void InstantiateBuildingsFromSingleton()
     {
-        List<Building> buildings = hiveSingleton.GetBuildings();
+        // Clear gameObject list to create again to match the data list.
+        hiveSingleton.GetBuildings().Clear();
 
+        List<BuildingData> buildingData = hiveSingleton.GetBuildingData();
+        
         // Check if the list is empty
-        if (buildings == null || buildings.Count == 0)
+        if (buildingData == null || buildingData.Count == 0)
         {
             Debug.Log("No buildings found in hiveSingleton as yet.");
             return;
         }
 
         // Iterate over each building in the list
-        foreach (Building building in buildings)
+        foreach (BuildingData bd in buildingData)
         {
-            Debug.Log(building);
+            Debug.Log(bd);
             // Instantiate the building from the building data
-            Vector3 position = new Vector3(building.TileID.x, 2f, building.TileID.y);
-            Building newBuilding = InstantiateBuilding(building.Type, building.ResourceType, position);
+            Building newBuilding = InstantiateBuilding(bd.Type, bd.ResourceType, bd.Position);
 
             // Check if the instantiation was successful
             if (newBuilding != null)
@@ -76,10 +78,9 @@ public class HiveGameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Failed to instantiate building from hiveSingleton: " + building.Type);
+                Debug.LogError("Failed to instantiate building from hiveSingleton: " + bd.Type);
             }
         }
-
     }
 
     private Building InstantiateBuilding(BuildingType buildingType, ResourceType resourceType, Vector3 position)
