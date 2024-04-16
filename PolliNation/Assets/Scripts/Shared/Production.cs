@@ -14,7 +14,7 @@ public class Production : MonoBehaviour
     void Start()
     {
         hiveSingleton = new();
-        
+
         // Initializng formula
         formula = new Formula(inventoryDataSingleton);
         Debug.Log("Formula has been initialized .");
@@ -28,12 +28,12 @@ public class Production : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             // Destroy duplicate instances
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
         inventoryDataSingleton = new();
     }
@@ -53,20 +53,20 @@ public class Production : MonoBehaviour
                 // get the number of assigned workers and produces resources each second 
                 // with one resource being produced per worker
                 int assignedWorkers = hiveSingleton.GetAssignedWorkers(resourceType);
-                
+
                 if (assignedWorkers > 0)
                 {
                     // Quick check for the resource thats being processed right now
                     Debug.Log("Processing resource type: " + resourceType);
                     if (formula.ConvertResource(resourceType, assignedWorkers, productionPerWorker, out int producedQuantity))
                     {
-                      Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
-                      inventoryDataSingleton.UpdateInventory(resourceType, producedQuantity);
+                        Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
+                        inventoryDataSingleton.UpdateInventory(resourceType, producedQuantity);
                     }
                     else
                     {
-                      Debug.Log("The conversion failed");
-                    }                 
+                        Debug.Log("The conversion failed");
+                    }
                 }
             }
 
@@ -77,7 +77,7 @@ public class Production : MonoBehaviour
                 if (assignedWorkers > 0)
                 {
                     int producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);
-                    inventoryDataSingleton.UpdateInventory(resourceType, producedQuantity);                      
+                    inventoryDataSingleton.UpdateInventory(resourceType, producedQuantity);
                 }
             }
         }
