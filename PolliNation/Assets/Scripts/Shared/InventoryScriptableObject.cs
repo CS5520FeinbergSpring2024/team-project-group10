@@ -9,14 +9,15 @@ public class InventoryScriptableObject : ScriptableObject
 {
     // set initial values to zero for now 
     // need to add method to get/set values from/to file with save system upon game start and end
-    private Dictionary<ResourceType, int> resourceCounts = new();
-    private Dictionary<ResourceType, int> resourceCarryLimits = new();
-    private Dictionary<ResourceType, bool> inventoryFull = new();
+    internal Dictionary<ResourceType, int> resourceCounts = new();
+    internal Dictionary<ResourceType, int> resourceCarryLimits = new();
+    internal Dictionary<ResourceType, bool> inventoryFull = new();
     public HiveScriptable hive;
     public event EventHandler OnInventoryChanged;
     private int storagePerLevel = 1000;
 
     public InventoryScriptableObject() {
+        Debug.Log("LOADSCRIPTABLE");
         foreach (ResourceType resource in Enum.GetValues(typeof(ResourceType))) {
             resourceCounts.Add(resource, 0);
             inventoryFull.Add(resource, false);
