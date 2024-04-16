@@ -36,6 +36,7 @@ public class DataStorageManager : MonoBehaviour
   
   private void Awake()
   {
+    Debug.Log("AWAKE");
     // Make DataStorageManagerScript a singleton.
     if (Instance != null)
     {
@@ -65,20 +66,23 @@ public class DataStorageManager : MonoBehaviour
     SaveData();
   }
 
-  private void OnApplicationQuit()
+  // OnApplicationPause is guaranteed to be called on Android,
+  // while OnApplicationQuit is not.
+  private void OnApplicationPause(bool paused)
   {
-    SaveData();
+    if (paused)
+    {
+      SaveData();
+    }
   }
 
   public void LoadData()
   {
-    Debug.Log("LOADDATA");
     LoadInventorySOData();
   }
 
   public void SaveData()
   {
-    Debug.Log("SAVEDATA");
     SaveInventorySOData();
   }
 
