@@ -34,8 +34,8 @@ public class TaskDataSingleton
   private event EventHandler _onTaskStatusChange;
   public event EventHandler OnTaskStatusChange
   {
-    add { Instance._onTaskStatusChange += value; }
-    remove { Instance._onTaskStatusChange -= value; }
+    add { lock(this) Instance._onTaskStatusChange += value; }
+    remove { lock(this) Instance._onTaskStatusChange -= value; }
   }
 
   public TaskDataSingleton()

@@ -42,8 +42,8 @@ public class InventoryDataSingleton
   private event EventHandler _onInventoryChanged;
   public event EventHandler OnInventoryChanged
   {
-    add { Instance._onInventoryChanged += value; }
-    remove { Instance._onInventoryChanged -= value; }
+    add { lock(this) Instance._onInventoryChanged += value; }
+    remove { lock(this) Instance._onInventoryChanged -= value; }
   }
   private HiveDataSingleton _hive;
   private HiveDataSingleton Hive

@@ -46,8 +46,8 @@ public class HiveDataSingleton
   private event EventHandler _onStationLevelChanged;
   public event EventHandler OnStationLevelChanged
   {
-    add { Instance._onStationLevelChanged += value; }
-    remove { Instance._onStationLevelChanged -= value; }
+    add { lock(this) Instance._onStationLevelChanged += value; }
+    remove { lock(this) Instance._onStationLevelChanged -= value; }
   }
 
   public HiveDataSingleton()
