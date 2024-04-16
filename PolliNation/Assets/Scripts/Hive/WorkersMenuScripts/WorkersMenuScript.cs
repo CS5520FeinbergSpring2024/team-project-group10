@@ -58,7 +58,8 @@ public class WorkersMenuScript : MonoBehaviour
             }
         }
 
-        hiveSingleton = gameManager.hiveSingleton;
+        // Since it's a singleton, this doesn't need to the the one the hive stores.
+        hiveSingleton = new();
 
         //initilize dictionary
         assignedTextMap = new Dictionary<ResourceType, TextMeshProUGUI>
