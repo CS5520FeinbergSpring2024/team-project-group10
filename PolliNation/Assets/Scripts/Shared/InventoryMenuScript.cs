@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class InventoryMenuScript : MonoBehaviour
 {   
@@ -28,9 +29,19 @@ public class InventoryMenuScript : MonoBehaviour
     public TextMeshProUGUI WaterProductionRateText;
     public TextMeshProUGUI BudsProductionRateText;
 
+    private Dictionary<ResourceType, int> rates = new();
+
     void Awake()
     {
         UserInventory = new InventoryDataSingleton();
+        // if rate dictionary isn't already set up then set it up
+        if (rates.Count == 0)
+        {
+            foreach(ResourceType resource in Enum.GetValues(typeof(ResourceType)))
+            {
+                rates.Add(resource, 0);
+            }
+        }
     }
 
     // Start is called before the first frame update
@@ -41,12 +52,12 @@ public class InventoryMenuScript : MonoBehaviour
 
         hive = new();
         
-        // on start do intial load of data and add listener
+        // on start do intial load of data and add event subscribers
         if (UserInventory != null) {
             LoadData();
+            UserInventory.OnInventoryChanged += InventoryUpdated;
             LoadStorageLimits();
             LoadProductionRates();
-            UserInventory.OnInventoryChanged += InventoryUpdated;
             hive.OnStationLevelChanged += InventoryStorageAndProductionUpdated;
         }
     }
@@ -54,6 +65,8 @@ public class InventoryMenuScript : MonoBehaviour
     // called on inventory count update
     private void InventoryUpdated(object sender, System.EventArgs e) {
         LoadData();
+        // since rates sometimes depend on if inventory is full or empty also update with inventory count changes
+        LoadProductionRates();
     }
 
     // called on inventory storage or production rate update
@@ -81,7 +94,6 @@ public class InventoryMenuScript : MonoBehaviour
         }
     }
 
-
     public void LoadStorageLimits()
     {
         if (UserInventory != null)
@@ -102,19 +114,76 @@ public class InventoryMenuScript : MonoBehaviour
 
     public void LoadProductionRates()
     {
-        if (hive != null)
+        // update calculated production rates stored in dictionary
+        CalculateProductionRates();
+        PollenProductionRateText.text = rates[ResourceType.Pollen].ToString();
+        NectarProductionRateText.text = rates[ResourceType.Nectar].ToString();
+        WaterProductionRateText.text = rates[ResourceType.Water].ToString();
+        BudsProductionRateText.text = rates[ResourceType.Buds].ToString();
+        HoneyProductionRateText.text = rates[ResourceType.Honey].ToString();
+        PropolisProductionRateText.text = rates[ResourceType.Propolis].ToString();
+        RoyalJellyProductionRateText.text = rates[ResourceType.RoyalJelly].ToString();
+    
+    }
+
+    /// <summary>
+    /// Calculates the net production rate of a resource based on hive station levels 
+    /// and if resource is being consumed to produce other finished good resources
+    /// stores results in rates dictionary.
+    /// </summary>
+    private void CalculateProductionRates()
+    {
+        // get conversion formulas from Formula class
+        Dictionary<ResourceType, Dictionary<ResourceType, int>> formulas = Formula.conversionFormulas;
+         List<ResourceType> notBeingProduced = new();
+
+        // iterate over all resource types
+        foreach(ResourceType resource in Enum.GetValues(typeof(ResourceType)))
         {
-            PollenProductionRateText.text = hive.GetStationLevels(ResourceType.Pollen).productionLevel.ToString();
-            NectarProductionRateText.text = hive.GetStationLevels(ResourceType.Nectar).productionLevel.ToString();
-            WaterProductionRateText.text = hive.GetStationLevels(ResourceType.Water).productionLevel.ToString();
-            BudsProductionRateText.text = hive.GetStationLevels(ResourceType.Buds).productionLevel.ToString();
-            HoneyProductionRateText.text = hive.GetStationLevels(ResourceType.Honey).productionLevel.ToString();
-            PropolisProductionRateText.text = hive.GetStationLevels(ResourceType.Propolis).productionLevel.ToString();
-            RoyalJellyProductionRateText.text = hive.GetStationLevels(ResourceType.RoyalJelly).productionLevel.ToString();
+            // reset values
+            rates[resource] = 0;
+
+            // add resources being gathered / produced
+            // assuming rate is 1 per second per worker
+            rates[resource] += hive.GetStationLevels(resource).productionLevel * hive.GetAssignedWorkers(resource);
+
+            // check if resource is being consumed to produce other finished good resources
+            foreach (KeyValuePair<ResourceType, Dictionary<ResourceType, int>> formula in formulas)
+            {
+                if (formula.Value.ContainsKey(resource) && hive.GetStationLevels(formula.Key).productionLevel >= 1)
+                {
+                    // if prodcued resource is not able to meet formula demands it won't be produced and the ingredients wont be consumed
+                    bool canProduce = true;
+                    foreach(KeyValuePair<ResourceType, int> formulaIngredient in formula.Value)
+                    {
+                        // if not enough of resource in inventory to use in recipe for finsihed good
+                        if (formulaIngredient.Value > UserInventory.GetResourceCount(formulaIngredient.Key))
+                        {
+                            canProduce = false;
+                            // produced resource is not being produced bc lack of supplies
+                            notBeingProduced.Add(formula.Key);
+                        }
+                    }
+                    // if finished good is being produced then take away contribution from ingredient
+                    if (canProduce)
+                    {
+                        // take away amount used to make produced resource based on formula, 
+                        // number of stations, and assigned workers for producing finished good that resource is used to make
+                        rates[resource] -= formula.Value[resource] 
+                        * hive.GetStationLevels(formula.Key).productionLevel * hive.GetAssignedWorkers(formula.Key);
+                    }
+                }
+            }
+
         }
-        else
+
+        // go back through and set all finished goods that aren't being produced to 0
+        if (notBeingProduced.Count > 0)
         {
-            Debug.LogWarning("hive scriptable asset is null");
+            foreach (ResourceType notProducingResource in notBeingProduced)
+            {
+                rates[notProducingResource] = 0;
+            }
         }
     }
     
