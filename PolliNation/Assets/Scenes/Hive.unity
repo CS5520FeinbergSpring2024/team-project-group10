@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hive_BuildButton
       objectReference: {fileID: 0}
+    - target: {fileID: 3699841413314204055, guid: 71395a9bb7dc7472c96b7ff62f8978fe, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5378802376478687789, guid: 71395a9bb7dc7472c96b7ff62f8978fe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1217,6 +1221,10 @@ PrefabInstance:
     - target: {fileID: 913438539994755913, guid: e64644866ab1a4d5e8e4770a4afdef71, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1414414419785602582, guid: e64644866ab1a4d5e8e4770a4afdef71, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3657773404937266759, guid: e64644866ab1a4d5e8e4770a4afdef71, type: 3}
       propertyPath: m_Name
@@ -2595,6 +2603,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1417209618546066988, guid: f6dc6d5d41fd04411ab870d85ab1d854, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5943947035623745103, guid: f6dc6d5d41fd04411ab870d85ab1d854, type: 3}
       propertyPath: m_Name
       value: InventoryButton
@@ -3486,63 +3498,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83deb21366957493497b1aeafe0b3dc8, type: 3}
---- !u!1001 &901521408
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 401577731480127909, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1781157660556699605, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
-      propertyPath: m_Name
-      value: InventoryMenu
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 5dad00f20180c4a89845f175c1fe3062, type: 3}
 --- !u!43 &901636842
 Mesh:
   m_ObjectHideFlags: 0
@@ -4368,67 +4323,6 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!1001 &932678331
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 807788551607665531, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 906827804773784181, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_Name
-      value: TasksMenu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8902845980344492459, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ddbbad3f15ee446ddbc8e62f2d46093f, type: 3}
 --- !u!43 &950173472
 Mesh:
   m_ObjectHideFlags: 0
@@ -6026,6 +5920,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2050416458886475528, guid: e992b7bcf8a48403b8bdfb3be818e099, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2266347201454132332, guid: e992b7bcf8a48403b8bdfb3be818e099, type: 3}
       propertyPath: m_Name
       value: Hive_WorkersMenu
@@ -6538,6 +6436,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2008546170887997149, guid: d77933d91fc4747829d4491a6c8155bb, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2885201027989233537, guid: d77933d91fc4747829d4491a6c8155bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -6986,6 +6888,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4476062484627135449, guid: 85f48a486bed0d144b7c62cded2061d0, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5830024351019060231, guid: 85f48a486bed0d144b7c62cded2061d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -8261,6 +8167,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1544235936539609488, guid: 8fe53808d29f7491cb1295b4aea49804, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1546726304130099346, guid: 8fe53808d29f7491cb1295b4aea49804, type: 3}
       propertyPath: m_Name
       value: Hive_InventoryDisplay
@@ -8434,8 +8344,6 @@ SceneRoots:
   - {fileID: 469076505}
   - {fileID: 165165778}
   - {fileID: 1182199920}
-  - {fileID: 932678331}
-  - {fileID: 901521408}
   - {fileID: 1117771790}
   - {fileID: 2068913648}
   - {fileID: 524925875301071403}

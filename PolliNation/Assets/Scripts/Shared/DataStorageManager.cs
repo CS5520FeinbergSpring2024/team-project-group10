@@ -3,7 +3,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 
 /// <summary>
-/// Manages data storage and loading for the different ScriptableObjects.
+/// Manages data storage and loading for the different data singletons.
 /// </summary>
 public class DataStorageManager : MonoBehaviour
 {
@@ -106,7 +106,7 @@ public class DataStorageManager : MonoBehaviour
     SaveTaskData();
   }
 
-  // ScriptableObject-specific loading and storage.
+  // DataSingleton-specific loading and storage.
 
   /// <summary>
   /// Loads the data from the storage files into the Inventory's dictionaries.
