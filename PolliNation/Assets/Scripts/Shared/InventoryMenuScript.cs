@@ -145,32 +145,37 @@ public class InventoryMenuScript : MonoBehaviour
 
             // add resources being gathered / produced
             // assuming rate is 1 per second per worker
-            rates[resource] += hive.GetStationLevels(resource).productionLevel * hive.GetAssignedWorkers(resource);
+            if (hive.GetStationLevels(resource).productionLevel >= 1)
+            {
+            rates[resource] += hive.GetAssignedWorkers(resource);
+            }
 
             // check if resource is being consumed to produce other finished good resources
             foreach (KeyValuePair<ResourceType, Dictionary<ResourceType, int>> formula in formulas)
             {
                 if (formula.Value.ContainsKey(resource) && hive.GetStationLevels(formula.Key).productionLevel >= 1)
                 {
-                    // if prodcued resource is not able to meet formula demands it won't be produced and the ingredients wont be consumed
+                    // if produced resource is not able to meet formula demands it won't be produced and the ingredients wont be consumed
                     bool canProduce = true;
                     foreach(KeyValuePair<ResourceType, int> formulaIngredient in formula.Value)
                     {
                         // if not enough of resource in inventory to use in recipe for finsihed good
-                        if (formulaIngredient.Value > UserInventory.GetResourceCount(formulaIngredient.Key))
+                        if (formulaIngredient.Value * hive.GetAssignedWorkers(formula.Key) 
+                        > UserInventory.GetResourceCount(formulaIngredient.Key))
                         {
+                            Debug.Log("RSRSRS Cannot produce: " + formula.Key + " not enough " + formulaIngredient + " need " + formulaIngredient.Value);
                             canProduce = false;
                             // produced resource is not being produced bc lack of supplies
                             notBeingProduced.Add(formula.Key);
                         }
                     }
                     // if finished good is being produced then take away contribution from ingredient
-                    if (canProduce)
+                    if (canProduce && hive.GetStationLevels(formula.Key).productionLevel >= 1)
                     {
-                        // take away amount used to make produced resource based on formula, 
-                        // number of stations, and assigned workers for producing finished good that resource is used to make
-                        rates[resource] -= formula.Value[resource] 
-                        * hive.GetStationLevels(formula.Key).productionLevel * hive.GetAssignedWorkers(formula.Key);
+                        // take away amount used to make produced resource based on formula 
+                        // and assigned workers for producing finished good that resource is used to make
+                        rates[resource] -= formula.Value[resource] * hive.GetAssignedWorkers(formula.Key);
+                        
                     }
                 }
             }
