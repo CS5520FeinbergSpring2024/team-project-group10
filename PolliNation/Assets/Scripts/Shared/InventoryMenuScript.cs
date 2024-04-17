@@ -153,7 +153,7 @@ public class InventoryMenuScript : MonoBehaviour
             // check if resource is being consumed to produce other finished good resources
             foreach (KeyValuePair<ResourceType, Dictionary<ResourceType, int>> formula in formulas)
             {
-                if (formula.Value.ContainsKey(resource) && hive.GetStationLevels(formula.Key).productionLevel >= 1)
+                if (formula.Value.ContainsKey(resource) && hive.GetAssignedWorkers(formula.Key) >= 1)
                 {
                     // if produced resource is not able to meet formula demands it won't be produced and the ingredients wont be consumed
                     bool canProduce = true;
