@@ -123,6 +123,8 @@ public class HiveDataSingleton
   public void AssignWorkers(ResourceType resourceType, int numberOfWorkers)
   {
     AssignedWorkers[resourceType] = numberOfWorkers;
+    // notify subscribers
+    Instance._onStationLevelChanged?.Invoke(Instance, EventArgs.Empty);
   }
 
   public int GetAssignedWorkers(ResourceType resourceType)

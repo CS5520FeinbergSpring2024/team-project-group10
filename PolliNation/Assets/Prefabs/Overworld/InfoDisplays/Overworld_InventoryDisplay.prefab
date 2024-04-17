@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: 0}
+  m_AnchoredPosition: {x: 500, y: 0}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2935555429755497101
@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 500, y: 0}
+  m_AnchoredPosition: {x: 100, y: 0}
   m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &7236661298123454233
@@ -393,7 +393,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 225, y: 0}
+  m_AnchoredPosition: {x: 625, y: 0}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &4998181436598405618
@@ -527,7 +527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 625, y: 0}
+  m_AnchoredPosition: {x: 225, y: 0}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &576020183766181431
@@ -730,7 +730,6 @@ MonoBehaviour:
   WaterAmountText: {fileID: 7636922642321697959}
   BudsAmountText: {fileID: 1900493930627721910}
   HealthAmountText: {fileID: 930123881982281303}
-  UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
 --- !u!1 &3563951908928363269
 GameObject:
   m_ObjectHideFlags: 0

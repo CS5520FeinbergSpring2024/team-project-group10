@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c1b54a25927456bb3e327b368c68f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tasks: {fileID: 11400000, guid: d47d5e4df00524cb185e6a85693d8424, type: 2}
   TaskGameObject: {fileID: 8324146062157378477, guid: b0286cc3f68224a76b79299a82421409, type: 3}
   ScrollContainer: {fileID: 3364086929699447263}
 --- !u!1 &1661111392812909491
@@ -540,11 +539,11 @@ RectTransform:
   - {fileID: 4924564249884765963}
   m_Father: {fileID: 7217383318469594887}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 5.000041, y: -24.99997}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 25, y: -25}
   m_SizeDelta: {x: 400, y: 110}
-  m_Pivot: {x: 0.5, y: 1}
+  m_Pivot: {x: 0, y: 1}
 --- !u!222 &7431024659545150529
 CanvasRenderer:
   m_ObjectHideFlags: 0
