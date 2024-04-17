@@ -5,7 +5,7 @@ using UnityEngine.InputSystem.Android;
 // inherits from enemy abstract class
 public class Wasp : Enemy
 {
-    public InventoryScriptableObject UserInventory;
+    public InventoryDataSingleton UserInventory;
     // percentage penalty on inventory on kill
     [SerializeField] private int pollenKillPenaltyPercent = 25;
     [SerializeField] private int nectarKillPenaltyPercent = 25;
@@ -25,6 +25,7 @@ public class Wasp : Enemy
         damageIndicator = GetComponentInChildren<SpriteRenderer>();
         SetEnemyStats(waspDamage, waspSpeed, waspChaseRange, 
             waspAttackCooldown, waspPatrolRange, waspHealth);
+        UserInventory = new();
     }
 
     private protected override void Roaming()

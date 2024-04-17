@@ -10,8 +10,13 @@ public class OverworldInventoryBar : MonoBehaviour
     public TextMeshProUGUI WaterAmountText;
     public TextMeshProUGUI BudsAmountText;
     public TextMeshProUGUI HealthAmountText;
-    public InventoryScriptableObject UserInventory;
+    public InventoryDataSingleton UserInventory;
     private GameObject bee;
+
+    void Awake()
+    {
+        UserInventory = new();
+    }
 
     // Start is called before the first frame update
     void Start()

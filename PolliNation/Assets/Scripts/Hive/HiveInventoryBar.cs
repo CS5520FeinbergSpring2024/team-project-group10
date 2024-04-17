@@ -9,7 +9,12 @@ public class HiveInventoryBar : MonoBehaviour
     public TextMeshProUGUI PropolisAmountText;
     public TextMeshProUGUI RoyalJellyAmountText;
 
-    public InventoryScriptableObject UserInventory;
+    public InventoryDataSingleton UserInventory;
+
+    void Awake()
+    {
+        UserInventory = new();
+    }
 
     // Start is called before the first frame update
     void Start()

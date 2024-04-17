@@ -14,7 +14,7 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
 
     // Set in the Unity editor.
     [SerializeField]
-    private protected InventoryScriptableObject UserInventory;
+    private protected InventoryDataSingleton UserInventory;
 
     // Paired with Properties.
     private protected ResourceType _resourceType;
@@ -372,10 +372,7 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
     private protected void Awake()
     {
         TAG = GetType().ToString();
-        if (UserInventory == null)
-        {
-            Debug.Log(FormatLogMessage("Awake()", "UserInventory is null."));
-        }
+        UserInventory = new InventoryDataSingleton();
         // Set default starting values.
         SetValues();
         _particleSystem = GetComponent<ParticleSystem>();

@@ -21,7 +21,7 @@ public class WorkersMenuScript : MonoBehaviour
     public TextMeshProUGUI RoyalJellyAssignedText;
     public TextMeshProUGUI availableWorkersText;
 
-    private HiveScriptable hiveScriptable;
+    private HiveDataSingleton hiveSingleton;
     private GameObject menuButtonObject;
     private ILaunchMenuButton launchMenuButton;
     private int availableWorkers;
@@ -58,7 +58,8 @@ public class WorkersMenuScript : MonoBehaviour
             }
         }
 
-        hiveScriptable = gameManager.hiveScriptable;
+        // Since it's a singleton, this doesn't need to the the one the hive stores.
+        hiveSingleton = new();
 
         //initilize dictionary
         assignedTextMap = new Dictionary<ResourceType, TextMeshProUGUI>
@@ -74,7 +75,7 @@ public class WorkersMenuScript : MonoBehaviour
 
         workersAssigned = new Dictionary<ResourceType, int>();
 
-        // init local workerAssigned Dictionary avoid frequent updating with HiveScriptable 
+        // init local workerAssigned Dictionary avoid frequent updating with HiveSingleton 
         foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
         {
             workersAssigned.Add(resourceType, 0);
@@ -88,10 +89,10 @@ public class WorkersMenuScript : MonoBehaviour
     {
         foreach (ResourceType resourceType in Enum.GetValues(typeof(ResourceType)))
         {
-            workersAssigned[resourceType] = hiveScriptable.GetAssignedWorkers(resourceType);
+            workersAssigned[resourceType] = hiveSingleton.GetAssignedWorkers(resourceType);
             assignedTextMap[resourceType].text = workersAssigned[resourceType].ToString();
         }
-        availableWorkers = hiveScriptable.GetTotalWorkers() - workersAssigned.Sum(x => x.Value);
+        availableWorkers = hiveSingleton.GetTotalWorkers() - workersAssigned.Sum(x => x.Value);
         availableWorkersText.text = availableWorkers.ToString();
     }
 
@@ -125,7 +126,7 @@ public class WorkersMenuScript : MonoBehaviour
 
     private void IncrementAssignedWorkers(TextMeshProUGUI assignedText, ResourceType resourceType)
     {
-        if (hiveScriptable.GetStationLevels(resourceType).productionLevel > 0)
+        if (hiveSingleton.GetStationLevels(resourceType).productionLevel > 0)
         {
             workersAssigned[resourceType]++;
             assignedText.text = workersAssigned[resourceType].ToString();
@@ -177,7 +178,7 @@ public class WorkersMenuScript : MonoBehaviour
     {
         foreach (var pair in workersAssigned)
         {
-            hiveScriptable.AssignWorkers(pair.Key, pair.Value);
+            hiveSingleton.AssignWorkers(pair.Key, pair.Value);
         }
        
     }

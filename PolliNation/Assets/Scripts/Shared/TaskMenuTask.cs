@@ -22,19 +22,17 @@ public class TaskMenuTask : MonoBehaviour
     public GameObject PollenRewardGO;
     public GameObject rewardsViewPortGO;
     public GameObject rewardsContentsGO;
-    public TaskScriptableObject Tasks;
-    public InventoryScriptableObject UserInventory;
+    public TaskDataSingleton Tasks;
+    public InventoryDataSingleton UserInventory;
 
     private Dictionary<RewardType, GameObject> RewardDisplays= new();
 
     void Awake()
     {   
-        if (Tasks != null) {
-            Tasks.OnTaskStatusChange += TasksUpdated;
-        }
-        if (UserInventory != null) {
-            UserInventory.OnInventoryChanged += CheckTaskRequirements;
-        }
+        Tasks = new();
+        UserInventory = new();
+        Tasks.OnTaskStatusChange += TasksUpdated;
+        UserInventory.OnInventoryChanged += CheckTaskRequirements;
     }
     
     /// <summary>
@@ -146,7 +144,7 @@ public class TaskMenuTask : MonoBehaviour
     }
     /// <summary>
     /// Called on claim reward button click. 
-    /// Calls TaskScriptableObjectMethod ClaimReward method.
+    /// Calls TaskDataSingleton ClaimReward method.
     /// </summary>
    public void ClaimRewardClick()
     {

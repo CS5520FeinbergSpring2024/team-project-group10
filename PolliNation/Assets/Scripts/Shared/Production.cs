@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Production : MonoBehaviour
 {
-    public HiveScriptable hiveScriptableObject;
-    public InventoryScriptableObject inventoryScriptableObject;
+    public HiveDataSingleton hiveSingleton;
+    public InventoryDataSingleton inventoryDataSingleton;
     public float productionInterval = 1f;
     public float productionPerWorker = 1f;
     private Formula formula;
@@ -13,8 +13,10 @@ public class Production : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        hiveSingleton = new();
+
         // Initializng formula
-        formula = new Formula(inventoryScriptableObject);
+        formula = new Formula(inventoryDataSingleton);
         Debug.Log("Formula has been initialized .");
         StartCoroutine(ProduceResources());
     }
@@ -26,13 +28,14 @@ public class Production : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); 
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             // Destroy duplicate instances
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
+        inventoryDataSingleton = new();
     }
 
     private IEnumerator ProduceResources()
@@ -49,32 +52,32 @@ public class Production : MonoBehaviour
             {
                 // get the number of assigned workers and produces resources each second 
                 // with one resource being produced per worker
-                int assignedWorkers = hiveScriptableObject.GetAssignedWorkers(resourceType);
-                
+                int assignedWorkers = hiveSingleton.GetAssignedWorkers(resourceType);
+
                 if (assignedWorkers > 0)
                 {
                     // Quick check for the resource thats being processed right now
                     Debug.Log("Processing resource type: " + resourceType);
                     if (formula.ConvertResource(resourceType, assignedWorkers, productionPerWorker, out int producedQuantity))
                     {
-                      Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
-                      inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);
+                        Debug.Log("Conversion successful for " + resourceType + " with expected produced quantity: " + producedQuantity);
+                        inventoryDataSingleton.UpdateInventory(resourceType, producedQuantity);
                     }
                     else
                     {
-                      Debug.Log("The conversion failed");
-                    }                 
+                        Debug.Log("The conversion failed");
+                    }
                 }
             }
 
             // Dealing with the raw resources that don't need to use the formula
             foreach (ResourceType resourceType in new ResourceType[] { ResourceType.Nectar, ResourceType.Pollen, ResourceType.Buds, ResourceType.Water })
             {
-                int assignedWorkers = hiveScriptableObject.GetAssignedWorkers(resourceType);
+                int assignedWorkers = hiveSingleton.GetAssignedWorkers(resourceType);
                 if (assignedWorkers > 0)
                 {
                     int producedQuantity = Mathf.RoundToInt(assignedWorkers * productionPerWorker);
-                    inventoryScriptableObject.UpdateInventory(resourceType, producedQuantity);                      
+                    inventoryDataSingleton.UpdateInventory(resourceType, producedQuantity);
                 }
             }
         }

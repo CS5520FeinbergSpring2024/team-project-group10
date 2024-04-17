@@ -107,7 +107,7 @@ public class Building : MonoBehaviour
 
     // Made method static to check if a Building can be afforded based on what is in the inventory
     // After pollen or nectar has been collected to the required amount
-    public static bool CanAfford(Dictionary<ResourceType, int> formula, InventoryScriptableObject inventory)
+    public static bool CanAfford(Dictionary<ResourceType, int> formula, InventoryDataSingleton inventory)
     {
         foreach (ResourceType resource in formula.Keys) {
             if (inventory.GetResourceCount(resource) < formula[resource]) {
