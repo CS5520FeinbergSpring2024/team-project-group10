@@ -1,12 +1,6 @@
 using UnityEngine;
 
 public class Building : MonoBehaviour {
-    private Vector2 _tileId;
-    internal Vector2 TileId {
-        get { return _tileId; }
-        set { _tileId = value; }
-    }
-
     public void DestroyGameObject() {
         Destroy(gameObject);
     }

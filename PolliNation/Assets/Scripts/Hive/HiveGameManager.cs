@@ -9,7 +9,7 @@ public class HiveGameManager : MonoBehaviour {
     // Flag used to enable/disable building on a tile
     public bool building = false;
     // List of Building GameObjects used to destroy buildings
-    private List<Building> _buildings = new();
+    private Dictionary<Vector2, Building> _buildings = new();
 
     // Start is called before the first frame update
     void Start() {
@@ -33,12 +33,9 @@ public class HiveGameManager : MonoBehaviour {
 
     public void DestroyBuilding(Vector2 tileId) {
         // Destroy the building GameObject
-        foreach(Building b in _buildings) {
-            if (b.TileId == tileId) {
-                _buildings.Remove(b);
-                b.DestroyGameObject();
-                break;
-            }
+        if (_buildings.ContainsKey(tileId)) {
+            _buildings[tileId].DestroyGameObject();
+            _buildings.Remove(tileId);
         }
 
         // Remove the building data corresponding to the given tileId
@@ -100,9 +97,8 @@ public class HiveGameManager : MonoBehaviour {
 
             // Associate the building with the selected resource 
             if (newBuilding != null) {
-                newBuilding.TileId = new Vector2(position.x, position.z);
                 newBuilding.UpdateResourceDisplay(resourceType);
-                _buildings.Add(newBuilding);
+                _buildings.Add(new(position.x, position.z), newBuilding);
                 Debug.Log($"{resourceType} {buildingType} Station instantiated");
                 return newBuilding;
             }
