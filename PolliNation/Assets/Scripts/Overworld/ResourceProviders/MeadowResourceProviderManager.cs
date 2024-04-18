@@ -16,7 +16,7 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
     private GameObject _pollenProviderPrefab;
     // Min distance between flowers of any type.
     [SerializeField]
-    private float _minDistanceApart = 3;
+    private float _minDistanceApart = 6;
     // NectarProvider
     [SerializeField]
     private int _numNectarProviders = 16;
@@ -26,6 +26,7 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
     // Other fields.
     private List<GameObject> _pollenProviders = new();
     private List<GameObject> _nectarProviders = new();
+    private List<GameObject> _allProviders = new();
 
     // For polar locations. Generated locations fall in
     // the ring between these two radii.
@@ -184,16 +185,18 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
     /// </summary>
     /// <param name="prefab">The prefab to spawn objects from.</param>
     /// <param name="instanceList">The list in which to store spawned instances.</param>
+    /// <param name="locationConflicts">Other GameObjects that this should be spawned _minDistanceApart from.</param>
     /// <param name="settingsKey">The key to use to look up production value settings.</param>
     /// <param name="count">The number of objects to spawn.</param>
-    private void SpawnObjects(GameObject prefab, List<GameObject> instanceList, Type settingsKey, int count = 1)
+    private void SpawnObjects(GameObject prefab, List<GameObject> instanceList, 
+                              List<GameObject> locationConflicts, Type settingsKey, int count = 1)
     {
         try
         {
             for (int i = 0; i < count; i++)
             {
                 Vector3 location = GenerateRandomLocationWithValidDistance(
-                    instanceList, _minDistanceApart);
+                    locationConflicts, _minDistanceApart);
                 if (!Vector3.positiveInfinity.Equals(location))
                 {
                     GameObject instance = Instantiate(prefab,
@@ -204,6 +207,7 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
                     SetRandomProductionValues(providerScript, settingsKey);
                     providerScript.EmissionRateConverter = this;
                     instanceList.Add(instance);
+                    locationConflicts.Add(instance);
                 }
             }
         }
@@ -286,7 +290,7 @@ public class MeadowResourceProviderManager : MonoBehaviour, IResourceAmountToEmi
                 / (_particleEmissionRateMax[_nectarKey] - _particleEmissionRateMin[_nectarKey]);
 
         // Spawn objects.
-        SpawnObjects(_pollenProviderPrefab, _pollenProviders, _pollenKey, _numPollenProviders);
-        SpawnObjects(_nectarProviderPrefab, _nectarProviders, _nectarKey, _numNectarProviders);
+        SpawnObjects(_pollenProviderPrefab, _pollenProviders, _allProviders, _pollenKey, _numPollenProviders);
+        SpawnObjects(_nectarProviderPrefab, _nectarProviders, _allProviders, _nectarKey, _numNectarProviders);
     }
 }
