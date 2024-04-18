@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.Android;
 
@@ -15,6 +16,7 @@ public class Wasp : Enemy
     [SerializeField] private float waspAttackCooldown = 1;
     [SerializeField] private int waspHealth = 5;
     [SerializeField] private float waspPatrolRange = 10;
+    private bool killedBee;
     public Animator animator;
     private SpriteRenderer damageIndicator;
 
@@ -26,6 +28,7 @@ public class Wasp : Enemy
         SetEnemyStats(waspDamage, waspSpeed, waspChaseRange, 
             waspAttackCooldown, waspPatrolRange, waspHealth);
         UserInventory = new();
+        killedBee = false;
     }
 
     private protected override void Roaming()
@@ -40,18 +43,37 @@ public class Wasp : Enemy
         base.Chase();
         animator.enabled = false;
         damageIndicator.enabled = false;
+        if (OverworldSoundManager.instance != null)
+        {
+            OverworldSoundManager.instance.PlayWaspSoundFX();
+        }
     }
 
     private protected override void Attack()
     {
         base.Attack();
         animator.enabled = true;
+        damageIndicator.enabled = true;
+        if (!killedBee)
+        {
+            if (OverworldSoundManager.instance != null)
+            {
+                OverworldSoundManager.instance.PlayWaspSoundFX();
+            }
+            Handheld.Vibrate();
+        }
     }
 
     // on kill by wasp reduce inventory by set kill penalty percentages
     private protected override void OnKill()
     {
         base.OnKill();
+        killedBee = true;
+        if (OverworldSoundManager.instance != null)
+        {
+            OverworldSoundManager.instance.StopWaspSoundFX();
+            OverworldSoundManager.instance.StopResourceCollectionSoundFX();
+        }
         if (UserInventory != null) 
         {
             int pollenAmount = (int) Math.Floor(UserInventory.GetResourceCount(ResourceType.Pollen) * (pollenKillPenaltyPercent/100.0));

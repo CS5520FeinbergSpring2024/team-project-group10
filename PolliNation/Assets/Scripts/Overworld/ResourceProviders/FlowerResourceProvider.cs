@@ -291,6 +291,10 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
                         (int)_partialUnitsForCollection);
                     _amountRemaining -= (int)_partialUnitsForCollection;
                     _partialUnitsForCollection %= 1;
+                    if (OverworldSoundManager.instance != null)
+                    {
+                        OverworldSoundManager.instance.PlayResoureCollectionSoundFX();
+                    }
                 }
             }
             catch (NullReferenceException e)

@@ -1210,16 +1210,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c08cd337ae74c2ebb2e91b77418a87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
-  pollenKillPenalty: 25
-  nectarKillPenalty: 25
+  pollenKillPenaltyPercent: 25
+  nectarKillPenaltyPercent: 25
   waspDamage: 5
   waspSpeed: 8
   waspChaseRange: 7
   waspAttackCooldown: 1
   waspHealth: 5
   waspPatrolRange: 10
-  animator: {fileID: 0}
+  animator: {fileID: 7512861604363963126}
 --- !u!95 &7512861604363963126
 Animator:
   serializedVersion: 5
