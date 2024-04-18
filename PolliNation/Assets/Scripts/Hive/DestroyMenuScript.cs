@@ -5,9 +5,9 @@ public class DestroyMenuScript : MonoBehaviour
 {
     private ILaunchMenuButton launchMenuButton;
     private HiveGameManager hiveGameManager;
+    private Vector2 tileId;
     [SerializeField] TextMeshProUGUI question;
     [SerializeField] TextMeshProUGUI warning;
-    private Vector2 tileId;
 
     // Start is called before the first frame update
     void Start() {
@@ -40,27 +40,22 @@ public class DestroyMenuScript : MonoBehaviour
 
     // Open Destroy menu and update contents with tileId's associated building
     public void OpenMenuForTile(Vector2 tileId) {
-        Debug.Log("Menu set to open");
         this.tileId = tileId;
         gameObject.SetActive(true);
+        BuildingData buildingData = hiveGameManager.hiveSingleton.GetBuildingDataByTileId(tileId);
+        if (buildingData != null) {
+            // RoyalJelly should be spaced out
+            string resourceType = buildingData.ResourceType == ResourceType.RoyalJelly ? "Royal Jelly" : buildingData.ResourceType.ToString();
 
-        foreach (Building b in hiveGameManager.hiveSingleton.GetBuildings()) {
-            if (b.TileID == tileId) {
-                // RoyalJelly should be spaced out
-                string resourceType = b.ResourceType == ResourceType.RoyalJelly ? "Royal Jelly" : b.ResourceType.ToString();
+            // Other menus use "Conversion" instead of "Production"
+            string buildingType = buildingData.BuildingType == BuildingType.Production ? "Conversion" : buildingData.BuildingType.ToString();
+            question.text = $"Destroy {resourceType} {buildingType} Station?";
 
-                // Other menus use "Conversion" instead of "Production"
-                string buildingType = b.Type == BuildingType.Production ? "Conversion" : b.Type.ToString();
-                question.text = $"Destroy {resourceType} {buildingType} Station?";
-
-                // Warning message based on building
-                if (b.Type == BuildingType.Storage) {
-                    warning.text = $"Note: Destroying {resourceType} {buildingType} will remove any surplus {resourceType} from the inventory";
-                } else {
-                    warning.text = $"Note: Destroying all {resourceType} {buildingType} Stations will unassign all workers assigned to {resourceType}";
-                }
-
-                break;
+            // Warning message based on building
+            if (buildingData.BuildingType == BuildingType.Storage) {
+                warning.text = $"Note: Destroying {resourceType} {buildingType} will remove any surplus {resourceType} from the inventory";
+            } else {
+                warning.text = $"Note: Destroying all {resourceType} {buildingType} Stations will unassign all workers assigned to {resourceType}";
             }
         }
     }

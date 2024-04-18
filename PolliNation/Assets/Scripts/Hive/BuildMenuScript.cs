@@ -1,76 +1,104 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuildMenuScript : MonoBehaviour
-{
-    private GameObject menuButtonObject;
+public class BuildMenuScript : MonoBehaviour {
     private ILaunchMenuButton launchMenuButton;
-    private Vector2 currentTileID;
+    private Vector2 tileId;
     private BuildingType? selectedBuildingType;
     private ResourceType? selectedResourceType;
     public InventoryDataSingleton myInventory;
     public HiveGameManager hiveGameManager;
 
-    // Reference to the future data class 
-    //public DataClass buildingData; 
+    // Static dictionary containing the resources that can be associated with each building type
+    public static Dictionary<BuildingType, List<ResourceType>> buildingResources = new() {
+        { BuildingType.Storage, new List<ResourceType>() {
+                ResourceType.Nectar,
+                ResourceType.Pollen,
+                ResourceType.Buds,
+                ResourceType.Water,
+                ResourceType.Honey,
+                ResourceType.Propolis,
+                ResourceType.RoyalJelly
+            }
+        },
+        { BuildingType.Gathering, new List<ResourceType>() {
+                ResourceType.Nectar,
+                ResourceType.Pollen,
+                ResourceType.Buds,
+                ResourceType.Water
+            }
+        },
+        { BuildingType.Production, new List<ResourceType>() {
+                ResourceType.Honey,
+                ResourceType.Propolis,
+                ResourceType.RoyalJelly
+            }
+        },
+    };
 
-    void Awake()
-    {
+    // Static dictionary containing resource requirements for each building.
+    // Used to check whether building can be built and to consume corresponding resources
+    public static Dictionary<BuildingType, Dictionary<ResourceType, int>> buildingFormulas = new() {
+        { BuildingType.Storage, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 5 }
+            }
+        },
+        { BuildingType.Gathering, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 10 },
+                { ResourceType.Pollen, 5 }
+            }
+        },
+        { BuildingType.Production, new Dictionary<ResourceType, int>() {
+                { ResourceType.Nectar, 20 },
+                { ResourceType.Pollen, 10 }
+            }
+        },
+    };
+
+    void Awake() {
         myInventory = new InventoryDataSingleton();
     }
 
     // Start is called before the first frame update
-    void Start()
-    {
-        setClose();
-
-        menuButtonObject = GameObject.Find("Build Button Object");
-
-        if (menuButtonObject != null)
-        {
+    void Start() {
+        SetClose();
+        
+        // Finding the Build Button object in the scene
+        GameObject menuButtonObject = GameObject.Find("Build Button Object");
+        if (menuButtonObject != null) {
             launchMenuButton = menuButtonObject.GetComponent<ILaunchMenuButton>();
-            if (launchMenuButton == null)
-            {
+            if (launchMenuButton == null) {
                 Debug.LogError("Button does not implement ILaunchMenuButton interface.");
             }
         }
-        else
-        {
+        else {
             Debug.LogError("Menu button object reference not set.");
         }
 
         // Finding the Hive_GameManager object in the scene
         GameObject hiveGameManagerObject = GameObject.Find("Hive_GameManager");
-        if (hiveGameManagerObject != null)
-        {
+        if (hiveGameManagerObject != null) {
             hiveGameManager = hiveGameManagerObject.GetComponent<HiveGameManager>();
-            if (hiveGameManager == null)
-            {
+            if (hiveGameManager == null) {
                 Debug.LogError("HiveGameManager component could not be found in Hive_GameManager object.");
             }
         }
-        else
-        {
+        else {
             Debug.LogError("Hive_GameManager object not found in the scene.");
         }
-
     }
 
-    public void setOpen()
-    {
-        Debug.Log("Menu set to open");
+    public void SetOpen() {
         gameObject.SetActive(true);
         gameObject.transform.parent.gameObject.SetActive(true);
     }
 
-    public void setClose()
-    {
+    public void SetClose() {
         gameObject.SetActive(false);
     }
 
     // Methods to handle the selecting a building
-    public void GatheringClick()
-    {
+    public void GatheringClick() {
         if (selectedBuildingType != BuildingType.Gathering) {
             selectedResourceType = null;
         }
@@ -78,8 +106,7 @@ public class BuildMenuScript : MonoBehaviour
         Debug.Log("Gathering building selected");
     }
 
-    public void StorageClick()
-    {
+    public void StorageClick() {
         if (selectedBuildingType != BuildingType.Storage) {
             selectedResourceType = null;
         }
@@ -87,8 +114,7 @@ public class BuildMenuScript : MonoBehaviour
         Debug.Log("Storage building selected");
     }
 
-    public void ProductionClick()
-    {
+    public void ProductionClick() {
         if (selectedBuildingType != BuildingType.Production) {
             selectedResourceType = null;
         }
@@ -97,48 +123,40 @@ public class BuildMenuScript : MonoBehaviour
     }
 
     // Methods to handle selecting a resource
-    public void NectarResourceClick()
-    {
+    public void NectarResourceClick() {
         selectedResourceType = ResourceType.Nectar;
         Debug.Log("Nectar resource selected");
     }
-    public void PollenResourceClick()
-    {
+    public void PollenResourceClick() {
         selectedResourceType = ResourceType.Pollen;
         Debug.Log("Pollen resource selected");
     }
-    public void WaterResourceClick()
-    {
+    public void WaterResourceClick() {
         selectedResourceType = ResourceType.Water;
         Debug.Log("Water resource selected");
     }
 
-    public void BudsResourceClick()
-    {
+    public void BudsResourceClick() {
         selectedResourceType = ResourceType.Buds;
         Debug.Log("Buds resource selected");
     }
 
-    public void HoneyResourceClick()
-    {
+    public void HoneyResourceClick() {
         selectedResourceType = ResourceType.Honey;
         Debug.Log("Honey resource selected");
     }
 
-    public void PropolisResourceClick()
-    {
+    public void PropolisResourceClick() {
         selectedResourceType = ResourceType.Propolis;
         Debug.Log("Propolis resource selected");
     }
 
-    public void RoyalJellyResourceClick()
-    {
+    public void RoyalJellyResourceClick() {
         selectedResourceType = ResourceType.RoyalJelly;
         Debug.Log("Royal Jelly resource selected");
     }
 
-    public void Build()
-    {
+    public void Build() {
         if (selectedBuildingType == null) {
             Debug.LogWarning("No building selected!");
             return;
@@ -148,23 +166,18 @@ public class BuildMenuScript : MonoBehaviour
             return;
         }
         // Check if building/resource types are a valid match
-        if (!Building.buildingResources[(BuildingType)selectedBuildingType].Contains((ResourceType) selectedResourceType)) {
+        if (!buildingResources[(BuildingType)selectedBuildingType].Contains((ResourceType) selectedResourceType)) {
             Debug.LogWarning("Invalid building/resource pair!");
             return;
         }
 
         // Check if the player can afford to build the selected building and consume those resources
-        if (ConsumeResources((BuildingType) selectedBuildingType))
-        {
-            // Converting the tileID from a Vector2 to a Vector3 for positioning in the world space
-            Vector3 position = new Vector3(currentTileID.x, 2f, currentTileID.y);
-            
-            hiveGameManager.Build((BuildingType) selectedBuildingType, (ResourceType) selectedResourceType, position);
-            exitMenu();
-
+        if (ConsumeResources((BuildingType) selectedBuildingType)) {
+            // Converting the tileId from a Vector2 to a Vector3 for positioning in the world space
+            hiveGameManager.Build((BuildingType) selectedBuildingType, (ResourceType) selectedResourceType, new(tileId.x, 2f, tileId.y));
+            ExitMenu();
         }
-        else
-        {
+        else {
             Debug.Log("Insufficient resources for this building");
         }
     }
@@ -172,8 +185,8 @@ public class BuildMenuScript : MonoBehaviour
     // Consumes resources required to build the given building type
     // Returns true if succeeded and false if not (due to lack of resources)
     private bool ConsumeResources(BuildingType buildingType) {
-        Dictionary<ResourceType, int> formula = Building.buildingFormulas[buildingType];
-        if (Building.CanAfford(formula, myInventory)) {
+        Dictionary<ResourceType, int> formula = buildingFormulas[buildingType];
+        if (HiveGameManager.CanAfford(formula, myInventory)) {
             foreach (ResourceType resource in formula.Keys) {
                 myInventory.UpdateInventory(resource, -formula[resource]);
             }
@@ -182,26 +195,15 @@ public class BuildMenuScript : MonoBehaviour
         return false;
     }
 
-
-    public void OpenMenuForTile(Vector2 tileID)
-    {   
-        currentTileID = tileID; // Store the tile ID
-
-        // Show the build menu    
-        setOpen();
+    public void OpenMenuForTile(Vector2 tileId) {   
+        this.tileId = tileId; // Store the tile ID
+        SetOpen(); // Show the build menu 
     }
 
-
-    public void exitMenu()
-    {
+    public void ExitMenu() {
         Canvas canvas = GetComponentInParent<Canvas>();
         canvas.gameObject.SetActive(false);
         Debug.Log("Exit button was clicked");
-
-        if (launchMenuButton != null)
-        {
-            launchMenuButton.ReappearButton();
-        }
+        launchMenuButton?.ReappearButton();
     }
-
 }
