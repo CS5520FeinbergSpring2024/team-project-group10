@@ -51,6 +51,7 @@ MonoBehaviour:
   tileID: {x: 0, y: 0}
   yellowMat: {fileID: 2100000, guid: 6a773d48843f60f479b18546fa8b930b, type: 2}
   greenMat: {fileID: 2100000, guid: 49352aa73c298594eba551c99dbedee6, type: 2}
+  redMat: {fileID: 2100000, guid: 01a94afdb5b9dbc469da291b1b959270, type: 2}
 --- !u!65 &4381519841571860742
 BoxCollider:
   m_ObjectHideFlags: 0

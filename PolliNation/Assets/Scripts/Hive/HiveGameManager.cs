@@ -33,6 +33,22 @@ public class HiveGameManager : MonoBehaviour
         }
     }
 
+    public void DestroyBuilding(Vector2 tileId) {
+        foreach(Building b in hiveSingleton.GetBuildings()) {
+            if (b.TileID == tileId) {
+                hiveSingleton.Buildings.Remove(b);
+                b.DestroyGameObject();
+                break;
+            }
+        }
+        foreach(BuildingData bd in hiveSingleton.GetBuildingData()) {
+            if (bd.TileID == tileId) {
+                hiveSingleton.BuildingData.Remove(bd);
+                break;
+            }
+        }
+    }
+
     private GameObject GetBuildingPrefab(BuildingType buildingType)
     {
         switch (buildingType)
@@ -75,6 +91,7 @@ public class HiveGameManager : MonoBehaviour
             if (newBuilding != null)
             {
                 Debug.Log("Building instantiated: " + newBuilding.Type + " with resource: " + newBuilding.ResourceType);
+                hiveSingleton.Buildings.Add(newBuilding);
             }
             else
             {
