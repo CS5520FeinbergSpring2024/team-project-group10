@@ -23,6 +23,10 @@ public class Building : MonoBehaviour
         TileID = tileID;
     }
 
+    public void DestroyGameObject() {
+        Destroy(gameObject);
+    }
+
     // Programatically sets the building's resource display
     public void UpdateResourceDisplay(ResourceType resourceType) {
         Material resourceMaterial;
