@@ -75,6 +75,7 @@ public class HiveGameManager : MonoBehaviour
             if (newBuilding != null)
             {
                 Debug.Log("Building instantiated: " + newBuilding.Type + " with resource: " + newBuilding.ResourceType);
+                hiveSingleton.Buildings.Add(newBuilding);
             }
             else
             {
