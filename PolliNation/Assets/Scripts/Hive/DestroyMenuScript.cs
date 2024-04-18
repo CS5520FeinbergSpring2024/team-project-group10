@@ -6,6 +6,7 @@ public class DestroyMenuScript : MonoBehaviour
     private ILaunchMenuButton launchMenuButton;
     private HiveGameManager hiveGameManager;
     [SerializeField] TextMeshProUGUI question;
+    [SerializeField] TextMeshProUGUI warning;
     private Vector2 tileId;
 
     // Start is called before the first frame update
@@ -47,9 +48,18 @@ public class DestroyMenuScript : MonoBehaviour
             if (b.TileID == tileId) {
                 // RoyalJelly should be spaced out
                 string resourceType = b.ResourceType == ResourceType.RoyalJelly ? "Royal Jelly" : b.ResourceType.ToString();
+
                 // Other menus use "Conversion" instead of "Production"
                 string buildingType = b.Type == BuildingType.Production ? "Conversion" : b.Type.ToString();
                 question.text = $"Destroy {resourceType} {buildingType} Station?";
+
+                // Warning message based on building
+                if (b.Type == BuildingType.Storage) {
+                    warning.text = $"Note: Destroying {resourceType} {buildingType} will remove any surplus {resourceType} from the inventory";
+                } else {
+                    warning.text = $"Note: Destroying all {resourceType} {buildingType} Stations will unassign all workers assigned to {resourceType}";
+                }
+
                 break;
             }
         }
