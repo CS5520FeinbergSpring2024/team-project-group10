@@ -121,17 +121,17 @@ public class HiveGameManager : MonoBehaviour
 
     // Update is called once per frame
     public bool IsOccupied(Vector2 tileID) {
-        List<Building> buildings = hiveSingleton.GetBuildings();
+        List<BuildingData> buildingData = hiveSingleton.GetBuildingData();
 
         // Check if the list is empty
-        if (buildings == null || buildings.Count == 0) {
+        if (buildingData == null || buildingData.Count == 0) {
             Debug.Log("No buildings found in hiveSingleton as yet.");
             return false;
         }
 
         // Iterate over each building in the list
-        foreach (Building building in buildings) {
-            if (building.TileID == tileID) {
+        foreach (BuildingData bd in buildingData) {
+            if (bd.TileID == tileID) {
                 return true;
             }
         }
