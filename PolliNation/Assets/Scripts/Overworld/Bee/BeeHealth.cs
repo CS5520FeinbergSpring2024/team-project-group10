@@ -79,12 +79,13 @@ public class BeeHealth : MonoBehaviour
     {
         if (deathScreen != null)
         {
+            OverworldSoundManager.instance.PlayDeathScreenFX();
             deathScreen.SetActive(true);
             yield return new WaitForSeconds(deathScreenTime - 1);
             SceneManager.LoadScene("Hive");
+            OverworldSoundManager.instance.StopDeathScreenSoundFX();
             yield return new WaitForSeconds(1);
             deathScreen.SetActive(false);
-            
         }
          yield return null;
     }

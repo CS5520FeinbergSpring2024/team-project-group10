@@ -6,8 +6,6 @@ using UnityEngine.UI;
 public class HiveSoundManager : MonoBehaviour
 {
     public static HiveSoundManager instance;
-    [SerializeField] private Sprite musicIcon;
-    [SerializeField] private Sprite muteMusicIcon;
     private AudioSource[] hiveSceneAudio;
     [SerializeField] private GameObject hiveSoundLayer;
     [SerializeField] private GameObject hiveButtonGO;
@@ -27,24 +25,7 @@ public class HiveSoundManager : MonoBehaviour
     private void Start()
     {
         hiveButtonGO.SetActive(true);
-        if (SoundOn.soundOn)
-        {
-            foreach (AudioSource audioSource in hiveSceneAudio)
-            {
-                audioSource.enabled = true;
-            }
-            
-            musicIconImage.sprite = musicIcon;
-        } else
-        {
-            foreach (AudioSource audioSource in hiveSceneAudio)
-            {
-                audioSource.enabled = false;
-            }
-            musicIconImage.sprite = muteMusicIcon;
-        }
-            
-        
+        AudioUtility.OnSceneAudioStart(hiveSceneAudio, musicIconImage);
     }
 
     /// <summary>
@@ -52,23 +33,7 @@ public class HiveSoundManager : MonoBehaviour
     /// </summary>
     public void SoundClickButton()
     {
-        if (hiveSceneAudio != null)
-        {
-            foreach (AudioSource audioSource in hiveSceneAudio)
-            {
-            audioSource.enabled = !audioSource.enabled;
-            }
-            SoundOn.soundOn = hiveSceneAudio[0].enabled;
-            if (hiveSceneAudio[0].enabled)
-            {
-                musicIconImage.sprite = musicIcon;
-            }
-            else
-            {
-                musicIconImage.sprite = muteMusicIcon;
-            }
-            
-        }
+        AudioUtility.AudioButtonClick(hiveSceneAudio, musicIconImage);
     }
 
     private void OnDestroy()

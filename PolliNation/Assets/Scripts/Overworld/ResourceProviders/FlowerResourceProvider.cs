@@ -291,10 +291,6 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
                         (int)_partialUnitsForCollection);
                     _amountRemaining -= (int)_partialUnitsForCollection;
                     _partialUnitsForCollection %= 1;
-                    if (OverworldSoundManager.instance != null)
-                    {
-                        OverworldSoundManager.instance.PlayResoureCollectionSoundFX();
-                    }
                 }
             }
             catch (NullReferenceException e)
@@ -389,6 +385,11 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
         {
             _currentlyCollecting = true;
             _currentlyRegenerating = false;
+            // play collection soundFX once per collection
+            if (OverworldSoundManager.instance != null)
+            {
+                OverworldSoundManager.instance.PlayResoureCollectionSoundFX();
+            }
         }
     }
 

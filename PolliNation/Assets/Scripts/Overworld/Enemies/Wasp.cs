@@ -69,11 +69,6 @@ public class Wasp : Enemy
     {
         base.OnKill();
         killedBee = true;
-        if (OverworldSoundManager.instance != null)
-        {
-            OverworldSoundManager.instance.StopWaspSoundFX();
-            OverworldSoundManager.instance.StopResourceCollectionSoundFX();
-        }
         if (UserInventory != null) 
         {
             int pollenAmount = (int) Math.Floor(UserInventory.GetResourceCount(ResourceType.Pollen) * (pollenKillPenaltyPercent/100.0));

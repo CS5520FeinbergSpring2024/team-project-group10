@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -5,14 +7,13 @@ using UnityEngine.UI;
 public class OverworldSoundManager : MonoBehaviour
 {
     public static OverworldSoundManager instance;
-    [SerializeField] private Sprite musicIcon;
-    [SerializeField] private Sprite muteMusicIcon;
     private AudioSource overworldSceneAudio;
     [SerializeField] private GameObject overworldSoundLayer;
     [SerializeField] private GameObject overworldButtonGO;
     private UnityEngine.UI.Image musicIconImage;
     [SerializeField] private AudioSource waspFX;
     [SerializeField] private AudioSource flowerFX;
+    [SerializeField] private AudioSource deathScreenFX;
 
     private void Awake()
     {
@@ -28,19 +29,9 @@ public class OverworldSoundManager : MonoBehaviour
     private void Start()
     {
         overworldButtonGO.SetActive(true);
-        if (SoundOn.soundOn)
-        {
-            overworldSceneAudio.enabled = true;
-            waspFX.enabled = true;
-            flowerFX.enabled = true;
-            musicIconImage.sprite = musicIcon;
-        } else
-        {
-            overworldSceneAudio.enabled = false;
-            waspFX.enabled = false;
-            flowerFX.enabled = false;
-            musicIconImage.sprite = muteMusicIcon;
-        }
+        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX};
+        AudioUtility.OnSceneAudioStart(audioSources, musicIconImage);
+
     }
 
     /// <summary>
@@ -48,22 +39,8 @@ public class OverworldSoundManager : MonoBehaviour
     /// </summary>
     public void SoundClickButton()
     {
-        
-        if (overworldSceneAudio != null)
-        {
-            overworldSceneAudio.enabled = !overworldSceneAudio.enabled;
-            waspFX.enabled = !waspFX.enabled;
-            flowerFX.enabled= !flowerFX.enabled;
-            SoundOn.soundOn = overworldSceneAudio.enabled;
-            if (overworldSceneAudio.enabled)
-            {
-                musicIconImage.sprite = musicIcon;
-            }
-            else
-            {
-                musicIconImage.sprite = muteMusicIcon;
-            }
-        }
+        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX};
+        AudioUtility.AudioButtonClick(audioSources, musicIconImage);
     }
 
     /// <summary>
@@ -110,13 +87,46 @@ public class OverworldSoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///  Plays death screen soundFX.
+    /// </summary>
+    public void PlayDeathScreenFX()
+    {
+        if (!deathScreenFX.isPlaying && deathScreenFX.enabled)
+        {
+            StopAllMeadowSoundsOnDeath();
+            deathScreenFX.Play();
+        }
+    }
+
+    /// <summary>
+    ///  Stops death screen soundFX.
+    /// </summary>
+    public void StopDeathScreenSoundFX()
+    {
+        if (deathScreenFX.isPlaying && deathScreenFX.enabled)
+        {
+            deathScreenFX.Stop();
+        }
+    }
+
+    public void StopAllMeadowSoundsOnDeath()
+    {
+        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX};
+        foreach(AudioSource audioSource in audioSources)
+        {
+            if(audioSource != null)
+            {
+                audioSource.Stop();
+                audioSource.enabled = false;
+            }
+        }
+    }
+
+
+
     private void OnDestroy()
     {
          overworldButtonGO.GetComponent<Button>().onClick.RemoveListener(this.SoundClickButton);
     }
-}
-
-public class SoundOn
-{
-    public static bool soundOn = true;
 }

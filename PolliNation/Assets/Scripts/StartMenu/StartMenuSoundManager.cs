@@ -4,8 +4,6 @@ using UnityEngine.UI;
 public class StartMenuSoundManager : MonoBehaviour
 {
     public static StartMenuSoundManager instance;
-    [SerializeField] private Sprite musicIcon;
-    [SerializeField] private Sprite muteMusicIcon;
     private AudioSource startMenuSceneAudio;
     [SerializeField] private GameObject startMenuSoundLayer;
     [SerializeField] private GameObject startMenuButtonGO;
@@ -24,16 +22,9 @@ public class StartMenuSoundManager : MonoBehaviour
 
     private void Start()
     {
-       startMenuButtonGO.SetActive(true);
-        if (SoundOn.soundOn)
-        {
-            startMenuSceneAudio.enabled = true;
-            musicIconImage.sprite = musicIcon;
-        } else
-        {
-            startMenuSceneAudio.enabled = false;
-            musicIconImage.sprite = muteMusicIcon;
-        }
+        startMenuButtonGO.SetActive(true);
+        AudioSource[] audioSources = {startMenuSceneAudio};
+        AudioUtility.OnSceneAudioStart(audioSources, musicIconImage);
     }
 
     /// <summary>
@@ -41,20 +32,8 @@ public class StartMenuSoundManager : MonoBehaviour
     /// </summary>
     public void SoundClickButton()
     {
-        if (startMenuSceneAudio != null)
-        {
-            Debug.Log("RSRSRS start menu sound button clicked");
-            startMenuSceneAudio.enabled = !startMenuSceneAudio.enabled;
-            SoundOn.soundOn = startMenuSceneAudio.enabled;
-            if (startMenuSceneAudio.enabled)
-            {
-                musicIconImage.sprite = musicIcon;
-            }
-            else
-            {
-                musicIconImage.sprite = muteMusicIcon;
-            }
-        } 
+        AudioSource[] audioSources = {startMenuSceneAudio};
+        AudioUtility.AudioButtonClick(audioSources, musicIconImage);
     }
 
     private void OnDestroy()
