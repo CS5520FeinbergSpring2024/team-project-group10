@@ -33,6 +33,34 @@ public class HiveGameManager : MonoBehaviour
         }
     }
 
+    public void DestroyBuilding(Vector2 tileId) {
+        foreach(Building b in hiveSingleton.GetBuildings()) {
+            if (b.TileID == tileId) {
+                // Update station levels
+                (int, int) stationLevels = hiveSingleton.GetStationLevels(b.ResourceType);
+                if (b.Type == BuildingType.Storage) {
+                    hiveSingleton.UpdateStationLevels(b.ResourceType, stationLevels.Item1 - 1, stationLevels.Item2);
+                } else {
+                    hiveSingleton.UpdateStationLevels(b.ResourceType, stationLevels.Item1, stationLevels.Item2 - 1);
+                    if (hiveSingleton.GetStationLevels(b.ResourceType).productionLevel == 0) {
+                        // Reset workers if no remaining gathering/conversion stations
+                        hiveSingleton.AssignWorkers(b.ResourceType, 0);
+                    }
+                }
+
+                hiveSingleton.Buildings.Remove(b);
+                b.DestroyGameObject();
+                break;
+            }
+        }
+        foreach(BuildingData bd in hiveSingleton.GetBuildingData()) {
+            if (bd.TileID == tileId) {
+                hiveSingleton.BuildingData.Remove(bd);
+                break;
+            }
+        }
+    }
+
     private GameObject GetBuildingPrefab(BuildingType buildingType)
     {
         switch (buildingType)
@@ -75,6 +103,7 @@ public class HiveGameManager : MonoBehaviour
             if (newBuilding != null)
             {
                 Debug.Log("Building instantiated: " + newBuilding.Type + " with resource: " + newBuilding.ResourceType);
+                hiveSingleton.Buildings.Add(newBuilding);
             }
             else
             {
