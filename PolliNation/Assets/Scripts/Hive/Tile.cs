@@ -12,7 +12,7 @@ public class Tile : MonoBehaviour
     private BuildMenuScript buildMenu;
     private DestroyMenuScript destroyMenu;
     public HiveGameManager hiveGameManager;
-    public Vector2 tileID;
+    public Vector3 tilePosition;
     private bool occupied = false; // used to reduce usage of IsOccupied()
 
     // Fields related to changing tile color
@@ -27,8 +27,8 @@ public class Tile : MonoBehaviour
         //  Reference to hexagon object to change its material
         hexagon = gameObject.transform.GetChild(0).gameObject;
 
-        // Set tileID as this tile's x and z coordinates as a Vector2
-        tileID = new Vector2(transform.position.x, transform.position.z);
+        // Set tilePosition as this tile's position with the y-value set to make buildings appear on top of tile
+        tilePosition = new Vector3(transform.position.x, 2f, transform.position.z);
         
         // Finding the Hive_GameManager object in the scene
         GameObject hiveGameManagerObject = GameObject.Find("Hive_GameManager");
@@ -49,7 +49,7 @@ public class Tile : MonoBehaviour
         // Update tile color based on whether it is available for building
         if (hiveGameManager.building && !occupied && isYellow) {
             isYellow = false;
-            if (hiveGameManager.IsOccupied(tileID)) {
+            if (hiveGameManager.IsOccupied(tilePosition)) {
                 occupied = true;
                 hexagon.GetComponent<Renderer>().material = redMat;
                 return;
@@ -62,29 +62,28 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void OpenBuildMenu(Vector2 tileID) {
+    public void OpenBuildMenu() {
         if (buildMenu != null) {
-            buildMenu.OpenMenuForTile(tileID);
+            buildMenu.OpenMenuForTile(tilePosition);
         }
        
     }
 
-    public void OpenDestroyMenu(Vector2 tileID) {
+    public void OpenDestroyMenu() {
         if (destroyMenu != null) {
-            destroyMenu.OpenMenuForTile(tileID);
+            destroyMenu.OpenMenuForTile(tilePosition);
         }
     }
 
     // Opens build menu when in building mode and tile is available
     void OnMouseDown() {
         if (hiveGameManager.building && !isYellow) {
-            Debug.Log(tileID);
             hiveGameManager.building = false;
 
             if (occupied) {
-                OpenDestroyMenu(tileID);
+                OpenDestroyMenu();
             } else {
-                OpenBuildMenu(tileID);
+                OpenBuildMenu();
             }
         }
     }

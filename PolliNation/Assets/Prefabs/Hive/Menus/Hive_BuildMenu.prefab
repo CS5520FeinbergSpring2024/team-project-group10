@@ -4095,7 +4095,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -5336,7 +5336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c533704e05783446899ad3018300f2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
   hiveGameManager: {fileID: 0}
 --- !u!1 &7892460131914288085
 GameObject:
@@ -5934,7 +5933,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6372979348001810196}
         m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
-        m_MethodName: exitMenu
+        m_MethodName: ExitMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
