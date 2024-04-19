@@ -13,6 +13,7 @@ public class BuildMenuScript : MonoBehaviour
     public InventoryDataSingleton myInventory;
     public HiveGameManager hiveGameManager;
     private Image[] prevTypeImages = new Image[2];
+    private Image prevTypeImage;
     private Image prevSelectedResourceTypeButton;
 
     // Reference to the future data class 
@@ -143,27 +144,12 @@ public class BuildMenuScript : MonoBehaviour
 
     public void TypeButtonPressed(Image buttonImage)
     {
-        if(prevTypeImages[0] != null)
+        if (prevTypeImage != null)
         {
-            if ((prevTypeImages[0].name.Contains("Storage") && buttonImage.name.Contains("Storage"))
-            || (prevTypeImages[0].name.Contains("Gathering") && buttonImage.name.Contains("Gathering"))
-            || (prevTypeImages[0].name.Contains("Conversion") && buttonImage.name.Contains("Conversion")))
-            {
-                prevTypeImages[1] = prevTypeImages[0];
-            } 
-            else
-            {
-                foreach (Image btnImage in prevTypeImages)
-                {   
-                    if (btnImage != null)
-                    {
-                        btnImage.color = Color.white;
-                    }
-                }
-            }
+            prevTypeImage.color = Color.white;
         }
         buttonImage.color = Color.gray;
-        prevTypeImages[0] = buttonImage;
+        prevTypeImage = buttonImage;
     }
 
     public void ResourceButtonPressed(Image buttonImage)
@@ -200,22 +186,7 @@ public class BuildMenuScript : MonoBehaviour
             
             hiveGameManager.Build((BuildingType) selectedBuildingType, (ResourceType) selectedResourceType, position);
             exitMenu();
-            // turn buttons back to white
-            if (prevTypeImages[0] != null)
-            {
-                foreach (Image btnImage in prevTypeImages)
-                {
-                    if (btnImage != null)
-                    {
-                        btnImage.color = Color.white;
-                    }
-                }
-            }
-            if (prevSelectedResourceTypeButton != null)
-            {
-                prevSelectedResourceTypeButton.color = Color.white;
-            }
-
+            ResetButtonColors();
         }
         else
         {
@@ -256,16 +227,14 @@ public class BuildMenuScript : MonoBehaviour
         {
             launchMenuButton.ReappearButton();
         }
-        // reset selected button colors
-        if (prevTypeImages[0] != null)
+        ResetButtonColors();
+    }
+
+    private void ResetButtonColors()
+    {
+        if (prevTypeImage != null)
         {
-            foreach (Image btnImage in prevTypeImages)
-            {
-                if (btnImage != null)
-                {
-                    btnImage.color = Color.white;
-                }
-            }
+            prevTypeImage.color = Color.white;
         }
         if (prevSelectedResourceTypeButton != null)
         {
