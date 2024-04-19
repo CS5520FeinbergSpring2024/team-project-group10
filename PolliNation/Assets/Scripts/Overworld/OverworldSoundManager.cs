@@ -27,32 +27,20 @@ public class OverworldSoundManager : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().name == "OverworldMeadow")
+        overworldButtonGO.SetActive(true);
+        if (SoundOn.soundOn)
         {
-            overworldButtonGO.SetActive(true);
-            if (SoundOn.soundOn)
-            {
-                overworldSceneAudio.enabled = true;
-                waspFX.enabled = true;
-                flowerFX.enabled = true;
-                musicIconImage.sprite = musicIcon;
-            } else
-            {
-                overworldSceneAudio.enabled = false;
-                waspFX.enabled = false;
-                flowerFX.enabled = false;
-                musicIconImage.sprite = muteMusicIcon;
-            }
-            
-        } 
-        else
+            overworldSceneAudio.enabled = true;
+            waspFX.enabled = true;
+            flowerFX.enabled = true;
+            musicIconImage.sprite = musicIcon;
+        } else
         {
             overworldSceneAudio.enabled = false;
             waspFX.enabled = false;
             flowerFX.enabled = false;
-            overworldButtonGO.SetActive(false);
+            musicIconImage.sprite = muteMusicIcon;
         }
-        
     }
 
     /// <summary>
@@ -60,22 +48,20 @@ public class OverworldSoundManager : MonoBehaviour
     /// </summary>
     public void SoundClickButton()
     {
-        if (SceneManager.GetActiveScene().name == "OverworldMeadow")
+        
+        if (overworldSceneAudio != null)
         {
-            if (overworldSceneAudio != null)
+            overworldSceneAudio.enabled = !overworldSceneAudio.enabled;
+            waspFX.enabled = !waspFX.enabled;
+            flowerFX.enabled= !flowerFX.enabled;
+            SoundOn.soundOn = overworldSceneAudio.enabled;
+            if (overworldSceneAudio.enabled)
             {
-                overworldSceneAudio.enabled = !overworldSceneAudio.enabled;
-                waspFX.enabled = !waspFX.enabled;
-                flowerFX.enabled= !flowerFX.enabled;
-                SoundOn.soundOn = overworldSceneAudio.enabled;
-                if (overworldSceneAudio.enabled)
-                {
-                    musicIconImage.sprite = musicIcon;
-                }
-                else
-                {
-                    musicIconImage.sprite = muteMusicIcon;
-                }
+                musicIconImage.sprite = musicIcon;
+            }
+            else
+            {
+                musicIconImage.sprite = muteMusicIcon;
             }
         }
     }
