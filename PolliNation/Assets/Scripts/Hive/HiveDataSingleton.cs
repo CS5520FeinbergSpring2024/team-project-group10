@@ -77,11 +77,11 @@ public class HiveDataSingleton {
     return BuildingData;
   }
 
-  // Returns the building data associated with the given tileId (or null if none exists).
+  // Returns the building data associated with the given tilePosition (or null if none exists).
   // Null return value is expected since this will be used to check for occupied tiles
-  public BuildingData GetBuildingDataByTileId(Vector2 tileId) {
+  public BuildingData GetBuildingDataByTilePosition(Vector3 tilePosition) {
     foreach (BuildingData buildingData in BuildingData) {
-      if (buildingData.Position.x == tileId.x && buildingData.Position.z == tileId.y) {
+      if (buildingData.Position == tilePosition) {
         return buildingData;
       }
     }

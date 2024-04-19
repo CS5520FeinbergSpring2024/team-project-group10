@@ -5,7 +5,7 @@ public class DestroyMenuScript : MonoBehaviour
 {
     private ILaunchMenuButton launchMenuButton;
     private HiveGameManager hiveGameManager;
-    private Vector2 tileId;
+    private Vector3 tilePosition;
     [SerializeField] TextMeshProUGUI question;
     [SerializeField] TextMeshProUGUI warning;
 
@@ -39,10 +39,10 @@ public class DestroyMenuScript : MonoBehaviour
     }
 
     // Open Destroy menu and update contents with tileId's associated building
-    public void OpenMenuForTile(Vector2 tileId) {
-        this.tileId = tileId;
+    public void OpenMenuForTile(Vector3 tilePosition) {
+        this.tilePosition = tilePosition;
         gameObject.SetActive(true);
-        BuildingData buildingData = hiveGameManager.hiveSingleton.GetBuildingDataByTileId(tileId);
+        BuildingData buildingData = hiveGameManager.hiveSingleton.GetBuildingDataByTilePosition(tilePosition);
         if (buildingData != null) {
             // RoyalJelly should be spaced out
             string resourceType = buildingData.ResourceType == ResourceType.RoyalJelly ? "Royal Jelly" : buildingData.ResourceType.ToString();
@@ -68,7 +68,7 @@ public class DestroyMenuScript : MonoBehaviour
 
     // Destroy building then close the menu
     public void YesPressed() {
-        hiveGameManager.DestroyBuilding(tileId);
+        hiveGameManager.DestroyBuilding(tilePosition);
         SetClose();
     }
     

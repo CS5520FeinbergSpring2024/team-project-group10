@@ -6,14 +6,16 @@ public class HiveGameManager : MonoBehaviour {
     public GameObject buildingGatheringPrefab;
     public GameObject buildingProductionPrefab;
     public HiveDataSingleton hiveSingleton;
+    public InventoryDataSingleton inventorySingleton;
     // Flag used to enable/disable building on a tile
     public bool building = false;
     // List of Building GameObjects used to destroy buildings
-    private Dictionary<Vector2, Building> _buildings = new();
+    private Dictionary<Vector3, Building> _buildings = new();
 
     // Start is called before the first frame update
     void Start() {
         hiveSingleton = new();
+        inventorySingleton = new();
         // Getting all of the buildings from the HiveSingleton and instantiating them
         InstantiateBuildingsFromSingleton();
     }
@@ -31,21 +33,23 @@ public class HiveGameManager : MonoBehaviour {
         }
     }
 
-    public void DestroyBuilding(Vector2 tileId) {
+    public void DestroyBuilding(Vector3 tilePosition) {
         // Destroy the building GameObject
-        if (_buildings.ContainsKey(tileId)) {
-            _buildings[tileId].DestroyGameObject();
-            _buildings.Remove(tileId);
+        if (_buildings.ContainsKey(tilePosition)) {
+            Debug.Log("DESTROY: Found gameObject");
+            _buildings[tilePosition].DestroyGameObject();
+            _buildings.Remove(tilePosition);
         }
 
-        // Remove the building data corresponding to the given tileId
-        BuildingData bd = hiveSingleton.GetBuildingDataByTileId(tileId);
+        // Remove the building data corresponding to the given tilePosition
+        BuildingData bd = hiveSingleton.GetBuildingDataByTilePosition(tilePosition);
         hiveSingleton.BuildingData.Remove(bd);
 
         // Update station levels
         (int, int) stationLevels = hiveSingleton.GetStationLevels(bd.ResourceType);
         if (bd.BuildingType == BuildingType.Storage) {
             hiveSingleton.UpdateStationLevels(bd.ResourceType, stationLevels.Item1 - 1, stationLevels.Item2);
+            inventorySingleton.UpdateInventory(bd.ResourceType, 0);
         } else {
             hiveSingleton.UpdateStationLevels(bd.ResourceType, stationLevels.Item1, stationLevels.Item2 - 1);
             // Reset workers if no remaining gathering/conversion stations
@@ -98,7 +102,7 @@ public class HiveGameManager : MonoBehaviour {
             // Associate the building with the selected resource 
             if (newBuilding != null) {
                 newBuilding.UpdateResourceDisplay(resourceType);
-                _buildings.Add(new(position.x, position.z), newBuilding);
+                _buildings.Add(position, newBuilding);
                 Debug.Log($"{resourceType} {buildingType} Station instantiated");
                 return newBuilding;
             }
@@ -113,8 +117,8 @@ public class HiveGameManager : MonoBehaviour {
         }
     }
 
-    public bool IsOccupied(Vector2 tileId) {
-        BuildingData buildingData = hiveSingleton.GetBuildingDataByTileId(tileId);
+    public bool IsOccupied(Vector3 tilePosition) {
+        BuildingData buildingData = hiveSingleton.GetBuildingDataByTilePosition(tilePosition);
         return buildingData != null;
     }
 

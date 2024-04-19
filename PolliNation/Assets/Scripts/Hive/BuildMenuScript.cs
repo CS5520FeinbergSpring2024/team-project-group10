@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BuildMenuScript : MonoBehaviour {
     private ILaunchMenuButton launchMenuButton;
-    private Vector2 tileId;
+    private Vector3 tilePosition;
     private BuildingType? selectedBuildingType;
     private ResourceType? selectedResourceType;
     public InventoryDataSingleton myInventory;
@@ -174,7 +174,7 @@ public class BuildMenuScript : MonoBehaviour {
         // Check if the player can afford to build the selected building and consume those resources
         if (ConsumeResources((BuildingType) selectedBuildingType)) {
             // Converting the tileId from a Vector2 to a Vector3 for positioning in the world space
-            hiveGameManager.Build((BuildingType) selectedBuildingType, (ResourceType) selectedResourceType, new(tileId.x, 2f, tileId.y));
+            hiveGameManager.Build((BuildingType) selectedBuildingType, (ResourceType) selectedResourceType, tilePosition);
             ExitMenu();
         }
         else {
@@ -195,8 +195,8 @@ public class BuildMenuScript : MonoBehaviour {
         return false;
     }
 
-    public void OpenMenuForTile(Vector2 tileId) {   
-        this.tileId = tileId; // Store the tile ID
+    public void OpenMenuForTile(Vector3 tilePosition) {   
+        this.tilePosition = tilePosition; // Store the tile position
         SetOpen(); // Show the build menu 
     }
 
