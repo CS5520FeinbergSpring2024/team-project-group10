@@ -15,3 +15,6 @@ Hive:
 - <a href="https://www.freepik.com/icon/blog_12713691#fromView=search&page=1&position=1&uuid=25171f27-9918-47dd-85bc-b1396c8d487a">Worker menu bee</a> designed by Freepik
 - <a href="https://pixabay.com/music/video-games-game-music-loop-10-145572/">Background music</a> created by [XtremeFreddy](https://pixabay.com/users/xtremefreddy-32332307/)
 - <a href="https://pixabay.com/sound-effects/bee-hive-2-17072/">Bees buzzing sound</a> by [Pixabay](https://pixabay.com/users/pixabay-1/)
+
+Overworld:
+- <a href="https://pixabay.com/sound-effects/game-music-loop-6-144641/">Background music</a> created by [XtremeFreddy](https://pixabay.com/users/xtremefreddy-32332307/)
