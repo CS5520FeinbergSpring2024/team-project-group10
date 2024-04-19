@@ -10,7 +10,6 @@ public class BuildMenuScript : MonoBehaviour {
     private ResourceType? selectedResourceType;
     public InventoryDataSingleton myInventory;
     public HiveGameManager hiveGameManager;
-    private Image[] prevTypeImages = new Image[2];
     private Image prevTypeImage;
     private Image prevSelectedResourceTypeButton;
 
@@ -109,6 +108,10 @@ public class BuildMenuScript : MonoBehaviour {
         }
         selectedBuildingType = BuildingType.Gathering;
         Debug.Log("Gathering building selected");
+        if (prevSelectedResourceTypeButton != null && !prevSelectedResourceTypeButton.name.Contains("Gathering"))
+        {   
+           prevSelectedResourceTypeButton.color = Color.white;
+        }
     }
 
     public void StorageClick() {
@@ -117,6 +120,10 @@ public class BuildMenuScript : MonoBehaviour {
         }
         selectedBuildingType = BuildingType.Storage;
         Debug.Log("Storage building selected");
+        if (prevSelectedResourceTypeButton != null && !prevSelectedResourceTypeButton.name.Contains("Storage"))
+        {   
+           prevSelectedResourceTypeButton.color = Color.white;
+        }
     }
 
     public void ProductionClick() {
@@ -125,6 +132,10 @@ public class BuildMenuScript : MonoBehaviour {
         }
         selectedBuildingType = BuildingType.Production;
         Debug.Log("Production building selected");
+        if (prevSelectedResourceTypeButton != null && !prevSelectedResourceTypeButton.name.Contains("Conversion"))
+        {   
+           prevSelectedResourceTypeButton.color = Color.white;
+        }
     }
 
     // Methods to handle selecting a resource
