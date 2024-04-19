@@ -1,23 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class OverworldSoundManager : MonoBehaviour
 {
-        public static OverworldSoundManager instance;
-        public Sprite musicIcon;
-        public Sprite muteMusicIcon;
-        // fields for overworld scene muscic
-        private AudioSource overworldSceneAudio;
-        public GameObject overworldSoundLayer;
-        public GameObject overworldButtonGO;
-        private UnityEngine.UI.Image musicIconImage;
-        // fields for overworld sound FX
-        [SerializeField] private AudioSource waspFX;
-        [SerializeField] private AudioSource flowerFX;
+    public static OverworldSoundManager instance;
+    [SerializeField] private Sprite musicIcon;
+    [SerializeField] private Sprite muteMusicIcon;
+    private AudioSource overworldSceneAudio;
+    [SerializeField] private GameObject overworldSoundLayer;
+    [SerializeField] private GameObject overworldButtonGO;
+    private UnityEngine.UI.Image musicIconImage;
+    [SerializeField] private AudioSource waspFX;
+    [SerializeField] private AudioSource flowerFX;
 
     private void Awake()
     {
@@ -60,6 +55,9 @@ public class OverworldSoundManager : MonoBehaviour
         
     }
 
+    /// <summary>
+    ///  On sound button click turns all sounds in scene on or off.
+    /// </summary>
     public void SoundClickButton()
     {
         if (SceneManager.GetActiveScene().name == "OverworldMeadow")
@@ -82,6 +80,9 @@ public class OverworldSoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///  Plays Wasp soundFX.
+    /// </summary>
     public void PlayWaspSoundFX()
     {
         if (!waspFX.isPlaying && waspFX.enabled)
@@ -90,6 +91,9 @@ public class OverworldSoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///  Stops Wasp soundFX.
+    /// </summary>
     public void StopWaspSoundFX()
     {
         if (waspFX.isPlaying && waspFX.enabled)
@@ -98,6 +102,9 @@ public class OverworldSoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///  Plays ResourceCollection soundFX.
+    /// </summary>
     public void PlayResoureCollectionSoundFX()
     {
         if (!flowerFX.isPlaying && flowerFX.enabled)
@@ -106,6 +113,9 @@ public class OverworldSoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    ///  Stops ResourceCollection soundFX.
+    /// </summary>
     public void StopResourceCollectionSoundFX()
     {
         if (flowerFX.isPlaying && flowerFX.enabled)
