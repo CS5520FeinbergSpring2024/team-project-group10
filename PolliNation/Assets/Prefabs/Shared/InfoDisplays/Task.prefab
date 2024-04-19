@@ -1959,7 +1959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4028105896424768120
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2937,7 +2937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1180417458455075127
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3431,8 +3431,6 @@ MonoBehaviour:
   PollenRewardGO: {fileID: 6491226687541916026}
   rewardsViewPortGO: {fileID: 1084225199154026584}
   rewardsContentsGO: {fileID: 8487414905222832229}
-  Tasks: {fileID: 11400000, guid: d47d5e4df00524cb185e6a85693d8424, type: 2}
-  UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
 --- !u!114 &831433711662749716
 MonoBehaviour:
   m_ObjectHideFlags: 0
