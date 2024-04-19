@@ -5942,7 +5942,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 6372979348001810196}
         m_TargetAssemblyTypeName: BuildMenuScript, Assembly-CSharp
-        m_MethodName: exitMenu
+        m_MethodName: ExitMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
