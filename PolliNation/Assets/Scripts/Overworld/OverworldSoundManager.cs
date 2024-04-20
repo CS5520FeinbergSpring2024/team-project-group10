@@ -14,6 +14,8 @@ public class OverworldSoundManager : MonoBehaviour
     [SerializeField] private AudioSource waspFX;
     [SerializeField] private AudioSource flowerFX;
     [SerializeField] private AudioSource deathScreenFX;
+    [SerializeField] private AudioSource buttonClickFX;
+    private Button[] buttons;
 
     private void Awake()
     {
@@ -24,12 +26,18 @@ public class OverworldSoundManager : MonoBehaviour
         overworldButtonGO.GetComponent<Button>().onClick.AddListener(this.SoundClickButton);
         musicIconImage = overworldButtonGO.GetComponent<UnityEngine.UI.Image>();
         overworldSceneAudio = overworldSoundLayer.GetComponent<AudioSource>();
+        // Add click noise to each button.
+        buttons = GameObject.FindObjectsOfType<Button>(true);
+        foreach (Button button in buttons)
+        {
+            button.onClick.AddListener(OverworldSoundManager.PlayButtonClickFX);
+        }
     }
 
     private void Start()
     {
         overworldButtonGO.SetActive(true);
-        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX};
+        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX, buttonClickFX};
         AudioUtility.OnSceneAudioStart(audioSources, musicIconImage);
 
     }
@@ -39,7 +47,7 @@ public class OverworldSoundManager : MonoBehaviour
     /// </summary>
     public void SoundClickButton()
     {
-        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX};
+        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX, buttonClickFX};
         AudioUtility.AudioButtonClick(audioSources, musicIconImage);
     }
 
@@ -110,9 +118,20 @@ public class OverworldSoundManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Play the button click sound.
+    /// </summary>
+    public static void PlayButtonClickFX()
+    {
+        if (instance.buttonClickFX.enabled)
+        {
+            instance.buttonClickFX.Play();
+        }
+    }
+
     public void StopAllMeadowSoundsOnDeath()
     {
-        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX};
+        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, buttonClickFX};
         foreach(AudioSource audioSource in audioSources)
         {
             if(audioSource != null)
@@ -127,6 +146,10 @@ public class OverworldSoundManager : MonoBehaviour
 
     private void OnDestroy()
     {
-         overworldButtonGO.GetComponent<Button>().onClick.RemoveListener(this.SoundClickButton);
+        overworldButtonGO.GetComponent<Button>().onClick.RemoveListener(this.SoundClickButton);
+        foreach (Button button in buttons)
+        {
+            button.onClick.RemoveListener(OverworldSoundManager.PlayButtonClickFX);
+        }
     }
 }
