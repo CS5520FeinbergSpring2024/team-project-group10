@@ -221,7 +221,7 @@ public class BuildMenuScript : MonoBehaviour {
         }
         else {
             Debug.Log("Insufficient resources for this building");
-            snackbar.SetText("Insufficient resources for this building", 3);
+            snackbar.SetText("Insufficient resources for this building", 3f);
         }
     }
 
