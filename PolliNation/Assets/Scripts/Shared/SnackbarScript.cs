@@ -1,8 +1,10 @@
 using UnityEngine;
 using TMPro;
+using System.Collections.Generic;
 
 public class SnackbarScript : MonoBehaviour {
     [SerializeField] TextMeshProUGUI text;
+    private List<int> delays = new();
     
     // Start is called before the first frame update
     void Start() {
@@ -19,11 +21,20 @@ public class SnackbarScript : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
+    // Closes snackbar if no messages are in the queue
+    private void AttemptClose() {
+        delays.RemoveAt(0);
+        if (delays.Count == 0) {
+            SetClose();
+        }
+    }
+
     // Displays the given string on the snackbar (overwriting original text)
     // and closing it after a certain amount of time
     public void SetText(string text, int delay=1) {
         this.text.text = text;
+        delays.Add(delay);
         SetOpen();
-        Invoke(nameof(SetClose), delay);
+        Invoke(nameof(AttemptClose), delay);
     }
 }
