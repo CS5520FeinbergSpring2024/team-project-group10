@@ -1585,7 +1585,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0.5
+  m_MatchWidthOrHeight: 0.4
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -3018,6 +3018,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c34250b9dbb904f46a7a6b0f3cdbb674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
   NectarAssignedText: {fileID: 6909521149895591729}
   PollenAssignedText: {fileID: 3785930544574700471}
   BudsAssignedText: {fileID: 7931749337961595483}
@@ -3026,6 +3027,7 @@ MonoBehaviour:
   PropolisAssignedText: {fileID: 8049403554757652286}
   RoyalJellyAssignedText: {fileID: 2235760330409348075}
   availableWorkersText: {fileID: 8149082614234217294}
+  snackbar: {fileID: 0}
 --- !u!1 &2266461111986810399
 GameObject:
   m_ObjectHideFlags: 0
@@ -6242,10 +6244,10 @@ RectTransform:
   - {fileID: 9008422971126847720}
   m_Father: {fileID: 6320981243615098450}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -298, y: -126}
-  m_SizeDelta: {x: 216.1277, y: 61.1067}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 750, y: 350}
+  m_SizeDelta: {x: 216.12769, y: 61.10669}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3212361980242878090
 CanvasRenderer:

@@ -57,7 +57,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 25
+  m_AdditionalShaderChannelsFlag: 1
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -269,7 +269,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a73fe85f5c6042f2b83c65911c38d88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tasks: {fileID: 11400000, guid: d47d5e4df00524cb185e6a85693d8424, type: 2}
   button: {fileID: 7484571994018124790}
 --- !u!1 &8909640371787388717
 GameObject:
