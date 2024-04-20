@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TaskMenuTask : MonoBehaviour
@@ -33,6 +35,8 @@ public class TaskMenuTask : MonoBehaviour
         UserInventory = new();
         Tasks.OnTaskStatusChange += TasksUpdated;
         UserInventory.OnInventoryChanged += CheckTaskRequirements;
+        // call upon awake to keep tasks up to date
+        TasksUpdated(null,null);
     }
     
     /// <summary>
