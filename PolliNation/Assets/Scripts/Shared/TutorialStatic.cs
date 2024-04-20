@@ -15,6 +15,9 @@ public class TutorialStatic
 
   private static ResourceType _toldToBuildStorageForResourceType;
   private static bool _receivedWorkers;
+  private static bool _toldToBuildStorage;
+  private static bool _toldToBuildGathering;
+  private static bool _toldToBuildConversion;
 
   public static void EnteredHive()
   {
@@ -54,10 +57,11 @@ public class TutorialStatic
 
   public static void ResourceStorageLimitReached(ResourceType resource)
   {
-    if (!_builtStorageForMoreCapacity)
+    if (!_builtStorageForMoreCapacity && !_toldToBuildStorage)
     {
       string resourceString = resource == ResourceType.RoyalJelly ? "Royal Jelly" : resource.ToString();
       _toldToBuildStorageForResourceType = resource;
+      _toldToBuildStorage = true;
       Snackbar.SetText($"{resourceString} limit reached. Build more {resourceString} storage stations to store more.", 3);
     }
     if (_receivedWorkers) 
@@ -74,13 +78,15 @@ public class TutorialStatic
 
   private static void SuggestBuildingGatheringAndConversion()
   {
-    if (!_builtGatheringStation)
+    if (!_builtGatheringStation && !_toldToBuildGathering)
     {
+      _toldToBuildGathering = true;
       Snackbar.SetText("Build a gathering station to assign worker bees to collect resources for you.", 3);
     }
     // Forces an order, but is prefereable to bombardng the user with messages.
-    else if (!_builtConversionStation)
+    else if (!_builtConversionStation && !_toldToBuildConversion)
     {
+      _toldToBuildConversion = true;
       Snackbar.SetText("Build a conversion station to assign workers to produce resources like honey.");
     }
   }
