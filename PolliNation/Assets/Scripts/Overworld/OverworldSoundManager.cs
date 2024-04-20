@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System;
 
 public class OverworldSoundManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class OverworldSoundManager : MonoBehaviour
     [SerializeField] private AudioSource flowerFX;
     [SerializeField] private AudioSource deathScreenFX;
     [SerializeField] private AudioSource buttonClickFX;
+    [SerializeField] private AudioSource ClaimRewardFX;
     private Button[] buttons;
 
     private void Awake()
@@ -28,6 +30,8 @@ public class OverworldSoundManager : MonoBehaviour
         overworldSceneAudio = overworldSoundLayer.GetComponent<AudioSource>();
         // Add click noise to each button.
         buttons = GameObject.FindObjectsOfType<Button>(true);
+        // remove reward claim buttons
+        buttons = Array.FindAll(buttons, element => element.gameObject.name != "Claim Reward Button");
         foreach (Button button in buttons)
         {
             button.onClick.AddListener(OverworldSoundManager.PlayButtonClickFX);
@@ -37,7 +41,7 @@ public class OverworldSoundManager : MonoBehaviour
     private void Start()
     {
         overworldButtonGO.SetActive(true);
-        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX, buttonClickFX};
+        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX, buttonClickFX, ClaimRewardFX};
         AudioUtility.OnSceneAudioStart(audioSources, musicIconImage);
 
     }
@@ -47,7 +51,7 @@ public class OverworldSoundManager : MonoBehaviour
     /// </summary>
     public void SoundClickButton()
     {
-        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX, buttonClickFX};
+        AudioSource[] audioSources = {overworldSceneAudio, waspFX, flowerFX, deathScreenFX, buttonClickFX, ClaimRewardFX};
         AudioUtility.AudioButtonClick(audioSources, musicIconImage);
     }
 
@@ -126,6 +130,17 @@ public class OverworldSoundManager : MonoBehaviour
         if (instance.buttonClickFX.enabled)
         {
             instance.buttonClickFX.Play();
+        }
+    }
+
+    /// <summary>
+    /// Play claim reward click sound.
+    /// </summary>
+    public static void PlayClaimRewardButtonClickFX()
+    {
+        if (instance.ClaimRewardFX != null && instance.ClaimRewardFX.enabled)
+        {
+            instance.ClaimRewardFX.Play();
         }
     }
 
