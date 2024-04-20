@@ -288,8 +288,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 767, y: 400}
-  m_SizeDelta: {x: 190, y: 50}
+  m_AnchoredPosition: {x: 767, y: 364.4}
+  m_SizeDelta: {x: 190, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3423506221332807473
 CanvasRenderer:
@@ -430,8 +430,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f6d1de44c334018acc00bb3d236b30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UserInventory: {fileID: 11400000, guid: 3bc19f7f1530c48a88e9efda95d5809a, type: 2}
-  hive: {fileID: 11400000, guid: ca52e1306bdf0784c9c0cee15aa6b9eb, type: 2}
   HoneyAmountText: {fileID: 9148507712021430624}
   PropolisAmountText: {fileID: 7228149351721215531}
   RoyalJellyAmountText: {fileID: 4622553095068541279}
