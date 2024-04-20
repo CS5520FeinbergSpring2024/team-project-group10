@@ -94,9 +94,9 @@ public class DataStorageManager : MonoBehaviour
 
   public void LoadData()
   {
-    LoadInventoryData();
-    LoadHiveData();
-    LoadTaskData();
+    // LoadInventoryData();
+    // LoadHiveData();
+    // LoadTaskData();
   }
 
   public void SaveData()
