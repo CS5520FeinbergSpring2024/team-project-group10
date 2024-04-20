@@ -23,6 +23,7 @@ public class WorkersMenuScript : MonoBehaviour
 
     private HiveDataSingleton hiveSingleton;
     private GameObject menuButtonObject;
+    public SnackbarScript snackbar;
     private ILaunchMenuButton launchMenuButton;
     private int availableWorkers;
     private Dictionary<ResourceType, TextMeshProUGUI> assignedTextMap;
@@ -57,6 +58,9 @@ public class WorkersMenuScript : MonoBehaviour
                 Debug.LogError("HiveGameManager component not found!");
             }
         }
+
+        // Finding the SnackbarScript component in the scene
+        snackbar = FindObjectOfType<SnackbarScript>(true);
 
         // Since it's a singleton, this doesn't need to the the one the hive stores.
         hiveSingleton = new();
@@ -106,6 +110,7 @@ public class WorkersMenuScript : MonoBehaviour
         else
         {
             Debug.Log("No worker available.");
+            snackbar.SetText("No workers available");
         }
     }
 
@@ -119,6 +124,7 @@ public class WorkersMenuScript : MonoBehaviour
         else 
         {
             Debug.Log("No worker available.");
+            snackbar.SetText("No workers assigned");
         }
         
     }
@@ -136,6 +142,12 @@ public class WorkersMenuScript : MonoBehaviour
         else
         {
             Debug.Log(string.Format("No {0} building exist, please build it first", resourceType));
+            if (new List<ResourceType>{ResourceType.Nectar, ResourceType.Pollen, ResourceType.Water, ResourceType.Buds}.Contains(resourceType)) {
+                snackbar.SetText($"{resourceType} {BuildingType.Gathering} Station required");
+            } else {
+                string resourceString = (resourceType == ResourceType.RoyalJelly) ? "Royal Jelly" : resourceType.ToString();
+                snackbar.SetText($"{resourceString} Conversion Station required");
+            }
         }
     }
 
