@@ -70,11 +70,6 @@ public class BuildMenuScript : MonoBehaviour {
     void Start() {
         SetClose();
 
-        // Hide resource panels
-        storageResources.SetActive(false);
-        gatheringResources.SetActive(false);
-        conversionResources.SetActive(false);
-        
         // Finding the Build Button object in the scene
         GameObject menuButtonObject = GameObject.Find("Build Button Object");
         if (menuButtonObject != null) {
@@ -104,6 +99,11 @@ public class BuildMenuScript : MonoBehaviour {
     }
 
     public void SetOpen() {
+        // Hide resource panels
+        storageResources.SetActive(false);
+        gatheringResources.SetActive(false);
+        conversionResources.SetActive(false);
+        
         gameObject.SetActive(true);
         gameObject.transform.parent.gameObject.SetActive(true);
     }
