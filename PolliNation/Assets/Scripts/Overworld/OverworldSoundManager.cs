@@ -90,12 +90,12 @@ public class OverworldSoundManager : MonoBehaviour
     /// <summary>
     ///  Plays death screen soundFX.
     /// </summary>
-    public void PlayDeathScreenFX()
+    public void PlayDeathScreenFX(float duration)
     {
         if (!deathScreenFX.isPlaying && deathScreenFX.enabled)
         {
             StopAllMeadowSoundsOnDeath();
-            deathScreenFX.Play();
+            StartCoroutine(AudioUtility.AudioFadeOut(deathScreenFX, duration));
         }
     }
 
