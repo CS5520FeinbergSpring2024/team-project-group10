@@ -161,13 +161,6 @@ public class WorkersMenuScript : MonoBehaviour
     }
 
 
-    public void Assign()
-    {
-        saveChanges();
-        Debug.Log("Workers Assigned");
-    }
-
-
     public void SetOpen()
     {
         gameObject.SetActive(true);
