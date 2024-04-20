@@ -18,6 +18,7 @@ public class HiveGameManager : MonoBehaviour {
         inventorySingleton = new();
         // Getting all of the buildings from the HiveSingleton and instantiating them
         InstantiateBuildingsFromSingleton();
+        TutorialSingleton.EnteredHive(FindObjectOfType<SnackbarScript>(true));
     }
 
     public void Build(BuildingType buildingType, ResourceType resourceType, Vector3 position) {
