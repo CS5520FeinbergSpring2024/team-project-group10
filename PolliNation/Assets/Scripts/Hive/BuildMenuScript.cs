@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +9,7 @@ public class BuildMenuScript : MonoBehaviour {
     private ResourceType? selectedResourceType;
     public InventoryDataSingleton myInventory;
     public HiveGameManager hiveGameManager;
+    public SnackbarScript snackbar;
     private Image prevTypeImage;
     private Image prevSelectedResourceTypeButton;
 
@@ -89,6 +89,18 @@ public class BuildMenuScript : MonoBehaviour {
         }
         else {
             Debug.LogError("Hive_GameManager object not found in the scene.");
+        }
+        
+        // Finding the Snackbar object in the scene
+        GameObject snackbarObject = GameObject.Find("Snackbar");
+        if (snackbarObject != null) {
+            snackbar = snackbarObject.GetComponent<SnackbarScript>();
+            if (snackbarObject == null) {
+                Debug.LogError("Snackbar component could not be found.");
+            }
+        }
+        else {
+            Debug.LogError("Snackbar object not found in the scene.");
         }
     }
 
@@ -195,15 +207,18 @@ public class BuildMenuScript : MonoBehaviour {
     public void Build() {
         if (selectedBuildingType == null) {
             Debug.LogWarning("No building selected!");
+            snackbar.SetText("No building selected!");
             return;
         }
         if (selectedResourceType == null) {
             Debug.LogWarning("No resource selected!");
+            snackbar.SetText("No resource selected!");
             return;
         }
         // Check if building/resource types are a valid match
         if (!buildingResources[(BuildingType)selectedBuildingType].Contains((ResourceType) selectedResourceType)) {
             Debug.LogWarning("Invalid building/resource pair!");
+            snackbar.SetText("Invalid building/resource pair!");
             return;
         }
 
@@ -215,6 +230,7 @@ public class BuildMenuScript : MonoBehaviour {
         }
         else {
             Debug.Log("Insufficient resources for this building");
+            snackbar.SetText("Insufficient resources for this building");
         }
     }
 
@@ -241,6 +257,10 @@ public class BuildMenuScript : MonoBehaviour {
         canvas.gameObject.SetActive(false);
         Debug.Log("Exit button was clicked");
         launchMenuButton?.ReappearButton();
+
+        // Removes selections
+        selectedBuildingType = null;
+        selectedResourceType = null;
         ResetButtonColors();
     }
 
