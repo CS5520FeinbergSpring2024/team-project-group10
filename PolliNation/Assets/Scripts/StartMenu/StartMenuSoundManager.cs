@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class StartMenuSoundManager : MonoBehaviour
 {
     public static StartMenuSoundManager instance;
-    private AudioSource startMenuSceneAudio;
-    [SerializeField] private GameObject startMenuSoundLayer;
+    [SerializeField] private AudioSource startMenuBackgroundMusic;
     [SerializeField] private GameObject startMenuButtonGO;
+    [SerializeField] private AudioSource buttonClickFX;
     private UnityEngine.UI.Image musicIconImage;
 
     private void Awake()
@@ -17,13 +17,12 @@ public class StartMenuSoundManager : MonoBehaviour
         } 
         startMenuButtonGO.GetComponent<Button>().onClick.AddListener(this.SoundClickButton);
         musicIconImage = startMenuButtonGO.GetComponent<UnityEngine.UI.Image>();
-        startMenuSceneAudio = startMenuSoundLayer.GetComponent<AudioSource>();
     }
 
     private void Start()
     {
         startMenuButtonGO.SetActive(true);
-        AudioSource[] audioSources = {startMenuSceneAudio};
+        AudioSource[] audioSources = {startMenuBackgroundMusic, buttonClickFX};
         AudioUtility.OnSceneAudioStart(audioSources, musicIconImage);
     }
 
@@ -32,8 +31,19 @@ public class StartMenuSoundManager : MonoBehaviour
     /// </summary>
     public void SoundClickButton()
     {
-        AudioSource[] audioSources = {startMenuSceneAudio};
+        AudioSource[] audioSources = {startMenuBackgroundMusic, buttonClickFX};
         AudioUtility.AudioButtonClick(audioSources, musicIconImage);
+    }
+
+    /// <summary>
+    /// Play the button click sound.
+    /// </summary>
+    public void PlayButtonClickFX()
+    {
+        if (!buttonClickFX.isPlaying && buttonClickFX.enabled)
+        {
+            buttonClickFX.Play();
+        }
     }
 
     private void OnDestroy()
