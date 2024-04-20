@@ -64,19 +64,17 @@ public static class AudioUtility
     /// </summary>
     /// <param name="audioSource"> audioSource to fade out </param>
     /// <param name="duration"> duration to fade out audio from starting volume to 0 </param>
-   public static IEnumerator AudioFadeOut(AudioSource audioSource, float duration)
+   public static IEnumerator AudioFadeOut(AudioSource audioSource, float duration, float fadeTargetVolume)
    {
     float startVolume = audioSource.volume;
     float timeElapsed = 0f;
     audioSource.Play();
-    while (audioSource.volume > 0)
+    while (audioSource.volume > fadeTargetVolume)
     {
         audioSource.volume = startVolume * (1 - timeElapsed / duration);
         timeElapsed += Time.deltaTime;
         yield return null;
     }
-    audioSource.Stop();
-    audioSource.volume = startVolume;
     yield return null;
    }
 

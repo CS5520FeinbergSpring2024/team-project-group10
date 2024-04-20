@@ -95,7 +95,7 @@ public class OverworldSoundManager : MonoBehaviour
         if (!deathScreenFX.isPlaying && deathScreenFX.enabled)
         {
             StopAllMeadowSoundsOnDeath();
-            StartCoroutine(AudioUtility.AudioFadeOut(deathScreenFX, duration));
+            StartCoroutine(AudioUtility.AudioFadeOut(deathScreenFX, duration, 0.3f));
         }
     }
 
