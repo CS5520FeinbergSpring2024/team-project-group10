@@ -7,9 +7,11 @@ public class HiveSoundManager : MonoBehaviour
 {
     public static HiveSoundManager instance;
     private AudioSource[] hiveSceneAudio;
-    [SerializeField] private GameObject hiveSoundLayer;
+    [SerializeField] private AudioSource buttonClickFX;
+    [SerializeField] private GameObject backgroundSound;
     [SerializeField] private GameObject hiveButtonGO;
     private UnityEngine.UI.Image musicIconImage;
+    private Button[] buttons;
 
     private void Awake()
     {
@@ -19,7 +21,24 @@ public class HiveSoundManager : MonoBehaviour
         } 
         hiveButtonGO.GetComponent<Button>().onClick.AddListener(this.SoundClickButton);
         musicIconImage = hiveButtonGO.GetComponent<UnityEngine.UI.Image>();
-        hiveSceneAudio = hiveSoundLayer.GetComponents<AudioSource>();
+        // Put all audio sources into the array.
+        AudioSource[] background = backgroundSound.GetComponents<AudioSource>();
+        hiveSceneAudio = new AudioSource[background.Length + 1];
+        for (int i = 0; i < background.Length; i++)
+        {
+            hiveSceneAudio[i] = background[i];
+        }
+        if (buttonClickFX != null)
+        {
+            hiveSceneAudio[background.Length] = buttonClickFX;
+        }
+
+        // Add click noise to each button.
+        buttons = GameObject.FindObjectsOfType<Button>(true);
+        foreach (Button button in buttons)
+        {
+            button.onClick.AddListener(HiveSoundManager.PlayButtonClickFX);
+        }
     }
 
     private void Start()
@@ -36,8 +55,23 @@ public class HiveSoundManager : MonoBehaviour
         AudioUtility.AudioButtonClick(hiveSceneAudio, musicIconImage);
     }
 
+    /// <summary>
+    /// Play the button click sound.
+    /// </summary>
+    public static void PlayButtonClickFX()
+    {
+        if (instance.buttonClickFX.enabled)
+        {
+            instance.buttonClickFX.Play();
+        }
+    }
+
     private void OnDestroy()
     {
-         hiveButtonGO.GetComponent<Button>().onClick.RemoveListener(this.SoundClickButton);
+        hiveButtonGO.GetComponent<Button>().onClick.RemoveListener(this.SoundClickButton);
+        foreach (Button button in buttons)
+        {
+            button.onClick.RemoveListener(HiveSoundManager.PlayButtonClickFX);
+        }
     }
 }
