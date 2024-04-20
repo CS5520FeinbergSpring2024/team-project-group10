@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildMenuScript : MonoBehaviour {
     private ILaunchMenuButton launchMenuButton;
@@ -8,6 +10,8 @@ public class BuildMenuScript : MonoBehaviour {
     private ResourceType? selectedResourceType;
     public InventoryDataSingleton myInventory;
     public HiveGameManager hiveGameManager;
+    private Image prevTypeImage;
+    private Image prevSelectedResourceTypeButton;
 
     // Static dictionary containing the resources that can be associated with each building type
     public static Dictionary<BuildingType, List<ResourceType>> buildingResources = new() {
@@ -104,6 +108,10 @@ public class BuildMenuScript : MonoBehaviour {
         }
         selectedBuildingType = BuildingType.Gathering;
         Debug.Log("Gathering building selected");
+        if (prevSelectedResourceTypeButton != null && !prevSelectedResourceTypeButton.name.Contains("Gathering"))
+        {   
+           prevSelectedResourceTypeButton.color = Color.white;
+        }
     }
 
     public void StorageClick() {
@@ -112,6 +120,10 @@ public class BuildMenuScript : MonoBehaviour {
         }
         selectedBuildingType = BuildingType.Storage;
         Debug.Log("Storage building selected");
+        if (prevSelectedResourceTypeButton != null && !prevSelectedResourceTypeButton.name.Contains("Storage"))
+        {   
+           prevSelectedResourceTypeButton.color = Color.white;
+        }
     }
 
     public void ProductionClick() {
@@ -120,6 +132,10 @@ public class BuildMenuScript : MonoBehaviour {
         }
         selectedBuildingType = BuildingType.Production;
         Debug.Log("Production building selected");
+        if (prevSelectedResourceTypeButton != null && !prevSelectedResourceTypeButton.name.Contains("Conversion"))
+        {   
+           prevSelectedResourceTypeButton.color = Color.white;
+        }
     }
 
     // Methods to handle selecting a resource
@@ -154,6 +170,26 @@ public class BuildMenuScript : MonoBehaviour {
     public void RoyalJellyResourceClick() {
         selectedResourceType = ResourceType.RoyalJelly;
         Debug.Log("Royal Jelly resource selected");
+    }
+
+    public void TypeButtonPressed(Image buttonImage)
+    {
+        if (prevTypeImage != null)
+        {
+            prevTypeImage.color = Color.white;
+        }
+        buttonImage.color = Color.gray;
+        prevTypeImage = buttonImage;
+    }
+
+    public void ResourceButtonPressed(Image buttonImage)
+    {
+        if (prevSelectedResourceTypeButton != null)
+        {
+            prevSelectedResourceTypeButton.color = Color.white;
+        }
+        buttonImage.color = Color.gray;
+        prevSelectedResourceTypeButton = buttonImage;
     }
 
     public void Build() {
@@ -205,5 +241,18 @@ public class BuildMenuScript : MonoBehaviour {
         canvas.gameObject.SetActive(false);
         Debug.Log("Exit button was clicked");
         launchMenuButton?.ReappearButton();
+        ResetButtonColors();
+    }
+
+    private void ResetButtonColors()
+    {
+        if (prevTypeImage != null)
+        {
+            prevTypeImage.color = Color.white;
+        }
+        if (prevSelectedResourceTypeButton != null)
+        {
+            prevSelectedResourceTypeButton.color = Color.white;
+        }
     }
 }
