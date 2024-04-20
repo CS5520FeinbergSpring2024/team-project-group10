@@ -5,6 +5,7 @@ public class TaskMenuScript : MonoBehaviour
     public TaskDataSingleton Tasks;
     public GameObject TaskGameObject;
     public GameObject ScrollContainer;
+    private RewardClickSoundPlayerScript _rewardClickSoundPlayer;
 
     void Start()
     {   
@@ -16,6 +17,7 @@ public class TaskMenuScript : MonoBehaviour
     {
         // intial load of tasks into menu
         Tasks = new TaskDataSingleton();
+        _rewardClickSoundPlayer = FindObjectOfType<RewardClickSoundPlayerScript>();
         LoadTasks();
     }
 
@@ -33,7 +35,13 @@ public class TaskMenuScript : MonoBehaviour
                 Instantiate(TaskGameObject, ScrollContainer.transform);
                 
                 // call method to assign values to task game object 
-                TaskGameObject.GetComponent<TaskMenuTask>().AssignValues(task);
+                TaskMenuTask taskMenuTask = TaskGameObject.GetComponent<TaskMenuTask>();
+                taskMenuTask.AssignValues(task);
+                if (_rewardClickSoundPlayer != null)
+                {
+                    Debug.Log("DEBUG assigned play reward sound");
+                    taskMenuTask.PlayRewardSound = RewardClickSoundPlayerScript.PlayClaimRewardFX;
+                }
             }
         }
     }

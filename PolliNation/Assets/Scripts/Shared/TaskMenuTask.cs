@@ -26,6 +26,31 @@ public class TaskMenuTask : MonoBehaviour
     public InventoryDataSingleton UserInventory;
 
     private Dictionary<RewardType, GameObject> RewardDisplays= new();
+    private Action _playRewardSound;
+    public Action PlayRewardSound
+    {
+        get 
+        { 
+            Debug.Log("DEBUG getting");
+            Debug.Log("DEBUG _playRewardSound is " + _playRewardSound);
+            if (_playRewardSound == null)
+            {
+                Debug.Log("DEBUG value is null");
+            }
+            return _playRewardSound;
+        }
+        set 
+        { 
+            Debug.Log("DEBUG setting");
+            Debug.Log("DEBUG value is " + value);
+            _playRewardSound = value;
+            Debug.Log("DEBUG _playRewardSound is " + _playRewardSound);
+            if (_playRewardSound == null)
+            {
+                Debug.Log("DEBUG value is null");
+            }
+        }
+    }
 
     void Awake()
     {   
@@ -153,5 +178,14 @@ public class TaskMenuTask : MonoBehaviour
         // match task to tasks in SO
         Task task = Tasks.GetTask(TaskTitleText.text.ToString());
         Tasks.ClaimReward(task);
+        if (PlayRewardSound != null)
+        {
+            PlayRewardSound();
+            Debug.Log("DEBUG playRewardSound NOT null");
+        }
+        else
+        {
+            Debug.Log("DEBUG playRewardSound null");
+        }
     }
 }
