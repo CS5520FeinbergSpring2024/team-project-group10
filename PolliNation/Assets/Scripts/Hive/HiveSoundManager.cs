@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,7 @@ public class HiveSoundManager : MonoBehaviour
     public static HiveSoundManager instance;
     private AudioSource[] hiveSceneAudio;
     [SerializeField] private AudioSource buttonClickFX;
+    [SerializeField] private AudioSource ClaimRewardFX;
     [SerializeField] private GameObject backgroundSound;
     [SerializeField] private GameObject hiveButtonGO;
     private UnityEngine.UI.Image musicIconImage;
@@ -23,7 +25,7 @@ public class HiveSoundManager : MonoBehaviour
         musicIconImage = hiveButtonGO.GetComponent<UnityEngine.UI.Image>();
         // Put all audio sources into the array.
         AudioSource[] background = backgroundSound.GetComponents<AudioSource>();
-        hiveSceneAudio = new AudioSource[background.Length + 1];
+        hiveSceneAudio = new AudioSource[background.Length + 2];
         for (int i = 0; i < background.Length; i++)
         {
             hiveSceneAudio[i] = background[i];
@@ -32,19 +34,28 @@ public class HiveSoundManager : MonoBehaviour
         {
             hiveSceneAudio[background.Length] = buttonClickFX;
         }
+        if (ClaimRewardFX != null)
+        {
+            hiveSceneAudio[background.Length + 1] = ClaimRewardFX;
+        }
 
         // Add click noise to each button.
         buttons = GameObject.FindObjectsOfType<Button>(true);
+        //remove claim reward buttons
+        buttons = Array.FindAll(buttons, element => element.gameObject.name != "Claim Reward Button");
         foreach (Button button in buttons)
         {
             button.onClick.AddListener(HiveSoundManager.PlayButtonClickFX);
+            Debug.Log("RSRSRS button: " + button.gameObject.name);
         }
+
         // Add click sound function to each tile.
         Tile[] tiles = GameObject.FindObjectsOfType<Tile>(true);
         foreach (Tile tile in tiles)
         {
             tile.playSoundOnClick = HiveSoundManager.PlayButtonClickFX;
         }
+        
     }
 
     private void Start()
@@ -69,6 +80,17 @@ public class HiveSoundManager : MonoBehaviour
         if (instance.buttonClickFX.enabled)
         {
             instance.buttonClickFX.Play();
+        }
+    }
+
+    /// <summary>
+    /// Play the claim reward click sound.
+    /// </summary>
+    public static void PlayClaimRewardButtonClickFX()
+    {
+        if (instance.ClaimRewardFX != null && instance.ClaimRewardFX.enabled)
+        {
+            instance.ClaimRewardFX.Play();
         }
     }
 
