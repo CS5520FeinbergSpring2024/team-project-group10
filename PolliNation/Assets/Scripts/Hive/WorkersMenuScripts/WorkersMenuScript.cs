@@ -59,17 +59,8 @@ public class WorkersMenuScript : MonoBehaviour
             }
         }
 
-        // Finding the Snackbar object in the scene
-        GameObject snackbarObject = GameObject.Find("Snackbar");
-        if (snackbarObject != null) {
-            snackbar = snackbarObject.transform.GetChild(0).GetChild(0).GetComponent<SnackbarScript>();
-            if (snackbarObject == null) {
-                Debug.LogError("Snackbar component could not be found.");
-            }
-        }
-        else {
-            Debug.LogError("Snackbar object not found in the scene.");
-        }
+        // Finding the SnackbarScript component in the scene
+        snackbar = FindObjectOfType<SnackbarScript>(true);
 
         // Since it's a singleton, this doesn't need to the the one the hive stores.
         hiveSingleton = new();
@@ -120,7 +111,6 @@ public class WorkersMenuScript : MonoBehaviour
         {
             Debug.Log("No worker available.");
             snackbar.SetText("No workers available");
-
         }
     }
 

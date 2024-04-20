@@ -90,18 +90,9 @@ public class BuildMenuScript : MonoBehaviour {
         else {
             Debug.LogError("Hive_GameManager object not found in the scene.");
         }
-        
-        // Finding the Snackbar object in the scene
-        GameObject snackbarObject = GameObject.Find("Snackbar");
-        if (snackbarObject != null) {
-            snackbar = snackbarObject.transform.GetChild(0).GetChild(0).GetComponent<SnackbarScript>();
-            if (snackbarObject == null) {
-                Debug.LogError("Snackbar component could not be found.");
-            }
-        }
-        else {
-            Debug.LogError("Snackbar object not found in the scene.");
-        }
+
+        // Finding the SnackbarScript component in the scene
+        snackbar = FindObjectOfType<SnackbarScript>(true);
     }
 
     public void SetOpen() {
