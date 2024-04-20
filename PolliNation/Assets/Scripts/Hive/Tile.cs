@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 /// <summary>
 /// Provide:
@@ -21,6 +22,9 @@ public class Tile : MonoBehaviour
     [SerializeField] private Material yellowMat;
     [SerializeField] private Material greenMat;
     [SerializeField] private Material redMat;
+
+    // To play sound on click.
+    internal Action playSoundOnClick;
 
     // Start is called before the first frame update
     void Start() {
@@ -79,6 +83,11 @@ public class Tile : MonoBehaviour
     void OnMouseDown() {
         if (hiveGameManager.building && !isYellow) {
             hiveGameManager.building = false;
+
+            if (playSoundOnClick != null)
+            {
+                playSoundOnClick();
+            }
 
             if (occupied) {
                 OpenDestroyMenu();
