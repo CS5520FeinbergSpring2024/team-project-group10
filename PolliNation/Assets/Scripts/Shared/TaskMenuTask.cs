@@ -33,6 +33,8 @@ public class TaskMenuTask : MonoBehaviour
         UserInventory = new();
         Tasks.OnTaskStatusChange += TasksUpdated;
         UserInventory.OnInventoryChanged += CheckTaskRequirements;
+        // call upon awake to keep tasks up to date
+        TasksUpdated(null,null);
     }
     
     /// <summary>
