@@ -39,6 +39,12 @@ public class HiveSoundManager : MonoBehaviour
         {
             button.onClick.AddListener(HiveSoundManager.PlayButtonClickFX);
         }
+        // Add click sound function to each tile.
+        Tile[] tiles = GameObject.FindObjectsOfType<Tile>(true);
+        foreach (Tile tile in tiles)
+        {
+            tile.playSoundOnClick = HiveSoundManager.PlayButtonClickFX;
+        }
     }
 
     private void Start()
