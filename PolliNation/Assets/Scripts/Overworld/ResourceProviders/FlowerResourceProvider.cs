@@ -385,6 +385,11 @@ public class FlowerResourceProvider : MonoBehaviour, IResourceProvider
         {
             _currentlyCollecting = true;
             _currentlyRegenerating = false;
+            // play collection soundFX once per collection
+            if (OverworldSoundManager.instance != null)
+            {
+                OverworldSoundManager.instance.PlayResoureCollectionSoundFX();
+            }
         }
     }
 

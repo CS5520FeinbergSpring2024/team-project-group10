@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465788, g: 0.49641287, b: 0.5748173, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -354,6 +354,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5943947035623745103, guid: f6dc6d5d41fd04411ab870d85ab1d854, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -606,7 +610,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 992492791713173000, guid: d77933d91fc4747829d4491a6c8155bb, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
-      value: 1
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2885201027989233537, guid: d77933d91fc4747829d4491a6c8155bb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -655,6 +659,10 @@ PrefabInstance:
     - target: {fileID: 8909640371787388717, guid: d77933d91fc4747829d4491a6c8155bb, type: 3}
       propertyPath: m_Name
       value: TasksButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8909640371787388717, guid: d77933d91fc4747829d4491a6c8155bb, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -838,6 +846,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overworld_MeadowSoundLayer
       objectReference: {fileID: 0}
+    - target: {fileID: 7219156506726082751, guid: db1d29e0012ca4cdaa3dfe427a38e4d5, type: 3}
+      propertyPath: m_Pitch
+      value: 1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219156506726082751, guid: db1d29e0012ca4cdaa3dfe427a38e4d5, type: 3}
+      propertyPath: m_Volume
+      value: 0.075
+      objectReference: {fileID: 0}
+    - target: {fileID: 7219156506726082751, guid: db1d29e0012ca4cdaa3dfe427a38e4d5, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bc2726b014b004b8d9c828ece2e6e7f2, type: 3}
     - target: {fileID: 7526579309466527406, guid: db1d29e0012ca4cdaa3dfe427a38e4d5, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -891,10 +911,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3618323358029631248, guid: fe5cad47bd15d4b918ce1f8f7eb9c0aa, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6508834410871992109, guid: fe5cad47bd15d4b918ce1f8f7eb9c0aa, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

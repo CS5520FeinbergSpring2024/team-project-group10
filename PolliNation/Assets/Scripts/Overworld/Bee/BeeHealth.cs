@@ -71,7 +71,7 @@ public class BeeHealth : MonoBehaviour
     }
     }
 
-        /// <summary>
+    /// <summary>
     /// if bee health is below max health will regenerate health
     /// at set amount per set time interval
     /// </summary>
@@ -79,12 +79,12 @@ public class BeeHealth : MonoBehaviour
     {
         if (deathScreen != null)
         {
+            OverworldSoundManager.instance.PlayDeathScreenFX(deathScreenTime);
             deathScreen.SetActive(true);
             yield return new WaitForSeconds(deathScreenTime - 1);
             SceneManager.LoadScene("Hive");
             yield return new WaitForSeconds(1);
             deathScreen.SetActive(false);
-            
         }
          yield return null;
     }
