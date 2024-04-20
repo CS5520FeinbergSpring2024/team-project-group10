@@ -5379,6 +5379,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hiveGameManager: {fileID: 0}
+  snackbar: {fileID: 0}
 --- !u!1 &7892460131914288085
 GameObject:
   m_ObjectHideFlags: 0
@@ -5855,8 +5856,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 767, y: 400}
-  m_SizeDelta: {x: 190, y: 50}
+  m_AnchoredPosition: {x: 767, y: 364}
+  m_SizeDelta: {x: 190, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3713453752481124554
 CanvasRenderer:
