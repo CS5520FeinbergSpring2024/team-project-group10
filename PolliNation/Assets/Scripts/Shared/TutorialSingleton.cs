@@ -16,9 +16,11 @@ public class TutorialSingleton
   // a resource collection limit.
   [SerializeField] private static bool _builtStorageForMoreCapacity;
   [SerializeField] private static bool _builtStorageStation;
-
+  [SerializeField] private static bool _builtGatheringStation;
+  [SerializeField] private static bool _builtConversionStation;
 
   private static ResourceType _toldToBuildStorageForResourceType;
+  private static bool _receivedWorkers;
 
   public TutorialSingleton()
   {
@@ -47,26 +49,22 @@ public class TutorialSingleton
     switch (buildingType)
     {
       case BuildingType.Storage:
-        BuiltStorageStation(resourceType);
+        _builtStorageStation = true;
+        if (_toldToBuildStorageForResourceType == resourceType)
+        {
+          _builtStorageForMoreCapacity = true;
+        }
+        break;
+      case BuildingType.Gathering:
+        _builtGatheringStation = true;
+        break;
+      case BuildingType.Production:
+        _builtConversionStation = true;
         break;
       default:
         Debug.Log(buildingType + " is not recognized.");
         break;
     }
-  }
-
-  private static void BuiltStorageStation(ResourceType resource)
-  {
-    _builtStorageStation = true;
-    if (_toldToBuildStorageForResourceType == resource)
-    {
-      BuiltStorageForMoreCapacity();
-    }
-  }
-
-  private static void BuiltStorageForMoreCapacity()
-  {
-    _builtStorageForMoreCapacity = true;
   }
 
   public static void ResourceStorageLimitReached(ResourceType resource)
@@ -77,8 +75,29 @@ public class TutorialSingleton
       _toldToBuildStorageForResourceType = resource;
       Snackbar.SetText($"{resourceString} limit reached. Build more {resourceString} storage stations to store more.", 3);
     }
+    if (_receivedWorkers) 
+    {
+      SuggestBuildingGatheringAndConversion();
+    }
   }
 
-  
+  public static void ReceivedWorkers()
+  {
+    _receivedWorkers = true;
+    SuggestBuildingGatheringAndConversion();
+  }
+
+  private static void SuggestBuildingGatheringAndConversion()
+  {
+    if (!_builtGatheringStation)
+    {
+      Snackbar.SetText("Build a gathering station to assign worker bees to collect resources for you.", 3);
+    }
+    // Forces an order, but is prefereable to bombardng the user with messages.
+    else if (!_builtConversionStation)
+    {
+      Snackbar.SetText("Build a conversion station to assign workers to produce resources like honey.");
+    }
+  }
 
 }
