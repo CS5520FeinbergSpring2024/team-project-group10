@@ -18,13 +18,13 @@ public class HiveGameManager : MonoBehaviour {
         inventorySingleton = new();
         // Getting all of the buildings from the HiveSingleton and instantiating them
         InstantiateBuildingsFromSingleton();
-        TutorialSingleton.Snackbar = FindObjectOfType<SnackbarScript>(true);
-        TutorialSingleton.EnteredHive();
+        TutorialStatic.Snackbar = FindObjectOfType<SnackbarScript>(true);
+        TutorialStatic.EnteredHive();
     }
 
     public void Build(BuildingType buildingType, ResourceType resourceType, Vector3 position) {
         Building newBuilding = InstantiateBuilding(buildingType, resourceType, position);
-        TutorialSingleton.BuiltStation(buildingType, resourceType);
+        TutorialStatic.BuiltStation(buildingType, resourceType);
         if (newBuilding != null) {
             hiveSingleton.AddBuildingData(buildingType, resourceType, position);
             (int, int) stationLevels = hiveSingleton.GetStationLevels(resourceType);

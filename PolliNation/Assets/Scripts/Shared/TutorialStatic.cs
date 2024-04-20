@@ -1,35 +1,20 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialSingleton
+public class TutorialStatic
 {
-  private static TutorialSingleton _instance;
-  public static TutorialSingleton Instance
-  {
-    get { return _instance; }
-  }
   public static SnackbarScript Snackbar;
 
   // Milestone suggestions.
-  [SerializeField] private static bool _wentOutside;
+  internal static bool _wentOutside;
   // Whether they've built a storage station when they're reached 
   // a resource collection limit.
-  [SerializeField] private static bool _builtStorageForMoreCapacity;
-  [SerializeField] private static bool _builtStorageStation;
-  [SerializeField] private static bool _builtGatheringStation;
-  [SerializeField] private static bool _builtConversionStation;
+  internal static bool _builtStorageForMoreCapacity;
+  internal static bool _builtStorageStation;
+  internal static bool _builtGatheringStation;
+  internal static bool _builtConversionStation;
 
   private static ResourceType _toldToBuildStorageForResourceType;
   private static bool _receivedWorkers;
-
-  public TutorialSingleton()
-  {
-    if (_instance != null)
-    {
-      return;
-    }
-    _instance = this;
-  }
 
   public static void EnteredHive()
   {

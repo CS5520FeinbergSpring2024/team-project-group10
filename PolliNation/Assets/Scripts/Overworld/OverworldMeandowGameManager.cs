@@ -5,7 +5,7 @@ public class OverworldMeandowGameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TutorialSingleton.Snackbar = FindObjectOfType<SnackbarScript>(true);
-        TutorialSingleton.EnteredOutside();
+        TutorialStatic.Snackbar = FindObjectOfType<SnackbarScript>(true);
+        TutorialStatic.EnteredOutside();
     }
 }
