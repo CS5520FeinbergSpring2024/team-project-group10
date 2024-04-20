@@ -23,3 +23,4 @@ Overworld:
 
 General:
 - [Button click](https://pixabay.com/sound-effects/minimal-pop-click-ui-1-198301/) created by [floraphonic](https://pixabay.com/users/floraphonic-38928062/)
+- [Task reward click sound](https://pixabay.com/sound-effects/game-bonus-144751/) created by [UNIVERSFIELD](https://pixabay.com/users/universfield-28281460/)
