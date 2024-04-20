@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayGame() 
     {
+        StartMenuSoundManager.instance.PlayButtonClickFX();
         string hiveScene = "Hive";
         SceneManager.LoadScene(hiveScene);
     }
