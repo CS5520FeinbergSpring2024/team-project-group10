@@ -1,6 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-using Newtonsoft.Json;
 
 /// <summary>
 /// Manages data storage and loading for the different data singletons.
@@ -32,6 +33,7 @@ public class DataStorageManager : MonoBehaviour
   private static string _hiveTotalWorkersPath;
   private static string _hiveResourceLevelsPath;
   private static string _tasksPath;
+  private static string _tutorialPath;
 
   // Singleton objects whose data to store.
   // These must only be accessed through Instance.<field>.
@@ -69,6 +71,7 @@ public class DataStorageManager : MonoBehaviour
     _hiveResourceLevelsPath = 
         Application.persistentDataPath + "/hiveResourceLevelsPath.json";
     _tasksPath = Application.persistentDataPath + "/tasksPath.json";
+    _tutorialPath = Application.persistentDataPath + "/tutorialPath.json";
 
     _inventory = new InventoryDataSingleton();
     _hive = new HiveDataSingleton();
@@ -97,6 +100,7 @@ public class DataStorageManager : MonoBehaviour
     LoadInventoryData();
     LoadHiveData();
     LoadTaskData();
+    LoadTutorialData();
   }
 
   public void SaveData()
@@ -104,6 +108,7 @@ public class DataStorageManager : MonoBehaviour
     SaveInventoryData();
     SaveHiveData();
     SaveTaskData();
+    SaveTutorialData();
   }
 
   // DataSingleton-specific loading and storage.
@@ -253,4 +258,66 @@ public class DataStorageManager : MonoBehaviour
       Debug.LogError("Task is null");
     }
   }
+
+  // These should really be in DataStorageFacilitator, but this was faster.
+
+  public void LoadTutorialData()
+  {
+    try
+    {
+      if (File.Exists(_tutorialPath))
+      {
+        string jsonString = File.ReadAllText(_tutorialPath);
+        Debug.Log("Read: " + jsonString);
+        TutorialData tutorialData = JsonUtility.FromJson<TutorialData>(jsonString);
+        if (tutorialData != null)
+        {
+          TutorialStatic._wentOutside = tutorialData.WentOutside;
+          TutorialStatic._builtStorageForMoreCapacity = tutorialData.BuiltStorageForMoreCapacity;
+          TutorialStatic._builtStorageStation = tutorialData.BuiltStorageStation;
+          TutorialStatic._builtGatheringStation = tutorialData.BuiltGatheringStation;
+          TutorialStatic._builtConversionStation = tutorialData.BuiltConversionStation;
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      Debug.LogException(ex);
+    }
+  }
+
+  public void SaveTutorialData()
+  {
+    try
+    {
+      TutorialData tutorialData = new()
+      {
+        WentOutside = TutorialStatic._wentOutside,
+        BuiltStorageForMoreCapacity = TutorialStatic._builtStorageForMoreCapacity,
+        BuiltStorageStation = TutorialStatic._builtStorageStation,
+        BuiltGatheringStation = TutorialStatic._builtGatheringStation,
+        BuiltConversionStation = TutorialStatic._builtConversionStation
+      };
+      // JsonUtility can't serialize a list.
+      string jsonString = JsonUtility.ToJson(tutorialData);
+      Debug.Log("Writing: " + jsonString);
+      File.WriteAllText(_tutorialPath, jsonString);
+    }
+    // Swallow any exceptions.
+    catch (Exception ex)
+    {
+      Debug.LogException(ex);
+    }
+  }
+}
+
+/// <summary>
+/// Helper class for serializing and deserializing tutorial data.
+/// </summary>
+class TutorialData {
+  public bool WentOutside;
+  public bool BuiltStorageForMoreCapacity;
+  public bool BuiltStorageStation;
+  public bool BuiltGatheringStation;
+  public bool BuiltConversionStation;
 }
