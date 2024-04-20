@@ -287,7 +287,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7130995208225530597}
+  - {fileID: 610102943221626680}
   - {fileID: 2929416264178681227}
   - {fileID: 7868712704373275565}
   - {fileID: 7317388025106994749}
@@ -407,7 +407,7 @@ MonoBehaviour:
   waspFX: {fileID: 7219156506726082751}
   flowerFX: {fileID: 6229531620551171887}
   deathScreenFX: {fileID: 3668383898939581338}
-  buttonClickFX: {fileID: 0}
+  buttonClickFX: {fileID: 8038361778938959966}
 --- !u!1 &7620612567775552694
 GameObject:
   m_ObjectHideFlags: 0
@@ -758,7 +758,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!1001 &7448213105412071116
+--- !u!1001 &998877055058725649
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -808,15 +808,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4490177987841669509, guid: 44352f9040a99464685b899adc99bd6a, type: 3}
       propertyPath: m_Name
-      value: buttonClick_audioSource
+      value: ButtonClick_AudioSource
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44352f9040a99464685b899adc99bd6a, type: 3}
---- !u!4 &7130995208225530597 stripped
+--- !u!4 &610102943221626680 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 408486193550162985, guid: 44352f9040a99464685b899adc99bd6a, type: 3}
-  m_PrefabInstance: {fileID: 7448213105412071116}
+  m_PrefabInstance: {fileID: 998877055058725649}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &8038361778938959966 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 7084520728743875407, guid: 44352f9040a99464685b899adc99bd6a, type: 3}
+  m_PrefabInstance: {fileID: 998877055058725649}
   m_PrefabAsset: {fileID: 0}
