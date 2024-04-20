@@ -94,7 +94,7 @@ public class BuildMenuScript : MonoBehaviour {
         // Finding the Snackbar object in the scene
         GameObject snackbarObject = GameObject.Find("Snackbar");
         if (snackbarObject != null) {
-            snackbar = snackbarObject.GetComponent<SnackbarScript>();
+            snackbar = snackbarObject.transform.GetChild(0).GetChild(0).GetComponent<SnackbarScript>();
             if (snackbarObject == null) {
                 Debug.LogError("Snackbar component could not be found.");
             }
@@ -230,7 +230,7 @@ public class BuildMenuScript : MonoBehaviour {
         }
         else {
             Debug.Log("Insufficient resources for this building");
-            snackbar.SetText("Insufficient resources for this building");
+            snackbar.SetText("Insufficient resources for this building", 3);
         }
     }
 

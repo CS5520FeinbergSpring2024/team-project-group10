@@ -1,5 +1,56 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &812006745114762299
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5820790385390125003}
+  - component: {fileID: 8771647879429629858}
+  m_Layer: 0
+  m_Name: Snackbar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5820790385390125003
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812006745114762299}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 999392982188578072}
+  - {fileID: 4541728495170340286}
+  m_Father: {fileID: 7183786573086740585}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8771647879429629858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812006745114762299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb264fa8aaead0d4b8e0891286958c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 8373516099337475978}
 --- !u!1 &2622489800794828683
 GameObject:
   m_ObjectHideFlags: 0
@@ -28,10 +79,10 @@ RectTransform:
   m_GameObject: {fileID: 2622489800794828683}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1039699, y: 1.1039699, z: 1.1039699}
+  m_LocalScale: {x: 1.10397, y: 1.10397, z: 1.10397}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7183786573086740585}
+  m_Father: {fileID: 5820790385390125003}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -116,12 +167,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4721460907373812438}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7183786573086740585}
+  m_Father: {fileID: 5820790385390125003}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -234,7 +285,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8871022679423164428}
-  - component: {fileID: 9162150238567508019}
   m_Layer: 0
   m_Name: Snackbar
   m_TagString: Untagged
@@ -258,19 +308,6 @@ Transform:
   - {fileID: 7183786573086740585}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9162150238567508019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5596221874440024635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb264fa8aaead0d4b8e0891286958c71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text: {fileID: 8373516099337475978}
 --- !u!1 &5974267801023965669
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,8 +339,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 999392982188578072}
-  - {fileID: 4541728495170340286}
+  - {fileID: 5820790385390125003}
   m_Father: {fileID: 8871022679423164428}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

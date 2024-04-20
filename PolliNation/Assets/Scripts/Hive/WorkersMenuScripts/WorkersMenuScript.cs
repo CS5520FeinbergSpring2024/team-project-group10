@@ -23,6 +23,7 @@ public class WorkersMenuScript : MonoBehaviour
 
     private HiveDataSingleton hiveSingleton;
     private GameObject menuButtonObject;
+    public SnackbarScript snackbar;
     private ILaunchMenuButton launchMenuButton;
     private int availableWorkers;
     private Dictionary<ResourceType, TextMeshProUGUI> assignedTextMap;
@@ -56,6 +57,18 @@ public class WorkersMenuScript : MonoBehaviour
             {
                 Debug.LogError("HiveGameManager component not found!");
             }
+        }
+
+        // Finding the Snackbar object in the scene
+        GameObject snackbarObject = GameObject.Find("Snackbar");
+        if (snackbarObject != null) {
+            snackbar = snackbarObject.transform.GetChild(0).GetChild(0).GetComponent<SnackbarScript>();
+            if (snackbarObject == null) {
+                Debug.LogError("Snackbar component could not be found.");
+            }
+        }
+        else {
+            Debug.LogError("Snackbar object not found in the scene.");
         }
 
         // Since it's a singleton, this doesn't need to the the one the hive stores.
@@ -106,6 +119,8 @@ public class WorkersMenuScript : MonoBehaviour
         else
         {
             Debug.Log("No worker available.");
+            snackbar.SetText("No workers available");
+
         }
     }
 
@@ -119,6 +134,7 @@ public class WorkersMenuScript : MonoBehaviour
         else 
         {
             Debug.Log("No worker available.");
+            snackbar.SetText("No workers assigned");
         }
         
     }
@@ -136,6 +152,12 @@ public class WorkersMenuScript : MonoBehaviour
         else
         {
             Debug.Log(string.Format("No {0} building exist, please build it first", resourceType));
+            if (new List<ResourceType>{ResourceType.Nectar, ResourceType.Pollen, ResourceType.Water, ResourceType.Buds}.Contains(resourceType)) {
+                snackbar.SetText($"{resourceType} {BuildingType.Gathering} Station required");
+            } else {
+                string resourceString = (resourceType == ResourceType.RoyalJelly) ? "Royal Jelly" : resourceType.ToString();
+                snackbar.SetText($"{resourceString} Conversion Station required");
+            }
         }
     }
 
