@@ -130,6 +130,7 @@ public class InventoryDataSingleton
           // set count to max allowed for resource 
           Instance._resourceCounts[resource] = GetStorageLimit(resource);
           Instance._inventoryFull[resource] = true;
+          TutorialStatic.ResourceStorageLimitReached(resource);
           Debug.Log("Inventory full for resource, cannot add more to inventory");
       }
       Instance._onInventoryChanged?.Invoke(Instance, EventArgs.Empty); 

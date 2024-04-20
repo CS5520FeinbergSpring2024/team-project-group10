@@ -90,6 +90,7 @@ public class HiveDataSingleton {
 
   // Method to add to total workers 
   public void AddWorkers(int numberOfWorkers) {
+    TutorialStatic.ReceivedWorkers();
     TotalWorkers += numberOfWorkers;
   }
 
