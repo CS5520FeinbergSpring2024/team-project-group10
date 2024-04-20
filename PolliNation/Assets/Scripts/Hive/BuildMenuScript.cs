@@ -12,6 +12,9 @@ public class BuildMenuScript : MonoBehaviour {
     public SnackbarScript snackbar;
     private Image prevTypeImage;
     private Image prevSelectedResourceTypeButton;
+    [SerializeField] GameObject storageResources;
+    [SerializeField] GameObject gatheringResources;
+    [SerializeField] GameObject conversionResources;
 
     // Static dictionary containing the resources that can be associated with each building type
     public static Dictionary<BuildingType, List<ResourceType>> buildingResources = new() {
@@ -66,6 +69,11 @@ public class BuildMenuScript : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         SetClose();
+
+        // Hide resource panels
+        storageResources.SetActive(false);
+        gatheringResources.SetActive(false);
+        conversionResources.SetActive(false);
         
         // Finding the Build Button object in the scene
         GameObject menuButtonObject = GameObject.Find("Build Button Object");
@@ -108,6 +116,11 @@ public class BuildMenuScript : MonoBehaviour {
     public void GatheringClick() {
         if (selectedBuildingType != BuildingType.Gathering) {
             selectedResourceType = null;
+
+            // Handle resource panels
+            storageResources.SetActive(false);
+            gatheringResources.SetActive(true);
+            conversionResources.SetActive(false);
         }
         selectedBuildingType = BuildingType.Gathering;
         Debug.Log("Gathering building selected");
@@ -120,6 +133,11 @@ public class BuildMenuScript : MonoBehaviour {
     public void StorageClick() {
         if (selectedBuildingType != BuildingType.Storage) {
             selectedResourceType = null;
+
+            // Handle resource panels
+            storageResources.SetActive(true);
+            gatheringResources.SetActive(false);
+            conversionResources.SetActive(false);
         }
         selectedBuildingType = BuildingType.Storage;
         Debug.Log("Storage building selected");
@@ -132,6 +150,11 @@ public class BuildMenuScript : MonoBehaviour {
     public void ProductionClick() {
         if (selectedBuildingType != BuildingType.Production) {
             selectedResourceType = null;
+
+            // Handle resource panels
+            storageResources.SetActive(false);
+            gatheringResources.SetActive(false);
+            conversionResources.SetActive(true);
         }
         selectedBuildingType = BuildingType.Production;
         Debug.Log("Production building selected");
