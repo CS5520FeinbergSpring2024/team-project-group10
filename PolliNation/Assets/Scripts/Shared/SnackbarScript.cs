@@ -7,7 +7,7 @@ public class SnackbarScript : MonoBehaviour {
     private List<float> delays = new();
     
     // Start is called before the first frame update
-    void Start() {
+    void Awake() {
         SetClose();
     }
 
