@@ -23,7 +23,7 @@ public class TutorialStatic
   {
     if (!_wentOutside)
     {
-      Snackbar.SetText("Head outside to collect resources like pollen and nectar.", 3);
+      Snackbar.SetText("Head outside to collect resources like pollen and nectar.", 5);
     }
   }
 
@@ -62,7 +62,7 @@ public class TutorialStatic
       string resourceString = resource == ResourceType.RoyalJelly ? "Royal Jelly" : resource.ToString();
       _toldToBuildStorageForResourceType = resource;
       _toldToBuildStorage = true;
-      Snackbar.SetText($"{resourceString} limit reached. Build more {resourceString} storage stations to store more.", 3);
+      Snackbar.SetText($"{resourceString} limit reached. Build more {resourceString} storage stations to store more.", 5);
     }
     if (_receivedWorkers) 
     {
@@ -81,13 +81,13 @@ public class TutorialStatic
     if (!_builtGatheringStation && !_toldToBuildGathering)
     {
       _toldToBuildGathering = true;
-      Snackbar.SetText("Build a gathering station to assign worker bees to collect resources for you.", 3);
+      Snackbar.SetText("Build a gathering station to assign worker bees to collect resources for you.", 5);
     }
     // Forces an order, but is prefereable to bombardng the user with messages.
     else if (!_builtConversionStation && !_toldToBuildConversion)
     {
       _toldToBuildConversion = true;
-      Snackbar.SetText("Build a conversion station to assign workers to produce resources like honey.");
+      Snackbar.SetText("Build a conversion station to assign workers to produce resources like honey.", 5);
     }
   }
 
